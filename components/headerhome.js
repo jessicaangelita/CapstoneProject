@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import Image from "next/image";
+import { MdClose } from "react-icons/md";
+import { useState } from "react";
 
 const HeaderHome = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -17,8 +19,10 @@ const HeaderHome = () => {
       </button>
       <div className="flex items-center space-x-4">
         <div className="text-white">Nama Pengguna</div>
-        <img
-          className="w-8 h-8 rounded-full"
+        <Image
+          className="rounded-full"
+          width={20}
+          height={20}
           src="/path/to/user/avatar.jpg"
           alt="User Avatar"
         />
@@ -27,16 +31,28 @@ const HeaderHome = () => {
         <div className="fixed inset-0 bg-gray-800 bg-opacity-50 z-10">
           <div className="absolute left-0 h-full w-64 bg-blue-700 shadow-md">
             <nav className="p-4">
-              <h2 className="text-xl font-semibold mb-4 text-white">Menu</h2>
+              <div className="flex items-center justify-between mb-4 text-white">
+                <h2 className="text-xl font-semibold">Menu</h2>
+                <MdClose
+                  className="text-xl cursor-pointer"
+                  onClick={toggleSidebar}
+                />
+              </div>
               <ul className="space-y-2">
                 <li>
-                  <a href="#" className="text-white hover:underline">Menu 1</a>
+                  <a href="#" className="text-white hover:underline">
+                    Menu 1
+                  </a>
                 </li>
                 <li>
-                  <a href="#" className="text-white hover:underline">Menu 2</a>
+                  <a href="#" className="text-white hover:underline">
+                    Menu 2
+                  </a>
                 </li>
                 <li>
-                  <a href="#" className="text-white hover:underline">Menu 3</a>
+                  <a href="#" className="text-white hover:underline">
+                    Menu 3
+                  </a>
                 </li>
               </ul>
             </nav>
