@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function content() {
+export default function Content() {
   return (
     <div className="container px-5 py-24 mx-auto">
       <div className="lg:w-4/5 mx-auto flex flex-wrap">

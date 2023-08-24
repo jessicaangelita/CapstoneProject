@@ -1,6 +1,13 @@
-import React from "react";
+import {useState} from "react";
+import NewProvider from "@/pages/NewProvider";
 
 export default function ContentHome() {
+
+const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+const togglePopup = () => {
+    setIsPopupOpen(!isPopupOpen);
+};
     return (
         <div className="container px-5 py-24 mx-auto">
             <div className="flex justify-center"> {/* Center aligns the cards */}
@@ -20,6 +27,15 @@ export default function ContentHome() {
                             Click here to add a new provider.
                         </p>
                         <a className="text-blue-500 inline-flex items-center hover:underline" href="/addProvider">Add Provider</a>
+                        <button onClick={togglePopup}>Add Provider</button>
+
+                        {isPopupOpen && (
+                            <div className="popup-container">
+                                <div className="popup-content">
+                                    <NewProvider />
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
