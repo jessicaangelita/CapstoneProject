@@ -6,10 +6,10 @@ DROP TABLE IF EXISTS "users";
 
 CREATE TABLE "users" (
   "user_id" varchar PRIMARY KEY,
-  "email" varchar UNIQUE,
-  "username" varchar UNIQUE,
-  "password" varchar,
-  "name" varchar
+  "email" varchar UNIQUE NOT NULL,
+  "username" varchar UNIQUE NOT NULL,
+  "password" varchar NOT NULL,
+  "name" varchar NOT NULL
 );
 
 
@@ -21,10 +21,10 @@ CREATE TABLE "projects" (
 
 CREATE TABLE "message_providers" (
   "message_provider_id" varchar PRIMARY KEY,
-  "message_provider_user_id" varchar,
-  "provider_type" varchar,
-  "provider_label" varchar,
-  "webhook" varchar
+  "message_provider_user_id" varchar NOT NULL,
+  "provider_type" varchar NOT NULL,
+  "provider_label" varchar NOT NULL,
+  "webhook" varchar NOT NULL
 );
 
 
