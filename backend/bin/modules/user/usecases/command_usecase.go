@@ -227,7 +227,7 @@ func (q CommandUsecase) DeleteUser(ctx *gin.Context) {
 	if deletedUser.DB.RowsAffected == 0 {
 		// If there was an error, return Internal Server Error with error message
 		result.Code = http.StatusBadRequest
-		result.Message = "project not found"
+		result.Message = "User not found"
 		ctx.AbortWithStatusJSON(result.Code, result)
 		return
 	}
