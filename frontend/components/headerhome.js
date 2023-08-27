@@ -19,13 +19,13 @@ const HeaderHome = () => {
       </button>
       <div className="flex items-center space-x-4">
         <div className="text-white">User</div>
-        <Image
+        {/* <Image
           className="rounded-full"
           width={20}
           height={20}
           src="/path/to/user/avatar.jpg"
           alt="User Avatar"
-        />
+        /> */}
       </div>
       {isSidebarOpen && (
         <div className="fixed inset-0 bg-gray-800 bg-opacity-50 z-10">
