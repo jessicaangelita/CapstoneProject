@@ -20,6 +20,7 @@ type UsecaseCommand interface {
 	PostMessageProvider(ctx *gin.Context)
 	PutMessageProvider(ctx *gin.Context)
 	DeleteMessageProvider(ctx *gin.Context)
+	// SendNotification(ctx *gin.Context)
 }
 
 type RepositoryQuery interface {
