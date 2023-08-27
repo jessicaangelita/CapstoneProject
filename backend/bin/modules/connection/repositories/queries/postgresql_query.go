@@ -24,27 +24,38 @@ func NewQueryRepository(orm *databases.ORM) connection.RepositoryQuery {
 // FindOneByID retrieves a connection record from database by ID
 
 func (q QueryRepository) FindAll(ctx *gin.Context, skip, limit int) utils.Result {
-	var connectionsModel []models.Connection
+	var connectionInfo []map[string]interface{}
 
 	// Use ORM to find a connection record by ID
-	r := q.ORM.DB.Offset(skip).Limit(limit).Find(&connectionsModel)
+	r := q.ORM.DB.Table("connections").
+		Select("connections.*, projects.*, message_providers.*").
+		Joins("LEFT JOIN message_providers ON message_providers.message_provider_id = connections.connection_message_provider_id").
+		Joins("LEFT JOIN projects ON projects.project_id = connections.connection_project_id").
+		Offset(skip).Limit(limit).Scan(&connectionInfo)
 
 	// Prepare the result, including retrieved connection data and database operation result
 	output := utils.Result{
-		Data: connectionsModel,
+		Data: connectionInfo,
 		DB:   r,
 	}
 	return output
 
 }
 func (q QueryRepository) FindOneByID(ctx *gin.Context, connection_id string) utils.Result {
-	var connectionModel models.Connection
+	// Define the structs for the connection and provider
+	var connectionInfo []map[string]interface{}
 
-	// Use ORM to find a connection record by ID
-	r := q.ORM.DB.First(&connectionModel, "connection_id = ?", connection_id)
-	// Prepare the result, including retrieved connection data and database operation result
+	// Use ORM to find a project record by ID
+	r := q.ORM.DB.
+		Table("connections").
+		Select("connections.*, projects.*, message_providers.*").
+		Joins("LEFT JOIN message_providers ON message_providers.message_provider_id = connections.connection_message_provider_id").
+		Joins("LEFT JOIN projects ON projects.project_id = connections.connection_project_id").
+		Where("connections.connection_id = ?", connection_id).
+		Scan(&connectionInfo)
+
 	output := utils.Result{
-		Data: connectionModel,
+		Data: connectionInfo,
 		DB:   r,
 	}
 	return output
@@ -52,13 +63,20 @@ func (q QueryRepository) FindOneByID(ctx *gin.Context, connection_id string) uti
 }
 
 func (q QueryRepository) FindOneByProjectID(ctx *gin.Context, project_id string) utils.Result {
-	var connectionModel models.Connection
 
-	// Use ORM to find a connection record by ID
-	r := q.ORM.DB.First(&connectionModel, "project_id = ?", project_id)
+	var connectionInfo []map[string]interface{}
+
+	// Use ORM to find a project record by ID
+	r := q.ORM.DB.
+		Table("connections").
+		Select("connections.*, projects.*, message_providers.*").
+		Joins("LEFT JOIN message_providers ON message_providers.message_provider_id = connections.connection_message_provider_id").
+		Joins("LEFT JOIN projects ON projects.project_id = connections.connection_project_id").
+		Where("connections.connection_project_id = ?", project_id).
+		Scan(&connectionInfo)
 	// Prepare the result, including retrieved connection data and database operation result
 	output := utils.Result{
-		Data: connectionModel,
+		Data: connectionInfo,
 		DB:   r,
 	}
 	return output
@@ -66,13 +84,19 @@ func (q QueryRepository) FindOneByProjectID(ctx *gin.Context, project_id string)
 }
 
 func (q QueryRepository) FindOneByMessageProviderID(ctx *gin.Context, message_provider_id string) utils.Result {
-	var connectionModel models.Connection
+	var connectionInfo []map[string]interface{}
 
-	// Use ORM to find a connection record by ID
-	r := q.ORM.DB.First(&connectionModel, "message_provider_id = ?", message_provider_id)
+	// Use ORM to find a project record by ID
+	r := q.ORM.DB.
+		Table("connections").
+		Select("connections.*, projects.*, message_providers.*").
+		Joins("LEFT JOIN message_providers ON message_providers.message_provider_id = connections.connection_message_provider_id").
+		Joins("LEFT JOIN projects ON projects.project_id = connections.connection_project_id").
+		Where("connections.connection_message_provider_id = ?", message_provider_id).
+		Scan(&connectionInfo)
 	// Prepare the result, including retrieved connection data and database operation result
 	output := utils.Result{
-		Data: connectionModel,
+		Data: connectionInfo,
 		DB:   r,
 	}
 	return output
