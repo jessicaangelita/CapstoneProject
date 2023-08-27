@@ -61,23 +61,22 @@ func (c *CommandRepository) Updates(ctx *gin.Context, p models.Project) utils.Re
 func (c *CommandRepository) Delete(ctx *gin.Context, project_id string) utils.MultiDataResult {
 	var projectModel models.Project
 	var connectionModel connectionModels.Connection
+	var projectInfo []map[string]interface{}
 
-	c.ORM.DB.First(&connectionModel, "connection_project_id = ?", project_id)
-	c.ORM.DB.First(&projectModel, "project_id = ?", project_id)
+	// Use ORM to find project records by user ID with LEFT JOIN on connections and message_providers
+	c.ORM.DB.
+		Table("projects").
+		Select("projects.*, connections.*, message_providers.*").
+		Joins("LEFT JOIN connections ON connections.connection_project_id = projects.project_id").
+		Joins("LEFT JOIN message_providers ON message_providers.message_provider_id = connections.connection_message_provider_id").
+		Where("projects.project_id = ?", project_id).
+		Scan(&projectInfo)
 
 	connectionRecordset := c.ORM.DB.Delete(&connectionModel, "connection_project_id = ?", project_id)
 	projectRecordset := c.ORM.DB.Delete(&projectModel, "project_id = ?", project_id)
 
-	result := struct {
-		Project    models.Project
-		Connection connectionModels.Connection
-	}{
-		Project:    projectModel,
-		Connection: connectionModel,
-	}
-
 	output := utils.MultiDataResult{
-		Data: result,
+		Data: projectInfo,
 		DB:   []*gorm.DB{connectionRecordset, projectRecordset},
 	}
 	return output
