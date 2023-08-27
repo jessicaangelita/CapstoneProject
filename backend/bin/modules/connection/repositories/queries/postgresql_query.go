@@ -42,10 +42,9 @@ func (q QueryRepository) FindAll(ctx *gin.Context, skip, limit int) utils.Result
 
 }
 func (q QueryRepository) FindOneByID(ctx *gin.Context, connection_id string) utils.Result {
-	// Define the structs for the connection and provider
 	var connectionInfo []map[string]interface{}
 
-	// Use ORM to find a project record by ID
+	// Use ORM to find a connection record by ID
 	r := q.ORM.DB.
 		Table("connections").
 		Select("connections.*, projects.*, message_providers.*").
@@ -66,7 +65,7 @@ func (q QueryRepository) FindOneByProjectID(ctx *gin.Context, project_id string)
 
 	var connectionInfo []map[string]interface{}
 
-	// Use ORM to find a project record by ID
+	// Use ORM to find a connection record by project id
 	r := q.ORM.DB.
 		Table("connections").
 		Select("connections.*, projects.*, message_providers.*").
@@ -74,7 +73,6 @@ func (q QueryRepository) FindOneByProjectID(ctx *gin.Context, project_id string)
 		Joins("LEFT JOIN projects ON projects.project_id = connections.connection_project_id").
 		Where("connections.connection_project_id = ?", project_id).
 		Scan(&connectionInfo)
-	// Prepare the result, including retrieved connection data and database operation result
 	output := utils.Result{
 		Data: connectionInfo,
 		DB:   r,
@@ -86,7 +84,7 @@ func (q QueryRepository) FindOneByProjectID(ctx *gin.Context, project_id string)
 func (q QueryRepository) FindOneByMessageProviderID(ctx *gin.Context, message_provider_id string) utils.Result {
 	var connectionInfo []map[string]interface{}
 
-	// Use ORM to find a project record by ID
+	// Use ORM to find a connection record by message provider id
 	r := q.ORM.DB.
 		Table("connections").
 		Select("connections.*, projects.*, message_providers.*").
@@ -94,7 +92,6 @@ func (q QueryRepository) FindOneByMessageProviderID(ctx *gin.Context, message_pr
 		Joins("LEFT JOIN projects ON projects.project_id = connections.connection_project_id").
 		Where("connections.connection_message_provider_id = ?", message_provider_id).
 		Scan(&connectionInfo)
-	// Prepare the result, including retrieved connection data and database operation result
 	output := utils.Result{
 		Data: connectionInfo,
 		DB:   r,

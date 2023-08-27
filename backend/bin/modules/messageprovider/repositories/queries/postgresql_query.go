@@ -73,57 +73,6 @@ func (q QueryRepository) FindConnectedOneByID(ctx *gin.Context, message_provider
 	return output
 }
 
-// func (q QueryRepository) FindConnectedOneByID(ctx *gin.Context, message_provider_id string) utils.Result {
-// 	var messageProviderModel models.MessageProvider
-// 	// Define the structs for the connection and provider
-// 	var connectionModel connectionModels.Connection
-// 	var projectModel projectModels.Project
-
-// 	// Use ORM to find a project record by ID
-// 	r := q.ORM.DB.First(&messageProviderModel, "message_provider_id = ?", message_provider_id)
-// 	connector := struct {
-// 		Data    interface{}
-// 		Message string
-// 	}{
-// 		Message: "found",
-// 		Data:    &connectionModel,
-// 	}
-
-// 	provider := struct {
-// 		Data    interface{}
-// 		Message string
-// 	}{
-// 		Message: "found",
-// 		Data:    &projectModel,
-// 	}
-
-// 	if q.ORM.DB.First(&connectionModel, "connection_message_provider_id = ?", message_provider_id).Error == gorm.ErrRecordNotFound {
-// 		connector.Message = "record not found"
-
-// 	}
-
-// 	if q.ORM.DB.First(&projectModel, "message_provider_id = ?", connectionModel.ConnectionMessageProviderID).Error == gorm.ErrRecordNotFound {
-// 		// Handle the case when provider data is not found
-// 		provider.Message = "record not found"
-// 	}
-
-// 	// Prepare the result
-// 	output := utils.Result{
-// 		Data: struct {
-// 			MessageProvider models.MessageProvider
-// 			Connector       interface{}
-// 			Provider        interface{}
-// 		}{
-// 			MessageProvider: messageProviderModel,
-// 			Connector:       connector,
-// 			Provider:        provider,
-// 		},
-// 		DB: r,
-// 	}
-
-// 	return output
-// }
-
 func (q QueryRepository) CountData(ctx *gin.Context) utils.Result {
 	var messageproviderModel models.MessageProvider
 	var count int64

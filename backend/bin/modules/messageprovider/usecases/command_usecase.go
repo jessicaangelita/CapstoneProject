@@ -171,3 +171,8 @@ func (q CommandUsecase) DeleteMessageProvider(ctx *gin.Context) {
 	}
 	ctx.JSON(result.Code, result)
 }
+
+// func (q CommandUsecase) SendNotification(ctx *gin.Context) {
+// 	var messageProviderModel models.MessageProvider
+// 	requestData= ctx.ShouldBind(&messageProviderModel)
+// }

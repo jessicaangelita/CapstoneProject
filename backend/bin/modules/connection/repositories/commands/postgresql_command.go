@@ -59,11 +59,20 @@ func (c *CommandRepository) Updates(ctx *gin.Context, p models.Connection) utils
 func (c *CommandRepository) Delete(ctx *gin.Context, connection_id string) utils.Result {
 	var connectionModel models.Connection
 
-	c.ORM.DB.First(&connectionModel, "connection_id = ?", connection_id)
+	var connectionInfo []map[string]interface{}
+
+	// Use ORM to find a connection record by ID
+	c.ORM.DB.
+		Table("connections").
+		Select("connections.*, projects.*, message_providers.*").
+		Joins("LEFT JOIN message_providers ON message_providers.message_provider_id = connections.connection_message_provider_id").
+		Joins("LEFT JOIN projects ON projects.project_id = connections.connection_project_id").
+		Where("connections.connection_id = ?", connection_id).
+		Scan(&connectionInfo)
 	recordset := c.ORM.DB.Delete(&connectionModel, "connection_id = ?", connection_id)
 
 	output := utils.Result{
-		Data: connectionModel,
+		Data: connectionInfo,
 		DB:   recordset,
 	}
 	return output
