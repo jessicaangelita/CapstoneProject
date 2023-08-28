@@ -77,7 +77,7 @@ export default function UpdatedProvider({ data, onUpdate, onCancel, setData }) {
     <div className="bg-white rounded-lg absolute max-w-[30rem] p-3 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
       <div className="flex justify-between items-center mb-3">
         <h1 className="text-lg text-black mb-2">Update Project</h1>
-        <button className="text-black hover:text-red-600 mb-2" type="button" onClick={oncancel}>
+        <button className="text-black hover:text-red-600 mb-2" type="button" onClick={onCancel}>
           Close
         </button>
       </div>

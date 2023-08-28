@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "@/pages/api/axios";
 import { useRouter } from "next/router";
 import HeaderHome from "@/components/headerhome";
+import { FaPencilAlt } from "react-icons/fa";
+import UpdatedProject from "@/components/UpdatedProject";
 
 export default function ContentProject() {
     const [project, setProject] = useState([]); 
@@ -10,6 +12,16 @@ export default function ContentProject() {
     const router = useRouter();
 
     const { userid } = router.query
+
+    const handleEdit = (data) => {
+        // setSelectedData(data);
+        setData(item);
+        setShowUpdate(true);
+    };
+
+    const handleCancel = () => {
+        setShowUpdate(false);
+    };
    
     useEffect(() => {
         const fetchData = async () => {
@@ -56,6 +68,11 @@ export default function ContentProject() {
                                     <td className="px-6 py-4">{item.provider_type}</td>
                                     <td className="px-6 py-4">
                                         {/* Kolom Edit */}
+                                        <div>
+                                        <button onClick={() => handleEdit(data)}>
+                                                <FaPencilAlt className="text-blue-500" />
+                                            </button>      
+                                        </div>                   
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap">
                                         {/* Kolom Delete */}
@@ -71,6 +88,14 @@ export default function ContentProject() {
                     </tbody>
                 </table>
             )}
+              {showUpdate && (
+            <UpdatedProject
+            data={data }
+            onUpdate={handleCancel}
+            setData={setData}
+            onCancel={handleCancel}
+            />
+        )}
         </div>
         </>
     );
