@@ -2,36 +2,12 @@ import React, { useState, useEffect } from "react";
 import axios from "@/pages/api/axios";
 
 export default function UpdatedProvider({ data, onUpdate, onCancel, setData }) {
+  const [id,setID] = useState(data.id)
   const [providername, setProvidertName] = useState(data.provider_label);
   const [webhook, setWebhook] = useState(data.webhook);
   // const [project, setProject] = useState(data.project);
   const [selectedproject, setSelectedProject] = useState("");
 
-  // const handleUpdated = () => {
-  //   const updatedData = {
-  //     id: data.id,
-  //     providername: provider_label,
-  //     webhook,
-  //     project: selectedproject,
-  //   };
-  //   onUpdate(updatedData);
-  // };
-
-  // useEffect(() => {
-  // axios.get(`http://localhost:8050/message-provider/id/connected/${messageprovider_id}`)
-  // .then(res => setData(res.data.data))
-  // .catch(err => console.log(err));
-  //   const fetchDataProduct = async () => {
-  //     try {
-  //       const resp = await axios.get(`http://localhost:8050/message-provider/id/connected/${messageprovider_id}`);
-  //       const respData = resp.data.data
-  //       setData(respData);
-  //     } catch (error) {
-  //       console.log('Error Fetch Data', error)
-  //     }
-  //   }
-  //   fetchDataProduct();
-  // },[messageprovider_id]);
 
   const handleSubmit = async (e) => {
     try {
@@ -47,6 +23,7 @@ export default function UpdatedProvider({ data, onUpdate, onCancel, setData }) {
       );
 
       setData(updatedData);
+      setProvidertName(updatedData)
       console.log("saved", updatedData);
       onUpdate();
     } catch (err) {
@@ -71,13 +48,14 @@ export default function UpdatedProvider({ data, onUpdate, onCancel, setData }) {
         </div>
         <table className="w-full mb-5 ">
           <tbody className="">
+            
             {/* ID*/}
             <tr>
               <td className="text-black font-semibold ">ID</td>
               <td className="pl-3">
                 <input
                   type="text"
-                  value={data.id}
+                  value={id}
                   disabled
                   className="w-full border p-2 rounded outline-none"
                 />

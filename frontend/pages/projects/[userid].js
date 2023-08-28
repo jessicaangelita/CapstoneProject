@@ -8,21 +8,31 @@ import UpdatedProject from "@/components/UpdatedProject";
 export default function ContentProject() {
     const [project, setProject] = useState([]); 
     const [isLoading, setIsLoading] = useState(true);
+    const [showUpdate, setShowUpdate] = useState(false);
+    const [data, setData] = useState(undefined);
+
 
     const router = useRouter();
 
     const { userid } = router.query
 
-    const handleEdit = (data) => {
+    const handleEdit = (item) => {
         // setSelectedData(data);
         setData(item);
-        setShowUpdate(true);
     };
 
     const handleCancel = () => {
+        setData(undefined);
         setShowUpdate(false);
     };
-   
+
+    
+    useEffect(() => {
+        if (!data) return;
+
+        setShowUpdate(true);
+    }, [data]);
+    
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -39,6 +49,11 @@ export default function ContentProject() {
         void fetchData();
     }, [userid]);
 
+    const onProviderUpdate = () => {
+        void fetchData();
+        handleCancel();
+      };
+    
 
     return (
         <>
@@ -69,7 +84,7 @@ export default function ContentProject() {
                                     <td className="px-6 py-4">
                                         {/* Kolom Edit */}
                                         <div>
-                                        <button onClick={() => handleEdit(data)}>
+                                        <button onClick={() => handleEdit(item)}>
                                                 <FaPencilAlt className="text-blue-500" />
                                             </button>      
                                         </div>                   
@@ -88,10 +103,10 @@ export default function ContentProject() {
                     </tbody>
                 </table>
             )}
-              {showUpdate && (
+            {showUpdate && (
             <UpdatedProject
-            data={data }
-            onUpdate={handleCancel}
+            data={data}
+            onUpdate={onProviderUpdate}
             setData={setData}
             onCancel={handleCancel}
             />

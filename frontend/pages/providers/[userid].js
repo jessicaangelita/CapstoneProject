@@ -59,7 +59,7 @@ export default function ContentProvider() {
 
   const onProviderUpdate = () => {
     void fetchData();
-    setShowUpdate(false);
+    handleCancel();
   };
 
   return (
