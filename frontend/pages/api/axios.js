@@ -1,7 +1,13 @@
 import axios from "axios";
 
-const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJhbWJhbmdAZ21haWwuY29tIiwiZXhwIjoxNjkzNTAxMzkwLCJpZCI6IjQwMGMyMTVhLWZkNmMtNDAzZi1iYjlhLWIzYjMwNGU1MjUzYyIsIm5hbWUiOiJDYXJvbGluZSBTdGV1YmVyIiwidXNlcm5hbWUiOiJiYW1iYW5nMTIzIn0.wBuWcLjXgX5IVvsql42OqD42JxYcd31fT74DVZyBpvM";
+let token 
+
+export const setToken = () => {
+  const accessToken = localStorage.getItem('token');
+  token = accessToken;
+}
+
+// const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJlYXRyaWNlQGdtYWlsLmNvbSIsImV4cCI6MTY5MzUwNjYwMiwiaWQiOiIxZDBkMDdlYS0wODJmLTQ1YjgtODYzMi0xNDRiZmRjNjA3ZDUiLCJuYW1lIjoiIiwidXNlcm5hbWUiOiJiZWF0cmljZSJ9.u8h_HvrHKJRmCyMNTKdgj3ew2tyWxzSltKPDehB64QI";
 
 export default axios.create({
   // baseURL:  'https://jico-api.up.railway.app/user/register'

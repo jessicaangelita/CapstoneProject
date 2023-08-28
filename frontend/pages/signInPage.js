@@ -3,7 +3,7 @@ import Head from 'next/head';
 import { useState, useEffect, useRef, useContext } from 'react';
 import { MdPermIdentity, MdLockOutline } from 'react-icons/md';
 import { BiHide, BiShow } from "react-icons/bi";
-import axios from './api/axios';
+import axios, {setToken} from './api/axios';
 import AuthContext from './context/AuthProvider';
 
 const SignIn_URL = 'http://localhost:8050/user/SignIn'
@@ -80,8 +80,6 @@ export const signInPage = () => {
       axios.post(SignIn_URL, data)
       .then((res) => {
           console.log("success");
-
-
           //IF LOGIN SUCCESS <bakal direplace atau dipindahin gtw>
           setSuccess(true);
           window.location.href = "/homePage";
@@ -92,6 +90,8 @@ export const signInPage = () => {
 
       //get token
       const accessToken = response?.data?.accessToken;
+      localStorage.setItem('token', accessToken)
+      setToken()
       //get roles
       const roles = response?.data?.roles;
 
