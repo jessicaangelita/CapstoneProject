@@ -1,28 +1,58 @@
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import UpdatedProvider from '@/components/UpdatedProvider';
+import { useRouter } from 'next/router';
 import { FaPencilAlt } from "react-icons/fa";
+import axios from 'axios';
+
 
 export default function Home() {
-  const initialData = {
-    id: '123',
-    name: 'Product Name',
-    webhook: 'https://webhook.example.com',
-    provider: 'Provider Name',
-  };
+  const router = useRouter()
+  const messageprovider_id = router.query.messageprovider_id
+  const [data, setData] = useState([])
 
   const [showUpdate, setShowUpdate] = useState(false);
-  const [selectedData, setSelectedData] = useState(initialData);
+//   const [selectedData, setSelectedData] = useState(data);
+
+  useEffect(() => {
+    // axios.get(`http://localhost:8050/message-provider/id/connected/${messageprovider_id}`)
+    // .then(res => setData(res.data.data))
+    // .catch(err => console.log(err));
+    const fetchDataProduct = async () => {
+      try {
+        const resp = await axios.get(`http://localhost:8050/message-provider/id/connected/${messageprovider_id}`);
+        const respData = resp.data.data
+        setData(respData);
+      } catch (error) {
+        console.log('Error Fetch Data', error)
+      }
+    }
+    fetchDataProduct();
+  },[messageprovider_id]);
 
   const handleEdit = (data) => {
-    setSelectedData(data);
+    // setSelectedData(data);
+    setData(data);
     setShowUpdate(true);
   };
 
-  const handleUpdate = (updatedData) => {
-    console.log('Updated data:', updatedData);
-    // Perform update logic here (e.g., send API request)
-    // After update, fetch new data and update the UI
-    setSelectedData(updatedData);
+  const handleSubmit = async (e) => {  
+    try {
+        const updatedData = {
+            id: data.id,
+            providername: data.name,
+            webhook: data.webhook,
+            project: data.project,
+        };
+
+        await axios.put(`http://localhost:8050/message-provider/edit/${messageprovider_id}`, updatedData);
+
+        setData(updatedData);
+    } catch (err) {
+        console.log('Update error',err)
+    }
+
+    // console.log('Updated data:', updatedData);
+
     setShowUpdate(false);
   };
 
@@ -32,44 +62,18 @@ export default function Home() {
 
   return (
     <div>
-      {/* Render your data list as a table */}
-      {/* <table className="border-collapse w-full"> */}
-        {/* <thead>
-          <tr>
-            <th className="border p-2 text-black">ID</th>
-            <th className="border p-2 text-black">Name</th>
-            <th className="border p-2 text-black">Webhook</th>
-            <th className="border p-2 text-black">Provider</th>
-            <th className="border p-2 text-black">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td className="border p-2">{selectedData.id}</td>
-            <td className="border p-2">{selectedData.name}</td>
-            <td className="border p-2">{selectedData.webhook}</td>
-            <td className="border p-2">{selectedData.provider}</td>
-            <td className="border p-2">
-              <button onClick={() => handleEdit(selectedData)}>
-                <FaPencilAlt className="text-blue-500" />
-              </button>
-            </td>
-          </tr> */}
-          {/* Render other data items */}
-        {/* </tbody>
-      </table> */}
-<button onClick={() => handleEdit(selectedData)}>
-                <FaPencilAlt className="text-blue-500" />
-              </button>
-            {/* </td> */}
-      {/* Render the update form popup */}
-      {showUpdate && (
-        <UpdatedProvider
-          data={selectedData}
-          onUpdate={handleUpdate}
-          onCancel={handleCancel}
-        />
-      )}
-    </div>
-  );
+    <button onClick={() => handleEdit(data)}>
+                    <FaPencilAlt className="text-blue-500" />
+                </button>
+                {/* </td> */}
+        {/* Render the update form popup */}
+        {showUpdate && (
+            <UpdatedProvider
+            data={data }
+            onUpdate={handleSubmit}
+            onCancel={handleCancel}
+            />
+        )}
+        </div>
+    );
 }

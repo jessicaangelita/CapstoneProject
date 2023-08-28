@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from 'react';
 
-export default function UpdatedProject({ data, handleUpdate, handleCancel }) {
+export default function UpdatedProject({ data, onUpdate, onCancel }) {
   const [id, setId] = useState(data.id);
   const [projectname, setProjectName] = useState(data.name);
   const [webhook, setWebhook] = useState(data.webhook);
@@ -14,7 +14,7 @@ export default function UpdatedProject({ data, handleUpdate, handleCancel }) {
       webhook,
       provider: selectedprovider,
     };
-    handleUpdate(updatedData);
+    onUpdate(updatedData);
   };
 
   useEffect(() => {
@@ -29,7 +29,7 @@ export default function UpdatedProject({ data, handleUpdate, handleCancel }) {
     <div className="bg-white rounded-lg absolute max-w-[30rem] p-3 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
       <div className="flex justify-between items-center mb-3">
         <h1 className="text-lg text-black mb-2">Update Project</h1>
-        <button className="text-black hover:text-red-600 mb-2" type="button" onClick={handleCancel}>
+        <button className="text-black hover:text-red-600 mb-2" type="button" onClick={oncancel}>
           Close
         </button>
       </div>
@@ -101,7 +101,7 @@ export default function UpdatedProject({ data, handleUpdate, handleCancel }) {
         <button
           type="button"
           className="px-4 py-1 bg-emerald-400 text-emerald-900 hover:bg-emerald-500 hover:text-white rounded-lg"
-          onClick={handleUpdate}
+          onClick={onUpdate}
         >
           Save
         </button>
@@ -110,7 +110,7 @@ export default function UpdatedProject({ data, handleUpdate, handleCancel }) {
         <button
           type="button"
           className="px-4 py-1 bg-red-400 text-red-900 hover:bg-red-500 hover:text-white rounded-lg"
-          onClick={handleCancel}
+          onClick={onCancel}
         >
           Cancel
         </button>

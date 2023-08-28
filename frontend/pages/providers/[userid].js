@@ -3,12 +3,30 @@ import axios from "@/pages/api/axios";
 // import UpdatedProject from "./UpdatedProject";
 import { useRouter } from "next/router";
 import HeaderHome from "@/components/headerhome";
+import UpdatedProvider from "@/components/UpdatedProvider";
+import { FaPencilAlt } from "react-icons/fa";
 
 export default function ContentProvider() {
     const [provider, setProvider] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [showUpdate, setShowUpdate] = useState(false);
+    const [data, setData] = useState([])
+
 
     const router = useRouter();
+    // const messageprovider_id = router.query.messageprovider_id
+
+    //Updated
+    const handleEdit = (item) => {
+        // setSelectedData(data);
+        setData(item);
+        setShowUpdate(true);
+      };
+
+      const handleCancel = () => {
+        setShowUpdate(false);
+      };
+      
 
     // const { userid } = router.query
 
@@ -73,6 +91,13 @@ export default function ContentProvider() {
                                     <td className="px-6 py-4">{item.provider_type}</td>
                                     <td className="px-6 py-4 text-center">
                                         {/* Kolom Edit */}
+                                             <div>
+                                            <button onClick={() => handleEdit(item)}>
+                                                            <FaPencilAlt className="text-blue-500" />
+                                                        </button>
+                                                        {/* </td> */}
+                                                {/* Render the update form popup */}
+                                                </div>
                                     </td>
                                     <td className="px-6 py-4 text-center">
                                         {/* Kolom Delete */}
@@ -89,6 +114,16 @@ export default function ContentProvider() {
                     </tbody>
                 </table>
             )}
+            <div>
+            {showUpdate && (
+             <UpdatedProvider
+                data={data}
+                onUpdate={handleCancel}
+                setData={setData}
+                onCancel={handleCancel}
+            />
+            )}
+            </div>
         </div>
         </>
 
