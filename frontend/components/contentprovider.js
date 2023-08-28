@@ -59,6 +59,7 @@ export default function ContentProvider() {
                             <td className="px-6 py-4">{item.provider_type}</td>
                             <td className="px-6 py-4 text-center">
                                 {/* Kolom Edit */}
+                                
                             </td>
                             <td className="px-6 py-4 text-center">
                                 {/* Kolom Delete */}

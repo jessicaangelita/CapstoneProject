@@ -49,7 +49,7 @@ export default function Home() {
             provider: data.provider,
         };
 
-        await axios.put(`http://localhost:8050/project/edit/{{project_id}}`, updatedData);
+        await axios.put(`http://localhost:8050/project/edit/${project_id}`, updatedData);
 
         setData(updatedData);
     } catch (err) {

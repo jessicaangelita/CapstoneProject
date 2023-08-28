@@ -1,35 +1,42 @@
 import React, { useState,useEffect } from 'react';
+import axios from '@/pages/api/axios';
 
-export default function UpdatedProject({ data, handleUpdate, handleCancel }) {
+export default function UpdatedProject({ data, onUpdate, onCancel,setData }) {
   const [id, setId] = useState(data.id);
   const [projectname, setProjectName] = useState(data.name);
   const [webhook, setWebhook] = useState(data.webhook);
-  // const [provider, setProvider] = useState(data.provider);
   const [selectedprovider, setSelectedProvider] = useState('')
 
-  const handleUpdated = () => {
-    const updatedData = {
-      id,
-      projectname,
-      webhook,
-      provider: selectedprovider,
-    };
-    handleUpdate(updatedData);
-  };
 
-  useEffect(() => {
-    setId(data.id);
-    setProjectName(data.name);
-    setWebhook(data.webhook);
-    setSelectedProvider(data.provider);
-  }, [data]);
+  const handleSubmit = async (e) => {  
+    try {
+        const updatedData = {
+            name: projectname,
+            webhook: data.webhook,
+            provider: selectedprovider,
+        };
+
+        await axios.put(`http://localhost:8050/project/edit/${data.id}}`, updatedData);
+
+        setData(updatedData);
+        setProjectName(updatedData);
+        console.log("saved",updatedData);
+        onUpdate();
+    } catch (err) {
+        console.log('Update error',err)
+    }
+  };
+  if (!data) return null;
   
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-70" >
     <div className="bg-white rounded-lg absolute max-w-[30rem] p-3 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
       <div className="flex justify-between items-center mb-3">
         <h1 className="text-lg text-black mb-2">Update Project</h1>
-        <button className="text-black hover:text-red-600 mb-2" type="button" onClick={handleCancel}>
+        <button className="text-black hover:text-red-600 mb-2" 
+          type="button" 
+          onClick={onCancel}
+        >
           Close
         </button>
       </div>
@@ -44,7 +51,6 @@ export default function UpdatedProject({ data, handleUpdate, handleCancel }) {
                 type="text"
                 value={id}
                 disabled
-                onChange={(e) => setId(e.target.value)}
                 className="w-full border p-2 rounded outline-none"
               />
             </td>
@@ -101,7 +107,7 @@ export default function UpdatedProject({ data, handleUpdate, handleCancel }) {
         <button
           type="button"
           className="px-4 py-1 bg-emerald-400 text-emerald-900 hover:bg-emerald-500 hover:text-white rounded-lg"
-          onClick={handleUpdate}
+          onClick={handleSubmit}
         >
           Save
         </button>
@@ -110,7 +116,7 @@ export default function UpdatedProject({ data, handleUpdate, handleCancel }) {
         <button
           type="button"
           className="px-4 py-1 bg-red-400 text-red-900 hover:bg-red-500 hover:text-white rounded-lg"
-          onClick={handleCancel}
+          onClick={onCancel}
         >
           Cancel
         </button>
