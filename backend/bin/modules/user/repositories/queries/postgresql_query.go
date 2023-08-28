@@ -51,6 +51,20 @@ func (q QueryRepository) FindOneByUsername(ctx *gin.Context, username string) ut
 
 }
 
+func (q QueryRepository) FindOneByEmail(ctx *gin.Context, email string) utils.Result {
+	var userModel models.User
+
+	// Use ORM to find a user record by username
+	r := q.ORM.DB.First(&userModel, "email = ?", email)
+	// Prepare the result, including retrieved user data and database operation result
+	output := utils.Result{
+		Data: userModel,
+		DB:   r,
+	}
+	return output
+
+}
+
 // FindOneByID retrieves a user record from database by ID
 
 func (q QueryRepository) FindAll(ctx *gin.Context, skip, limit int) utils.Result {
