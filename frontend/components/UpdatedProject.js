@@ -1,35 +1,57 @@
 import React, { useState,useEffect } from 'react';
 
-export default function UpdatedProject({ data, onUpdate, onCancel }) {
+export default function UpdatedProject({ data, onUpdate, onCancel,setData }) {
   const [id, setId] = useState(data.id);
   const [projectname, setProjectName] = useState(data.name);
   const [webhook, setWebhook] = useState(data.webhook);
   // const [provider, setProvider] = useState(data.provider);
   const [selectedprovider, setSelectedProvider] = useState('')
 
-  const handleUpdated = () => {
-    const updatedData = {
-      id,
-      projectname,
-      webhook,
-      provider: selectedprovider,
-    };
-    onUpdate(updatedData);
-  };
+  // const handleUpdated = () => {
+  //   const updatedData = {
+  //     id,
+  //     projectname,
+  //     webhook,
+  //     provider: selectedprovider,
+  //   };
+  //   onUpdate(updatedData);
+  // };
 
-  useEffect(() => {
-    setId(data.id);
-    setProjectName(data.name);
-    setWebhook(data.webhook);
-    setSelectedProvider(data.provider);
-  }, [data]);
+  // useEffect(() => {
+  //   setId(data.id);
+  //   setProjectName(data.name);
+  //   setWebhook(data.webhook);
+  //   setSelectedProvider(data.provider);
+  // }, [data]);
+
+  const handleSubmit = async (e) => {  
+    try {
+        const updatedData = {
+            id: data.id,
+            projectname: data.name,
+            webhook: data.webhook,
+            provider: data.provider,
+        };
+
+        await axios.put(`http://localhost:8050/message-provider/edit/${data.id}`, updatedData);
+
+        setData(updatedData);
+        console.log(updatedData);
+    } catch (err) {
+        console.log('Update error',err)
+    }
+
+    // console.log('Updated data:', updatedData);
+
+    onUpdate(false);
+  };
   
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-70" >
     <div className="bg-white rounded-lg absolute max-w-[30rem] p-3 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
       <div className="flex justify-between items-center mb-3">
         <h1 className="text-lg text-black mb-2">Update Project</h1>
-        <button className="text-black hover:text-red-600 mb-2" type="button" onClick={oncancel}>
+        <button className="text-black hover:text-red-600 mb-2" type="button" onClick={onCancel}>
           Close
         </button>
       </div>
@@ -101,7 +123,7 @@ export default function UpdatedProject({ data, onUpdate, onCancel }) {
         <button
           type="button"
           className="px-4 py-1 bg-emerald-400 text-emerald-900 hover:bg-emerald-500 hover:text-white rounded-lg"
-          onClick={onUpdate}
+          onClick={handleSubmit}
         >
           Save
         </button>
