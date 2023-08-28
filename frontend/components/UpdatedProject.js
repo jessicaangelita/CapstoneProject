@@ -7,22 +7,6 @@ export default function UpdatedProject({ data, onUpdate, onCancel,setData }) {
   // const [provider, setProvider] = useState(data.provider);
   const [selectedprovider, setSelectedProvider] = useState('')
 
-  // const handleUpdated = () => {
-  //   const updatedData = {
-  //     id,
-  //     projectname,
-  //     webhook,
-  //     provider: selectedprovider,
-  //   };
-  //   onUpdate(updatedData);
-  // };
-
-  // useEffect(() => {
-  //   setId(data.id);
-  //   setProjectName(data.name);
-  //   setWebhook(data.webhook);
-  //   setSelectedProvider(data.provider);
-  // }, [data]);
 
   const handleSubmit = async (e) => {  
     try {
@@ -66,7 +50,6 @@ export default function UpdatedProject({ data, onUpdate, onCancel,setData }) {
                 type="text"
                 value={id}
                 disabled
-                onChange={(e) => setId(e.target.value)}
                 className="w-full border p-2 rounded outline-none"
               />
             </td>
