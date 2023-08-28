@@ -1,28 +1,28 @@
 import {useState} from 'react'
+import CheckboxForm from './CheckboxForm';
 
-export const AddProvider3 = () => {
-
-  const checkboxItems = [
-    { id: 1, label: "JIRA Project 1" },
-    { id: 2, label: "JIRA Project 2" },
-    { id: 3, label: "JIRA Project 3" },
-    // ... add more items
-  ];
-
-  const [checkedItems, setCheckedItems] = useState([]);
-
-  const handleCheckboxChange = (id) => {
-    if (checkedItems.includes(id)) {
-      setCheckedItems(checkedItems.filter((item) => item !== id));
+export const AddProvider3 = ({ connection, setconnection}) => {
+const [selectedOptions, setSelectedOptions] = useState([]);
+const checkboxOptions = [
+  'JIRA Project 1', 
+  'JIRA Project 2', 
+  'JIRA Project 3'];
+const handleCheckboxChange = (value) => {
+  setSelectedOptions((prevOptions) => {
+    if (prevOptions.includes(value)) {
+      return prevOptions.filter((option) => option !== value);
     } else {
-      setCheckedItems([...checkedItems, id]);
+      return [...prevOptions, value];
     }
-  };
+  });
+
+setconnection(selectedOptions)
+};
+
 
   return (
     <>
     <div className="m-9">
-      <p className="flex justify-center text-slate-700 text-2xl font-extrabold mb-6">Create New Provider</p>
       <div className="flex items-center justify-center space-x-8">
       <div className="flex flex-col items-center">
         <div className="rounded-full w-14 h-14 bg-gray-700 text-white shadow-xl flex items-center justify-center">
@@ -45,20 +45,14 @@ export const AddProvider3 = () => {
     </div>
     
       <div className="space-y-4">
-        <p className="justify-center w-full text-center text-slate-700 text-lg font-bold  mx-1 my-8">Pick the projects you want to receive updates from.</p>
-        <label className="flex items-center justify-center flex-col">
-          {checkboxItems.map((item) => (
-          <div key={item.id} className="w-full flex items-center border bg-white rounded-md m-1 p-2">
-            <input
-              type="checkbox"
-              id={`checkbox-${item.id}`}
-              checked={checkedItems.includes(item.id)}
-              onChange={() => handleCheckboxChange(item.id)}
-              className="mr-2"
+        <p className="justify-center w-full text-center text-slate-700 text-lg font-bold  mx-1 my-8">Pick the providers you want to give updates to.</p>
+        <label className="flex items-center justify-center">
+          <CheckboxForm
+          value={connection}
+              options={checkboxOptions}
+              selectedOptions={selectedOptions}
+              onCheckboxChange={handleCheckboxChange}
             />
-            <label htmlFor={`checkbox-${item.id}`}>{item.label}</label>
-          </div>
-        ))}
         </label>
       </div>
     </div>

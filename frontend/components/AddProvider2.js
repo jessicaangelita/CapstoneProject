@@ -1,10 +1,9 @@
 import { useState } from "react";
 
-export const AddProvider2 = () => {
+export const AddProvider2 = ({webhook, setwebhook}) => {
   return (
     <>
     <div className="m-9">
-      <p className="flex justify-center text-slate-700 text-2xl font-extrabold mb-6">Create New Provider</p>
       <div className="flex items-center justify-center space-x-8">
       <div className="flex flex-col items-center">
         <div className="rounded-full w-14 h-14 bg-gray-700 text-white shadow-xl flex items-center justify-center">
@@ -34,6 +33,8 @@ export const AddProvider2 = () => {
             type="text"
             className="block w-full border-gray-300 border rounded-lg px-3 py-2 focus:outline-none focus:border-blue-500"
             placeholder="https://discord.com/api/webhooks/..."
+            value={webhook} 
+            onChange={(e) => setwebhook(e.target.value)}
           />
         
         <p className="text-slate-700 text-sm italic">Tip: The channel listed in the Webhook will be the channel that the 

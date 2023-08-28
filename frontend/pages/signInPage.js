@@ -6,7 +6,7 @@ import { BiHide, BiShow } from "react-icons/bi";
 import axios from './api/axios';
 import AuthContext from './context/AuthProvider';
 
-const SignIn_URL = 'http://localhost:8050/user/login'
+const SignIn_URL = 'http://localhost:8050/user/SignIn'
 
 export const signInPage = () => {
 
@@ -74,12 +74,21 @@ export const signInPage = () => {
     // test only // console.log(username, password);
 
     try {
-      const response = await axios.post(SignIn_URL, JSON.stringify({username, password}), {
-        headers: { 'Content-Type' : 'application/json'},
-        withCredentials: true
-      });
-      console.log(JSON.stringify(response?.data));
-      //console.log(JSON.stringify(response));
+      const data = {
+        username, password
+      }
+      axios.post(SignIn_URL, data)
+      .then((res) => {
+          console.log("success");
+
+
+          //IF LOGIN SUCCESS <bakal direplace atau dipindahin gtw>
+          setSuccess(true);
+          window.location.href = "/homePage";
+        })
+        .catch((error) => {
+          console.log(error);
+        });
 
       //get token
       const accessToken = response?.data?.accessToken;
@@ -89,20 +98,21 @@ export const signInPage = () => {
       setAuth({username, password, roles, accessToken});
       setUsername('');
       setPassword('');
-      setSuccess(true);
     } catch (error) {
-      if (!error?.response) {
-        // no response but there's error
-        setErrorMsg('No Server Response');
-      } else if (error.response?.status === 400) {
-        // something missing
-        setErrorMsg('Missing Username or Password');
-      } else if (error.response?.status === 401) {
-        // the roles / token unvalid
-        setErrorMsg('Unauthorized');
-      } else {
-        setErrorMsg('Login Failed');
-      }
+      console.log('Sign In Failed',error)
+      errorRef.current.focus();
+      // if (!error?.response) {
+      //   // no response but there's error
+      //   setErrorMsg('No Server Response');
+      // } else if (error.response?.status === 400) {
+      //   // something missing
+      //   setErrorMsg('Missing Username or Password');
+      // } else if (error.response?.status === 401) {
+      //   // the roles / token unvalid
+      //   setErrorMsg('Unauthorized');
+      // } else {
+      //   setErrorMsg('Login Failed');
+      // }
       errorRef.current.focus();
     }
 
@@ -114,18 +124,14 @@ export const signInPage = () => {
       localStorage.removeItem("rememberedUsername");
       localStorage.removeItem("rememberedPassword");
     }
-    // // Lakukan aksi pendaftaran atau validasi form di sini
-    // console.log(formData);
-    // // Reset form setelah pengiriman
-    // setFormData({
-    //   name: '',
-    //   username: '',
-    //   email: '',
-    //   password: ''
-    // });
   };
 
-  //const{show,showPass} = useState(false);
+  // useEffect(() => {
+  //   if (success) {
+  //     console.log("hrusny redirect yak")
+  //     window.location.href = "/homePage";
+  //   }
+  // }, [success]);
   
     return (
     <div>
@@ -146,8 +152,8 @@ export const signInPage = () => {
                     </div>
 
                     {/* ISI FORM */}
-                    <form onSubmit={handleSubmit} className='flex flex-col items-center space-y-4'>
-                        <div className="w-[80%] mx-auto bg-white flex items-center mb-[3%] border-gray-300 border rounded-lg px-3 py-2 focus:outline-none shadow shadow-black ">
+                    <form onSubmit={handleSubmit} className='w-full flex flex-col items-center space-y-4'>
+                        <div className="w-[60%] mx-auto bg-white flex items-center mb-[3%] border-gray-300 border rounded-lg px-3 py-2 focus:outline-none shadow shadow-black">
                       <MdPermIdentity className='m-[1%] text-slate-700'/>
                         <input
                           type="text"
@@ -169,7 +175,7 @@ export const signInPage = () => {
 
                         {/* Password */}
 
-                        <div className=' w-[80%] mx-auto bg-white flex items-center mb-[3%] border-gray-300 border rounded-lg px-3 py-2 focus:outline-none shadow shadow-black'>
+                        <div className=' w-[60%] mx-auto bg-white flex items-center mb-[3%] border-gray-300 border rounded-lg px-3 py-2 focus:outline-none shadow shadow-black'>
                           <MdLockOutline className='m-[1%] text-slate-700' />
                           <input
                             className='ml-[2%] w-full focus:outline-none'
@@ -195,10 +201,11 @@ export const signInPage = () => {
                         </div>
 
                         {/* Submit */}
-                        <div className='relative py-2'>
-                            <button href="/homePage" type="submit" className=" bg-blue-700  text-zinc-100 text-center justify-center rounded-md hover:bg-blue-800 transition-colors duration-200 inline-flex items-center w-72 h-10 px-3 py-1">Sign In</button>
+                        <div className='py-2 w-full flex justify-center'>
+                            <button href="/homePage" type="submit" className=" bg-blue-700 w-[60%] text-zinc-100 text-center justify-center rounded-md hover:bg-blue-800 transition-colors duration-200 inline-flex items-center h-10 px-3 py-1">Sign In</button>
                         </div>
                     </form>
+
                     <div className='flex flex-col items-center'>
                         <label htmlFor="remember" className="flex items-center  text-justify text-xs">
                             <input
@@ -225,7 +232,6 @@ export const signInPage = () => {
                 {/* welcome card */}
                 <div className='flex flex-col items-center justify-center text-right text-slate-700 p-4 w-full md:w-2/5'>
                     <div>
-
                         <h2 className='text-2xl font-bold mb-4 mt-6 mx-5'>Welcome to JICO</h2>
                         <p className='text-base font-normal mb-12 mx-5'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam nec ultricies nisi. Suspendisse pulvinar viverra nibh vel ultricies. Mauris tincidunt mollis diam, at mollis enim aliquet eget. Fusce eros neque, pharetra eget tincidunt in, tincidunt nec tellus. </p>
 
@@ -235,7 +241,6 @@ export const signInPage = () => {
                         </div>
                     </div>
                 </div>
-                
             </div>        
         </div>
     </div>

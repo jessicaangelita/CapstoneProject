@@ -13,8 +13,8 @@ const handleCheckboxChange = (value) => {
     }
   });
 
-  setFormData((prevData) => ({
-    ...prevData,
+  setFormData((formData) => ({
+    ...formData,
     providerSelected: selectedOptions,
   }));
 };

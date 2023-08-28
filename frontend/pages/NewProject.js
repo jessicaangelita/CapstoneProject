@@ -1,6 +1,5 @@
 import React from 'react'
-import { useEffect, useState } from 'react';
-import CheckboxForm from '../components/CheckboxForm';
+import { useEffect, useState, useRef } from 'react';
 import { AddProject1 } from '../components/AddProject1';
 import { AddProject2 } from '../components/AddProject2';
 import { AddProject3 } from '../components/AddProject3';
@@ -8,6 +7,10 @@ import { AddProject4 } from '../components/AddProject4';
 
 export const NewProject = () => {
 
+const NewProjectURL = "http://localhost:8050/project/new";
+const errReference = useRef();
+const [errMsg, setErrMsg] = useState("");
+const [success, setSuccess] = useState(false);
 
 const [page, setPage] = useState(0);
 const [formData, setFormData] = useState({
@@ -16,11 +19,33 @@ const [formData, setFormData] = useState({
   providerSelected : []
 });
 
+useEffect(() => {
+    setErrMsg("");
+}, [projectName, projectLink, providerSelected]);
+
 
 const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle submitted options
-    console.log('Selected options:', selectedOptions);
+
+    try {
+      const data = {
+        formData
+      };
+
+      axios
+        .post(NewProjectURL, data)
+        .then((res) => {
+          console.log("success");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+    } catch (err) {
+      console.log('Add New Project Failed',err)
+      errReference.current.focus();
+    }
+    setSuccess(true);
   };
 
 const PageDisplay = () => {
@@ -51,7 +76,14 @@ const FormTitles = ["Name The Project", "Configure Project", "Configure Provider
 
         {/* Form Body */}
         <div>
-          <form>
+          <p
+            ref={errReference}
+            className={` ${errMsg ? "errmsg" : "offscreen"}`}
+            aria-live="assertive"
+          >
+            {errMsg}
+          </p>
+          <form onSubmit={handleSubmit}>
             <div>
               {PageDisplay()}
             </div>
