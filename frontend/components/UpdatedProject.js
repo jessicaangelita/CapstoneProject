@@ -1,41 +1,42 @@
 import React, { useState,useEffect } from 'react';
+import axios from '@/pages/api/axios';
 
 export default function UpdatedProject({ data, onUpdate, onCancel,setData }) {
   const [id, setId] = useState(data.id);
   const [projectname, setProjectName] = useState(data.name);
   const [webhook, setWebhook] = useState(data.webhook);
-  // const [provider, setProvider] = useState(data.provider);
   const [selectedprovider, setSelectedProvider] = useState('')
 
 
   const handleSubmit = async (e) => {  
     try {
         const updatedData = {
-            id: data.id,
-            projectname: data.name,
+            name: projectname,
             webhook: data.webhook,
-            provider: data.provider,
+            provider_label: selectedprovider,
         };
 
         await axios.put(`http://localhost:8050/message-provider/edit/${data.id}`, updatedData);
 
         setData(updatedData);
-        console.log(updatedData);
+        setProjectName(updatedData);
+        console.log("saved",updatedData);
+        onUpdate();
     } catch (err) {
         console.log('Update error',err)
     }
-
-    // console.log('Updated data:', updatedData);
-
-    onUpdate(false);
   };
+  if (!data) return null;
   
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-70" >
     <div className="bg-white rounded-lg absolute max-w-[30rem] p-3 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
       <div className="flex justify-between items-center mb-3">
         <h1 className="text-lg text-black mb-2">Update Project</h1>
-        <button className="text-black hover:text-red-600 mb-2" type="button" onClick={onCancel}>
+        <button className="text-black hover:text-red-600 mb-2" 
+          type="button" 
+          onClick={onCancel}
+        >
           Close
         </button>
       </div>

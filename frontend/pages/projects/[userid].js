@@ -33,7 +33,6 @@ export default function ContentProject() {
         setShowUpdate(true);
     }, [data]);
     
-    useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await axios.get(`http://localhost:8050/project/user/connected/${userid}`);            
@@ -46,8 +45,10 @@ export default function ContentProject() {
                 setIsLoading(false);
             }
         };
+
+    useEffect (() => {
         void fetchData();
-    }, [userid]);
+    },[])
 
     const onProviderUpdate = () => {
         void fetchData();

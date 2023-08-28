@@ -5,7 +5,6 @@ export default function UpdatedProvider({ data, onUpdate, onCancel, setData }) {
   const [id,setID] = useState(data.id)
   const [providername, setProvidertName] = useState(data.provider_label);
   const [webhook, setWebhook] = useState(data.webhook);
-  // const [project, setProject] = useState(data.project);
   const [selectedproject, setSelectedProject] = useState("");
 
 
