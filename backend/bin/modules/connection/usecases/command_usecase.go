@@ -48,16 +48,23 @@ func (q CommandUsecase) PostConnection(ctx *gin.Context) {
 	r := q.ConnectionRepositoryCommand.Create(ctx, connectionModel)
 	if r.DB.Error != nil {
 
-		if strings.Contains(r.DB.Error.Error(), "insert or update on table \"connections\" violates foreign key constraint \"connections_project_id_fkey\"") {
+		if strings.Contains(r.DB.Error.Error(), "insert or update on table \"connections\" violates foreign key constraint \"connections_connection_project_id_fkey\"") {
 			// If data user id not valid return message "user id not valid"
 			result.Message = "project id not valid"
 			ctx.AbortWithStatusJSON(result.Code, result)
 			return
 		}
 
-		if strings.Contains(r.DB.Error.Error(), "insert or update on table \"connections\" violates foreign key constraint \"connections_message_provider_id_fkey\"") {
+		if strings.Contains(r.DB.Error.Error(), "insert or update on table \"connections\" violates foreign key constraint \"connections_connection_message_provider_id_fkey\"") {
 			// If data user id not valid return message "user id not valid"
 			result.Message = "message_provider id not valid"
+			ctx.AbortWithStatusJSON(result.Code, result)
+			return
+		}
+		if strings.Contains(r.DB.Error.Error(), "duplicate key value violates unique constraint") {
+			// If data is not found in the database, abort with status Unauthorized
+			result.Code = http.StatusBadRequest
+			result.Message = "Connection Exist Already"
 			ctx.AbortWithStatusJSON(result.Code, result)
 			return
 		}
