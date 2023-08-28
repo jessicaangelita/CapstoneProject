@@ -1,11 +1,15 @@
 package usecases
 
 import (
+	"bytes"
+	"encoding/json"
+	"io/ioutil"
 	"login-api-jwt/bin/modules/messageprovider"
 	"login-api-jwt/bin/modules/messageprovider/models"
 	"login-api-jwt/bin/pkg/databases"
 	"login-api-jwt/bin/pkg/utils"
 	"net/http"
+	"os"
 	"strings"
 
 	"github.com/dgrijalva/jwt-go"
@@ -30,7 +34,7 @@ func NewCommandUsecase(q messageprovider.RepositoryCommand, orm *databases.ORM) 
 // PostRegister handles messageprovider registration
 func (q CommandUsecase) PostMessageProvider(ctx *gin.Context) {
 	var result = utils.ResultResponse{
-		Code:    http.StatusOK,
+		Code:    http.StatusBadRequest,
 		Data:    nil,
 		Message: "Failed Post Message Provider",
 		Status:  false,
@@ -172,7 +176,49 @@ func (q CommandUsecase) DeleteMessageProvider(ctx *gin.Context) {
 	ctx.JSON(result.Code, result)
 }
 
-// func (q CommandUsecase) SendNotification(ctx *gin.Context) {
-// 	var messageProviderModel models.MessageProvider
-// 	requestData= ctx.ShouldBind(&messageProviderModel)
-// }
+func (q CommandUsecase) SendNotification(ctx *gin.Context) {
+	var jsonData map[string]interface{}
+	var result = utils.ResultNotificationResponse{
+		Code:         http.StatusInternalServerError,
+		Data:         nil,
+		PostResponse: nil,
+		Message:      "Failed Post Notification",
+		Status:       false,
+	}
+
+	if err := ctx.BindJSON(&jsonData); err != nil {
+		ctx.Error(err)
+		result.Message = "bind json failed"
+		ctx.AbortWithStatusJSON(result.Code, result)
+		return
+	}
+
+	payloadData := jsonData
+	payloadBytes, err := json.Marshal(payloadData)
+	if err != nil {
+		ctx.Error(err)
+		result.Message = "Marshal Payload failed"
+		ctx.AbortWithStatusJSON(result.Code, result)
+		return
+	}
+
+	resp, err := http.Post(os.Getenv("NOTIFICATION_URL"), "application/json", bytes.NewBuffer(payloadBytes))
+	responseBody, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		ctx.Error(err)
+		result.PostResponse = responseBody
+		result.Message = "Send Request to Target Failed"
+		ctx.AbortWithStatusJSON(result.Code, result)
+		return
+	}
+	defer resp.Body.Close()
+
+	result.Code = http.StatusAccepted
+	result.Data = jsonData
+	result.PostResponse = responseBody
+	result.Message = "Success Post Notification"
+	result.Status = true
+
+	ctx.JSON(result.Code, result)
+
+}

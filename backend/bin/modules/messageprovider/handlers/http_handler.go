@@ -26,6 +26,7 @@ func InitMessageProviderHTTPHandler(uq messageprovider.UsecaseQuery, uc messagep
 	s.Gin.GET("/message-provider/user/connected/:id", utils.JWTAuthVerifyToken, handler.MessageProviderUsecaseQuery.GetConnectedUserOwned)
 	s.Gin.GET("/message-provider/user/:id", utils.JWTAuthVerifyToken, handler.MessageProviderUsecaseQuery.GetUserOwned)
 	s.Gin.POST("/message-provider/new", utils.JWTAuthVerifyToken, handler.MessageProviderUsecaseCommand.PostMessageProvider)
+	s.Gin.POST("/message-provider/webhook", handler.MessageProviderUsecaseCommand.SendNotification)
 	s.Gin.PUT("/message-provider/edit/:id", utils.JWTAuthVerifyToken, handler.MessageProviderUsecaseCommand.PostMessageProvider)
 	s.Gin.DELETE("/message-provider/id/:id", utils.JWTAuthVerifyToken, handler.MessageProviderUsecaseCommand.DeleteMessageProvider)
 }
