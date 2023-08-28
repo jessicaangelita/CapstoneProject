@@ -1,36 +1,51 @@
+DROP TABLE IF EXISTS "connections";
 DROP TABLE IF EXISTS "message_providers";
 DROP TABLE IF EXISTS "projects";
 DROP TABLE IF EXISTS "users";
 
+
 CREATE TABLE "users" (
-  "id" varchar PRIMARY KEY,
-  "email" varchar UNIQUE,
-  "username" varchar UNIQUE,
-  "password" varchar,
-  "name" varchar
+  "user_id" varchar PRIMARY KEY,
+  "email" varchar UNIQUE NOT NULL,
+  "username" varchar UNIQUE NOT NULL,
+  "password" varchar NOT NULL,
+  "name" varchar NOT NULL
 );
 
+
 CREATE TABLE "projects" (
-  "id" varchar PRIMARY KEY,
-  "user_id" varchar,
+  "project_id" varchar PRIMARY KEY,
+  "project_user_id" varchar,
   "name" varchar
 );
 
 CREATE TABLE "message_providers" (
-  "id" varchar PRIMARY KEY,
-  "project_id" varchar,
-  "provider_type" varchar,
-  "provider_label" varchar,
-  "channel" varchar
+  "message_provider_id" varchar PRIMARY KEY,
+  "message_provider_user_id" varchar NOT NULL,
+  "provider_type" varchar NOT NULL,
+  "provider_label" varchar NOT NULL,
+  "webhook" varchar NOT NULL
 );
 
-ALTER TABLE "projects" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id");
 
-ALTER TABLE "message_providers" ADD FOREIGN KEY ("project_id") REFERENCES "projects" ("id");
+CREATE TABLE "connections" (
+  "connection_id" varchar PRIMARY KEY,
+  "connection_project_id" varchar unique,
+  "connection_message_provider_id" varchar unique
+);
 
--- INSERT INTO "users" (id, email, password, name)
--- 		VALUES (1234, 'name@email.com', 'password', 'name');
-		
+ALTER TABLE "connections" ADD FOREIGN KEY ("connection_project_id") REFERENCES "projects" ("project_id");
+
+ALTER TABLE "projects" ADD FOREIGN KEY ("project_user_id") REFERENCES "users" ("user_id");
+
+ALTER TABLE "connections" ADD FOREIGN KEY ("connection_message_provider_id") REFERENCES "message_providers" ("message_provider_id");
+
+ALTER TABLE "message_providers" ADD FOREIGN KEY ("message_provider_user_id") REFERENCES "users" ("user_id");
+
+
+
+
 select * from users;
+select * from connections;
 select * from message_providers;
 select * from projects;

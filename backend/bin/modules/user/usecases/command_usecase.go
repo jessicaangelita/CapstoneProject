@@ -7,13 +7,11 @@ import (
 	"login-api-jwt/bin/modules/user/models"
 	"login-api-jwt/bin/pkg/databases"
 	"login-api-jwt/bin/pkg/utils"
+
 	"login-api-jwt/bin/pkg/utils/validators"
 	"net/http"
-	"os"
 	"strings"
-	"time"
 
-	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 	"golang.org/x/crypto/bcrypt"
@@ -50,8 +48,8 @@ func (q CommandUsecase) PostRegister(ctx *gin.Context) {
 		return
 	}
 
-	// Generate a unique ID for user
-	userModel.ID = uuid.NewString()
+	// Generate a unique UserID for user
+	userModel.UserID = uuid.NewString()
 
 	// Capitalize first letter of user's name
 	userModel.Name = strings.Title(userModel.Name)
@@ -118,7 +116,7 @@ func (q CommandUsecase) PostRegister(ctx *gin.Context) {
 
 	// Response data for successful registration
 	userRegisterResponse := models.RegisterResponse{
-		ID:       userModel.ID,
+		UserID:   userModel.UserID,
 		Name:     userModel.Name,
 		Username: userModel.Username,
 		Email:    userModel.Email,
@@ -181,20 +179,7 @@ func (q CommandUsecase) PostLogin(ctx *gin.Context) {
 	}
 
 	// Create a new JWT token for user
-	token := jwt.New(jwt.SigningMethodHS256) // create new jwt token
-
-	// Initialize claims variable as a map to hold JWT claims
-	claims := token.Claims.(jwt.MapClaims)
-
-	// Set claims in JWT token payload
-	claims["id"] = r.Data.ID
-	claims["username"] = r.Data.Username
-	claims["name"] = r.Data.Name
-	claims["email"] = r.Data.Email
-	claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
-
-	// Sign token with JWT secret key
-	t, err := token.SignedString([]byte(os.Getenv("JWT_SECRET_KEY")))
+	t, err := utils.GenerateUserJWT(r.Data) // create new jwt token
 	if err != nil {
 		// fmt.Println("found jwt error")
 		result.Code = http.StatusInternalServerError
@@ -204,7 +189,7 @@ func (q CommandUsecase) PostLogin(ctx *gin.Context) {
 
 	// Create a new instance of LoginResponse model, initializing its fields with data
 	userLoginResponse := models.LoginResponse{
-		ID:          r.Data.ID,
+		UserID:      r.Data.UserID,
 		Email:       r.Data.Email,
 		Name:        r.Data.Name,
 		Username:    r.Data.Username,
@@ -219,5 +204,39 @@ func (q CommandUsecase) PostLogin(ctx *gin.Context) {
 	}
 
 	// Respond to request with an HTTP 200 OK status code and userLoginResponse data in JSON format
+	ctx.JSON(result.Code, result)
+}
+
+func (q CommandUsecase) DeleteUser(ctx *gin.Context) {
+	var result utils.ResultResponse = utils.ResultResponse{
+		Code:    http.StatusBadRequest,
+		Data:    nil,
+		Message: "Failed Delete User",
+		Status:  false,
+	}
+
+	var id string = ctx.Param("id")
+
+	deletedUser := q.UserRepositoryCommand.Delete(ctx, id)
+	if deletedUser.Error != nil {
+		result.Code = http.StatusInternalServerError
+		ctx.AbortWithStatusJSON(result.Code, result)
+		return
+	}
+
+	if deletedUser.DB.RowsAffected == 0 {
+		// If there was an error, return Internal Server Error with error message
+		result.Code = http.StatusBadRequest
+		result.Message = "User not found"
+		ctx.AbortWithStatusJSON(result.Code, result)
+		return
+	}
+
+	result = utils.ResultResponse{
+		Code:    http.StatusOK,
+		Data:    deletedUser.Data,
+		Message: "Success Delete User",
+		Status:  true,
+	}
 	ctx.JSON(result.Code, result)
 }
