@@ -49,6 +49,8 @@ func (q QueryUsecase) GetByID(ctx *gin.Context) {
 			ctx.AbortWithStatusJSON(result.Code, result)
 			return
 		}
+		ctx.Error(ret.DB.Error)
+		result.Code = http.StatusInternalServerError
 		ctx.AbortWithStatusJSON(result.Code, result)
 		return
 	}
@@ -154,6 +156,8 @@ func (q QueryUsecase) GetAll(ctx *gin.Context) {
 
 	getMessageProviderData := q.MessageProviderRepositoryQuery.FindAll(ctx, skip, limit)
 	if getMessageProviderData.DB.Error != nil {
+		result.Code = http.StatusInternalServerError
+		ctx.Error(getMessageProviderData.DB.Error)
 		ctx.AbortWithStatusJSON(result.Code, result)
 		return
 	}
@@ -230,6 +234,8 @@ func (q QueryUsecase) GetUserOwned(ctx *gin.Context) {
 
 	getMessageProviderData := q.MessageProviderRepositoryQuery.FindByUserID(ctx, id, skip, limit)
 	if getMessageProviderData.DB.Error != nil {
+		resultPagination.Code = http.StatusInternalServerError
+		ctx.Error(getMessageProviderData.Error)
 		ctx.AbortWithStatusJSON(resultPagination.Code, resultPagination)
 		return
 	}
