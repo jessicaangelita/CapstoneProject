@@ -13,10 +13,10 @@ export default function UpdatedProject({ data, onUpdate, onCancel,setData }) {
         const updatedData = {
             name: projectname,
             webhook: data.webhook,
-            provider_label: selectedprovider,
+            provider: selectedprovider,
         };
 
-        await axios.put(`http://localhost:8050/message-provider/edit/${data.id}`, updatedData);
+        await axios.put(`http://localhost:8050/project/edit/${data.id}}`, updatedData);
 
         setData(updatedData);
         setProjectName(updatedData);
