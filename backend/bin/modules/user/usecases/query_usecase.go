@@ -110,6 +110,40 @@ func (q QueryUsecase) GetByUsername(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, result)
 }
 
+func (q QueryUsecase) GetByEmail(ctx *gin.Context) {
+	var result utils.ResultResponse = utils.ResultResponse{
+		Code:    http.StatusBadRequest,
+		Data:    nil,
+		Message: "Failed Get Data User",
+		Status:  false,
+	}
+	email := ctx.Param("email")
+	fmt.Printf("username access %s", email)
+
+	// Call FindOneByUsername method to retrieve user data by email
+	userData := q.UserRepositoryQuery.FindOneByEmail(ctx, email)
+	if userData.DB.Error != nil {
+		if errors.Is(userData.DB.Error, gorm.ErrRecordNotFound) {
+			result.Code = http.StatusNotFound
+			result.Message = "Data Not Found"
+			ctx.AbortWithStatusJSON(result.Code, result)
+			return
+		}
+
+		ctx.AbortWithStatusJSON(result.Code, result)
+		return
+	}
+
+	result = utils.ResultResponse{
+		Code:    http.StatusOK,
+		Data:    userData.Data,
+		Message: "Success Get Data User",
+		Status:  true,
+	}
+	// Respond with retrieved user data in JSON format
+	ctx.JSON(http.StatusOK, result)
+}
+
 // Get All retrieves All user data with pagination result
 func (q QueryUsecase) GetAll(ctx *gin.Context) {
 	var totalCount, page, limit int
@@ -155,12 +189,12 @@ func (q QueryUsecase) GetAll(ctx *gin.Context) {
 		Status:    false,
 	}
 
-	if totalCount == 0 {
-		result.Code = http.StatusNotFound
-		result.Message = "Data Not Found"
-		ctx.AbortWithStatusJSON(result.Code, result)
-		return
-	}
+	// if totalCount == 0 {
+	// 	result.Code = http.StatusNotFound
+	// 	result.Message = "Data Not Found"
+	// 	ctx.AbortWithStatusJSON(result.Code, result)
+	// 	return
+	// }
 
 	getUserData := q.UserRepositoryQuery.FindAll(ctx, skip, limit)
 	if getUserData.DB.Error != nil {

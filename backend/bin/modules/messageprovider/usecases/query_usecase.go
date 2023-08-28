@@ -147,12 +147,12 @@ func (q QueryUsecase) GetAll(ctx *gin.Context) {
 		Status:    false,
 	}
 
-	if totalCount == 0 {
-		result.Code = http.StatusNotFound
-		result.Message = "Data Not Found"
-		ctx.AbortWithStatusJSON(result.Code, result)
-		return
-	}
+	// if totalCount == 0 {
+	// 	result.Code = http.StatusNotFound
+	// 	result.Message = "Data Not Found"
+	// 	ctx.AbortWithStatusJSON(result.Code, result)
+	// 	return
+	// }
 
 	getMessageProviderData := q.MessageProviderRepositoryQuery.FindAll(ctx, skip, limit)
 	if getMessageProviderData.DB.Error != nil {
@@ -225,12 +225,12 @@ func (q QueryUsecase) GetUserOwned(ctx *gin.Context) {
 		Status:    false,
 	}
 
-	if totalCount == 0 {
-		resultPagination.Code = http.StatusNotFound
-		resultPagination.Message = "Data Not Found"
-		ctx.AbortWithStatusJSON(resultPagination.Code, resultPagination)
-		return
-	}
+	// if totalCount == 0 {
+	// 	resultPagination.Code = http.StatusNotFound
+	// 	resultPagination.Message = "Data Not Found"
+	// 	ctx.AbortWithStatusJSON(resultPagination.Code, resultPagination)
+	// 	return
+	// }
 
 	getMessageProviderData := q.MessageProviderRepositoryQuery.FindByUserID(ctx, id, skip, limit)
 	if getMessageProviderData.DB.Error != nil {
@@ -304,12 +304,12 @@ func (q QueryUsecase) GetConnectedUserOwned(ctx *gin.Context) {
 		Status:    false,
 	}
 
-	if totalCount == 0 {
-		resultPagination.Code = http.StatusNotFound
-		resultPagination.Message = "Data Not Found"
-		ctx.AbortWithStatusJSON(resultPagination.Code, resultPagination)
-		return
-	}
+	// if totalCount == 0 {
+	// 	resultPagination.Code = http.StatusNotFound
+	// 	resultPagination.Message = "Data Not Found"
+	// 	ctx.AbortWithStatusJSON(resultPagination.Code, resultPagination)
+	// 	return
+	// }
 
 	getProjectData := q.MessageProviderRepositoryQuery.FindConnectedByUserID(ctx, id, skip, limit)
 	if getProjectData.DB.Error != nil {

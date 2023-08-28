@@ -182,12 +182,12 @@ func (q QueryUsecase) GetAll(ctx *gin.Context) {
 		Status:    false,
 	}
 
-	if totalCount == 0 {
-		result.Code = http.StatusNotFound
-		result.Message = "Data Not Found"
-		ctx.AbortWithStatusJSON(result.Code, result)
-		return
-	}
+	// if totalCount == 0 {
+	// 	result.Code = http.StatusNotFound
+	// 	result.Message = "Data Not Found"
+	// 	ctx.AbortWithStatusJSON(result.Code, result)
+	// 	return
+	// }
 
 	getConnectionData := q.ConnectionRepositoryQuery.FindAll(ctx, skip, limit)
 	if getConnectionData.DB.Error != nil {
