@@ -10,6 +10,8 @@ export default function ContentProject() {
     const [isLoading, setIsLoading] = useState(true);
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
     const [selectedProjectId, setSelectedProjectId] = useState(null);
+    const [showUpdate, setShowUpdate] = useState(false);
+    const [data, setData] = useState(undefined);
 
     const openDeleteModal = (project_id) => {
         setSelectedProjectId(project_id);
@@ -21,6 +23,16 @@ export default function ContentProject() {
         setDeleteModalOpen(false);
     }
 
+    const handleEdit = (item) => {
+        // setSelectedData(data);
+        setData(item);
+    };
+
+    const handleCancel = () => {
+        setData(undefined);
+        setShowUpdate(false);
+    };
+
     const deleteProject = async () => {
         try {
             await axios.delete(`http://localhost:8050/project/id/${selectedProjectId}`)
@@ -30,32 +42,6 @@ export default function ContentProject() {
             console.error('Error deleting projects ', error);
         }
     }
-    const [showUpdate, setShowUpdate] = useState(false);
-    const [data, setData] = useState(undefined);
-
-
-    const router = useRouter();
-
-    const { userid } = router.query
-
-    const handleEdit = (item) => {
-        // setSelectedData(data);
-        setData(item);
-    };
-    
-    const handleCancel = () => {
-          setData(undefined);
-          setShowUpdate(false);
-      };
-  
-      
-          if (!data) return;
-          useEffect(() => {
-            if (!data) return;
-    
-            setShowUpdate(true);
-        }, [data]);
-         
     
     const fetchData = async () => {
         try {
@@ -68,7 +54,14 @@ export default function ContentProject() {
             setIsLoading(false);
         }
     };
+    const router = useRouter();
 
+    const { userid } = router.query
+      
+      useEffect(() => {
+          if (!data) return;    
+            setShowUpdate(true);
+        }, [data]);
 
     useEffect (() => {
         void fetchData();
@@ -153,4 +146,4 @@ export default function ContentProject() {
             )}
         </>
     );
-}
+            }

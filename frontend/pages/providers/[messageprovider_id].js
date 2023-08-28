@@ -9,9 +9,10 @@ import { FaPencilAlt } from "react-icons/fa";
 export default function ContentProvider() {
   const [provider, setProvider] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-    const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-    const [selectedProviderId, setSelectedProviderId] = useState(null);
-
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [selectedProviderId, setSelectedProviderId] = useState(null);
+  const [showUpdate, setShowUpdate] = useState(false);
+  const [data, setData] = useState(undefined);
     // const router = useRouter();
 
     // const { messageprovider_id } = router.query
@@ -21,8 +22,7 @@ export default function ContentProvider() {
         setSelectedProviderId(message_provider_id);
         setDeleteModalOpen(true);
     }
-  const [showUpdate, setShowUpdate] = useState(false);
-  const [data, setData] = useState(undefined);
+  
 
   const closeDeleteModal = () => {
         setSelectedProviderId(null);
@@ -40,7 +40,7 @@ export default function ContentProvider() {
     setShowUpdate(false);
   };
 
-    const deleteProvider = async () => {
+  const deleteProvider = async () => {
         try {
             await axios.delete(`http://localhost:8050/message-provider/id/${selectedProviderId}`);
             fetchData();
@@ -72,9 +72,6 @@ export default function ContentProvider() {
   useEffect(() => {
     void fetchData();
   }, []);
-    useEffect(() => {
-        fetchData();
-    }, []);
 
   const onProviderUpdate = () => {
     void fetchData();
