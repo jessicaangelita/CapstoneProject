@@ -9,10 +9,25 @@ import { FaPencilAlt } from "react-icons/fa";
 export default function ContentProvider() {
   const [provider, setProvider] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+    const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+    const [selectedProviderId, setSelectedProviderId] = useState(null);
+
+    // const router = useRouter();
+
+    // const { messageprovider_id } = router.query
+
+
+    const openDeleteModal = (message_provider_id) => {
+        setSelectedProviderId(message_provider_id);
+        setDeleteModalOpen(true);
+    }
   const [showUpdate, setShowUpdate] = useState(false);
   const [data, setData] = useState(undefined);
 
-  const router = useRouter();
+  const closeDeleteModal = () => {
+        setSelectedProviderId(null);
+        setDeleteModalOpen(false);
+    }
   // const messageprovider_id = router.query.messageprovider_id
 
   //Updated
@@ -25,37 +40,41 @@ export default function ContentProvider() {
     setShowUpdate(false);
   };
 
-  // const { userid } = router.query
+    const deleteProvider = async () => {
+        try {
+            await axios.delete(`http://localhost:8050/message-provider/id/${selectedProviderId}`);
+            fetchData();
+            closeDeleteModal();
+        } catch (error) {
+            console.error('Error deleting provider: ', error);
+        }
+    }
 
-  // const deleteProvider = async messageprovider_id => {
-  //     const response = await fetch(`http://localhost:8050/message-provider/id/${messageprovider_id}`, {
-  //         method : 'DELETE'
-  //     })
-  // }
+    const fetchData = async () => {
+        try {
+            const response = await axios.get('http://localhost:8050/message-provider/all');
+            const responseData = response.data.data;
+            setProvider(responseData); 
+            setIsLoading(false);
+        } catch (error) {
+            console.error('Error fetching data: ', error);
+            setIsLoading(false);
+        }
+    };
 
   useEffect(() => {
     if (!data) return;
-
+    
     setShowUpdate(true);
   }, [data]);
 
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(
-        "http://localhost:8050/message-provider/all"
-      );
-      const responseData = response.data.data;
-      setProvider(responseData);
-      setIsLoading(false);
-    } catch (error) {
-      console.error("Error fetching data: ", error);
-      setIsLoading(false);
-    }
-  };
 
   useEffect(() => {
     void fetchData();
   }, []);
+    useEffect(() => {
+        fetchData();
+    }, []);
 
   const onProviderUpdate = () => {
     void fetchData();
@@ -98,7 +117,9 @@ export default function ContentProvider() {
                       </div>
                     </td>
                     <td className="px-6 py-4 text-center">
-                      {/* Kolom Delete */}
+                      <button onClick={() => openDeleteModal(item.id)} className="text-red-500 hover:text-red-700">
+                                            Delete
+                                        </button>
                     </td>
                   </tr>
                 ))
@@ -123,6 +144,18 @@ export default function ContentProvider() {
           )}
         </div>
       </div>
+
+        {deleteModalOpen && (
+            <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-75">
+            <div className="bg-white p-6 rounded-lg">
+                <p className="text-xl mb-4">Are you sure you want to delete this provider?</p>
+                <div className="flex justify-end">
+                    <button onClick={closeDeleteModal} className="mr-2 px-4 py-2 bg-gray-300 rounded">Cancel</button>
+                    <button onClick={deleteProvider} className="px-4 py-2 bg-red-500 text-white rounded">Delete</button>
+                </div>
+            </div>
+        </div>
+        )}
     </>
   );
 }
