@@ -59,7 +59,7 @@ const FormTitles = ["Name The Project", "New Project Created!"];
       <div className='bg-gray-100  w-fit shadow-2xl rounded-lg border-solid border-black p-4 mx-4 my-8 min-w-[300px] max-w-md md:w-[50%]'>
         {/* Close button */}
           <button
-            className="flex top-0 right-0 m-2 text-white bg-red-500 hover:text-gray-700 rounded-md p-2"
+            className="flex top-0 right-0 m-2 text-white bg-blue-700 px-5 mx-2 my-4 hover:text-gray-700 rounded-md p-2"
             onClick={onClose}
           >
             Close
