@@ -4,7 +4,7 @@ import axios from "@/pages/api/axios";
 import { useRouter } from "next/router";
 import HeaderHome from "@/components/headerhome";
 import UpdatedProvider from "@/components/UpdatedProvider";
-import { FaPencilAlt } from "react-icons/fa";
+import { FaPencilAlt, FaTrashAlt } from "react-icons/fa";
 
 export default function ContentProvider() {
   const [provider, setProvider] = useState([]);
@@ -28,7 +28,6 @@ export default function ContentProvider() {
         setSelectedProviderId(null);
         setDeleteModalOpen(false);
     }
-  // const messageprovider_id = router.query.messageprovider_id
 
   //Updated
   const handleEdit = (item) => {
@@ -105,18 +104,16 @@ export default function ContentProvider() {
                     <td className="px-6 py-4">{item.webhook}</td>
                     <td className="px-6 py-4">{item.provider_type}</td>
                     <td className="px-6 py-4 text-center">
-                      {/* Kolom Edit */}
                       <div>
                         <button onClick={() => handleEdit(item)}>
                           <FaPencilAlt className="text-blue-500" />
                         </button>
-                        {/* Render the update form popup */}
                       </div>
                     </td>
                     <td className="px-6 py-4 text-center">
-                      <button onClick={() => openDeleteModal(item.id)} className="text-red-500 hover:text-red-700">
-                                            Delete
-                                        </button>
+                      <button onClick={() => openDeleteModal(item.id)}>
+                            <FaTrashAlt className="text-red-500"/>
+                        </button>
                     </td>
                   </tr>
                 ))

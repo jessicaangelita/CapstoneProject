@@ -1,14 +1,12 @@
 import ContentProvider from "@/components/contentprovider";
-import HeaderHome from "@/components/headerhome";
-import UpdatedProvider from '@/components/UpdatedProvider';
 import React from "react";
+import HeaderHome from "@/components/headerhome";
 
 export default function Providers() {
     return (
         <div>
             <HeaderHome/>
             <ContentProvider/>
-            <UpdatedProvider/>
         </div>
     )
 }

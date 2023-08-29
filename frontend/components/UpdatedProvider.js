@@ -6,7 +6,26 @@ export default function UpdatedProvider({ data, onUpdate, onCancel, setData }) {
   const [providername, setProvidertName] = useState(data.provider_label);
   const [webhook, setWebhook] = useState(data.webhook);
   const [selectedproject, setSelectedProject] = useState("");
+  const [listProject, setListProject] = useState([]);
 
+
+  const fetchProvider = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8050/project/all`
+      );
+      const responseData = response.data.data;
+
+      setListProject(responseData);
+      console.log(response);
+    } catch (error) {
+      console.error("Error fetching data: ", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchProvider();
+  }, [id]);
 
   const handleSubmit = async (e) => {
     try {
@@ -99,10 +118,23 @@ export default function UpdatedProvider({ data, onUpdate, onCancel, setData }) {
                   onChange={(e) => setSelectedProject(e.target.value)}
                 >
                   <option value="">Select Project</option>
+                   {listProject?.map((project) => {
+                    const { name, id: projectId } = project;
+                    
+                    console.log(project)
+                    return (
+                      <option key={projectId} value={name}>
+                        {name}
+                      </option>
+                    );
+                    
+                  })}
+
                   <option value="Number 1">{data.project}</option>
                   <option value="Number 2">{data.project}</option>
                   <option value="Number 3">{data.project}</option>
                 </select>
+
               </td>
             </tr>
           </tbody>

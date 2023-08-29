@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "../api/axios";
 import { useRouter } from "next/router";
 import HeaderHome from "@/components/headerhome";
-import { FaPencilAlt } from "react-icons/fa";
+import { FaPencilAlt, FaTrashAlt } from "react-icons/fa";
 import UpdatedProject from "@/components/UpdatedProject";
 
 export default function ContentProject() {
@@ -16,15 +16,17 @@ export default function ContentProject() {
     const openDeleteModal = (project_id) => {
         setSelectedProjectId(project_id);
         setDeleteModalOpen(true);
-    }
+    };
 
     const closeDeleteModal = () => {
         setSelectedProjectId(null);
         setDeleteModalOpen(false);
-    }
+    };
+
+    const router = useRouter();
+    const { userid } = router.query;
 
     const handleEdit = (item) => {
-        // setSelectedData(data);
         setData(item);
     };
 
@@ -35,17 +37,17 @@ export default function ContentProject() {
 
     const deleteProject = async () => {
         try {
-            await axios.delete(`http://localhost:8050/project/id/${selectedProjectId}`)
+            await axios.delete(`http://localhost:8050/project/id/${selectedProjectId}`);
             fetchData();
             closeDeleteModal();
         } catch (error) {
-            console.error('Error deleting projects ', error);
+            console.error('Error deleting project: ', error);
         }
-    }
-    
+    };
+
     const fetchData = async () => {
         try {
-            const response = await axios.get(`http://localhost:8050/project/user/connected/${userid}`);            
+            const response = await axios.get(`http://localhost:8050/project/user/connected/${userid}`);
             const responseData = response.data.data;
             setProject(responseData); 
             setIsLoading(false);
@@ -54,24 +56,21 @@ export default function ContentProject() {
             setIsLoading(false);
         }
     };
-    const router = useRouter();
 
-    const { userid } = router.query
-      
+    useEffect(() => {
+        if (!data) return;
+        
+        setShowUpdate(true);
+      }, [data]);
+    
       useEffect(() => {
-          if (!data) return;    
-            setShowUpdate(true);
-        }, [data]);
-
-    useEffect (() => {
         void fetchData();
-    },[])
-
-    const onProviderUpdate = () => {
+      }, [userid]);
+    
+      const onProviderUpdate = () => {
         void fetchData();
         handleCancel();
       };
-    
 
     return (
         <>
@@ -100,16 +99,15 @@ export default function ContentProject() {
                                         <td className="px-6 py-4">{item.webhook}</td>
                                         <td className="px-6 py-4">{item.provider_type}</td>
                                         <td className="px-6 py-4">
-                                            {/* Kolom Edit */}
                                             <div>
                                         <button onClick={() => handleEdit(item)}>
                                                 <FaPencilAlt className="text-blue-500" />
                                             </button>      
                                         </div>                   
                                     </td>
-                                        <td className="px-6 py-4 whitespace-nowrap">
-                                            <button onClick={() => openDeleteModal(item.project_id)} className="text-red-500 hover:text-red-700">
-                                                Delete
+                                        <td className="px-6 py-4">
+                                            <button onClick={() => openDeleteModal(item.project_id)}>
+                                                <FaTrashAlt className="text-red-500" />
                                             </button>
                                         </td>
                                     </tr>
