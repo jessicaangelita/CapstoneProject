@@ -1,6 +1,7 @@
 import {useState} from "react";
 import NewProvider from "../pages/NewProvider"
 import NewProject from "../pages/NewProject";
+import Link from 'next/link';
 
 export default function ContentHome() {
 
@@ -27,16 +28,8 @@ const togglePopup = () => {
                         <p className="leading-relaxed mb-3">
                             Click here to add a new project.
                         </p>
-                        <a className="text-blue-500 inline-flex items-center hover:underline">Add Project</a>
-                        <button onClick={togglePopup}>Add Provider</button>
+                        <Link href='/projects' className='text-blue-500 inline-flex items-center hover:underline font-semibold'>Projects</Link>
 
-                        {isPopupOpen && (
-                            <div className="popup-container">
-                                <div className="popup-content">
-                                    <NewProvider/>
-                                </div>
-                            </div>
-                        )}
                     </div>
                 </div>
                 <div className="p-4 lg:w-1/3">
@@ -45,8 +38,7 @@ const togglePopup = () => {
                         <p className="leading-relaxed mb-3">
                             Click here to add a new provider.
                         </p>
-                        <a className="text-blue-500 inline-flex items-center hover:underline" href="/addProvider">Add Provider</a>
-                        <button onClick={togglePopup}>Add Provider</button>
+                        <Link href='/providers' className='text-blue-500 inline-flex items-center hover:underline font-semibold'>Provider</Link>
                         
                         {isPopupOpen && (
                             <div className="popup-container">
