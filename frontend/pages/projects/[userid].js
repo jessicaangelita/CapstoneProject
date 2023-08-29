@@ -65,7 +65,7 @@ export default function ContentProject() {
     
       useEffect(() => {
         void fetchData();
-      }, []);
+      }, [userid]);
     
       const onProviderUpdate = () => {
         void fetchData();

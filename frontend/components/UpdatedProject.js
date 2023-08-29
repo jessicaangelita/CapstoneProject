@@ -2,11 +2,29 @@ import React, { useState,useEffect } from 'react';
 import axios from '@/pages/api/axios';
 
 export default function UpdatedProject({ data, onUpdate, onCancel,setData }) {
-  const [id, setId] = useState(data.id);
-  const [projectname, setProjectName] = useState(data.name);
-  const [webhook, setWebhook] = useState(data.webhook);
-  const [selectedprovider, setSelectedProvider] = useState('')
+  const [id, setId] = useState(data.project_id);
+  const [projectname, setProjectName] = useState(data.name ?? undefined) ;
+  const [webhook, setWebhook] = useState(data.webhook ?? undefined);
+  const [selectedprovider, setSelectedProvider] = useState('');
+  const [listProvider, setListProvider] = useState([]);
 
+  const fetchProvider = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8050/message-provider/all`
+      );
+      const responseData = response.data.data;
+
+      setListProvider(responseData);
+      console.log(response);
+    } catch (error) {
+      console.error("Error fetching data: ", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchProvider();
+  }, [id]);
 
   const handleSubmit = async (e) => {  
     try {
@@ -16,7 +34,8 @@ export default function UpdatedProject({ data, onUpdate, onCancel,setData }) {
             provider: selectedprovider,
         };
 
-        await axios.put(`http://localhost:8050/project/edit/${data.id}}`, updatedData);
+        await axios.put(`http://localhost:8050/project/edit/${data.project_id}`,
+         updatedData);
 
         setData(updatedData);
         setProjectName(updatedData);
@@ -49,7 +68,7 @@ export default function UpdatedProject({ data, onUpdate, onCancel,setData }) {
             <td className='pl-3'>
               <input
                 type="text"
-                value={id}
+                value={data.project_id}
                 disabled
                 className="w-full border p-2 rounded outline-none"
               />
@@ -91,11 +110,20 @@ export default function UpdatedProject({ data, onUpdate, onCancel,setData }) {
               onChange={(e) => setSelectedProvider(e.target.value)}
               >
                 <option value="">Select Provider</option>
+                {listProvider?.map((provider) => {
+                    const { provider_label, id: providerId } = provider;
+
+                    return (
+                      <option key={providerId} value={provider_label}>
+                        {provider_label}
+                      </option>
+                    );
+                  })}
+
                 <option value="Number 1">{data.provider}</option>
                 <option value="Number 2">{data.provider}</option>
                 <option value="Number 3">{data.provider}</option>
 
-                
               </select>
             </td>
           </tr>
