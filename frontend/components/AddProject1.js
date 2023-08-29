@@ -1,6 +1,6 @@
 import {useState} from 'react'
 
-export const AddProject1 = ({ formData, setFormData }) => {
+export const AddProject1 = ({ name, setname }) => {
   return (
     <>
     {/* Process Indicating Circle */}
@@ -12,18 +12,6 @@ export const AddProject1 = ({ formData, setFormData }) => {
         </div>
         <p className="mt-2">Name The Project</p>
       </div>
-      <div className="flex flex-col items-center">
-        <div className="rounded-full w-14 h-14 bg-gray-100 shadow-xl flex items-center justify-center ">
-          2
-        </div>
-        <p className="mt-2">Configure Project</p>
-      </div>
-      <div className="flex flex-col items-center">
-        <div className="rounded-full w-14 h-14 bg-gray-100 shadow-xl flex items-center justify-center">
-          3
-        </div>
-        <p className="mt-2">Configure Providers</p>
-      </div>
     </div>
     
     {/* Input for the Form */}
@@ -33,8 +21,8 @@ export const AddProject1 = ({ formData, setFormData }) => {
             type="text"
             className="block w-full border-gray-300 border rounded-lg px-3 py-2 focus:outline-none focus:border-blue-500"
             placeholder="Project Name"
-            value={formData.projectName} 
-            onChange={(event) => setFormData({...formData, projectName: event.target.value})}
+            value={name} 
+            onChange={(event) => setname(event.target.value)}
           />
       </div>
     </div>

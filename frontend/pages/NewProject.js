@@ -4,24 +4,20 @@ import { AddProject1 } from '../components/AddProject1';
 import { AddProject2 } from '../components/AddProject2';
 import { AddProject3 } from '../components/AddProject3';
 import { AddProject4 } from '../components/AddProject4';
+import axios from './api/axios';
 
-export const NewProject = () => {
+export const NewProject = ({onClose}) => {
 
 const NewProjectURL = "http://localhost:8050/project/new";
 const errReference = useRef();
 const [errMsg, setErrMsg] = useState("");
 const [success, setSuccess] = useState(false);
-
 const [page, setPage] = useState(0);
-const [formData, setFormData] = useState({
-  projectName: "",
-  projectLink: "",
-  providerSelected : []
-});
+const [name, setname] = useState("");
 
 useEffect(() => {
     setErrMsg("");
-}, [projectName, projectLink, providerSelected]);
+}, [name]);
 
 
 const handleSubmit = (e) => {
@@ -29,7 +25,7 @@ const handleSubmit = (e) => {
 
     try {
       const data = {
-        formData
+        name
       };
 
       axios
@@ -50,21 +46,25 @@ const handleSubmit = (e) => {
 
 const PageDisplay = () => {
   if (page === 0) {
-    return <AddProject1 formData={formData} setFormData={setFormData} />;
+    return <AddProject1 name={name} setname={setname} />;
   } else if (page === 1) {
-    return <AddProject2 formData={formData} setFormData={setFormData} />;
-  } else if (page === 2) {
-    return <AddProject3 formData={formData} setFormData={setFormData} />;
-  } else if (page === 3) {
-    return <AddProject4 formData={formData} setFormData={setFormData} />;
+    return <AddProject2 />;
   }
 };
-
-const FormTitles = ["Name The Project", "Configure Project", "Configure Providers", "New Project Created!"];
+1
+const FormTitles = ["Name The Project", "New Project Created!"];
 
   return (
-    <div className='items-center justify-center flex md:flex'>
-      <div className='bg-gray-100  w-fit shadow-2xl rounded-lg border-solid border-black p-4 mx-4 my-8'>
+    <div className='items-center justify-center flex md:flex fixed inset-0 z-50'>
+      <div className='bg-gray-100  w-fit shadow-2xl rounded-lg border-solid border-black p-4 mx-4 my-8 min-w-[300px] max-w-md md:w-[50%]'>
+        {/* Close button */}
+          <button
+            className="flex top-0 right-0 m-2 text-white bg-red-500 hover:text-gray-700 rounded-md p-2"
+            onClick={onClose}
+          >
+            Close
+          </button>
+        
         {/* Title */}
         <p className="flex justify-center text-slate-700 text-2xl font-extrabold mb-6">Create New Project</p>
 
@@ -96,20 +96,14 @@ const FormTitles = ["Name The Project", "Configure Project", "Configure Provider
 
         <div className='mt-2 flex gap-2'>
           {/* nanti apus */}
-          <button
-            disabled={page == 0}
-            onClick={() => {
-              setPage((currPage) => currPage - 1);
-            }}
-            className='w-full text-white bg-gray-700 px-4 py-2 rounded-md my-6'
-          >
-            Prev
-          </button>
 
-          <button onClick={() => {
+          <button
+          type="submit"
+          onClick={(e) => {
               if (page === FormTitles.length - 1) {
                 alert("FORM SUBMITTED");
-                console.log(formData);
+                console.log("name nya" + name);
+                handleSubmit(e);
               } else {
                 setPage((currPage) => currPage + 1);
               }

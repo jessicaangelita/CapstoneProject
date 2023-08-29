@@ -6,7 +6,7 @@ import { AddProvider3 } from "../components/AddProvider3";
 import { AddProvider4 } from "../components/AddProvider4";
 import axios from "./api/axios";
 
-export const NewProvider = () => {
+export const NewProvider = ({ onClose }) => {
   const NewProviderURL = "http://localhost:8050/message-provider/new";
   const ConnectionURL = "http://localhost:8050/connection/new";
   const errReference = useRef();
@@ -60,6 +60,8 @@ export const NewProvider = () => {
         <AddProvider1
           provider_type={provider_type}
           setprovider_type={setprovider_type}
+          provider_label={provider_label}
+          setprovider_label={setprovider_label}
         />
       );
     } else if (page === 1) {
@@ -82,8 +84,16 @@ export const NewProvider = () => {
 
   return (
     <>
-      <div className="items-center justify-center flex md:flex">
-        <div className="bg-gray-100  w-fit shadow-2xl rounded-lg border-solid border-black p-4 mx-4 my-8">
+      <div className="items-center justify-center flex md:flex fixed inset-0 z-50">
+        <div className="bg-gray-100  w-fit shadow-2xl rounded-lg border-solid border-black p-4 mx-4 my-8 min-w-[300px] max-w-md md:w-[50%]">
+          {/* Close button */}
+          <button
+            className="flex top-0 right-0 m-2 text-white bg-red-500 hover:text-gray-700 rounded-md p-2"
+            onClick={onClose}
+          >
+            Close
+          </button>
+          
           {/* Title */}
           <p className="flex justify-center text-slate-700 text-2xl font-extrabold mb-6">
             Create New Provider

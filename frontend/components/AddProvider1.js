@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export const AddProvider1 = ({provider_type, setprovider_type }) => {
+export const AddProvider1 = ({provider_type, setprovider_type, provider_label, setprovider_label }) => {
   return (
     <>
     <div className="m-9">
@@ -37,6 +37,15 @@ export const AddProvider1 = ({provider_type, setprovider_type }) => {
           <option value="telegram">Telegram</option>
           <option value="microsoftteams">Microsoft Teams</option>
         </select>
+
+        <p className="justify-center w-full text-center text-slate-700 text-lg font-bold  mx-1 my-8">Enter your custom name for the message provider!</p>
+        <input
+            type="text"
+            className="block w-full border-gray-300 border rounded-lg px-3 py-2 focus:outline-none focus:border-blue-500"
+            placeholder="Project Name"
+            value={provider_label} 
+            onChange={(event) => setprovider_label(event.target.value)}
+          />
       </div>
     </div>
     

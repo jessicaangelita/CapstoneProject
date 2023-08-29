@@ -1,12 +1,21 @@
 import React, { useEffect, useState } from "react";
-import axios from "@/pages/api/axios";
+import axios from "../api/axios";
+// import axios from "@/pages/api/axios";
 // import UpdatedProject from "./UpdatedProject";
 import { useRouter } from "next/router";
-import HeaderHome from "@/components/headerhome";
-import UpdatedProvider from "@/components/UpdatedProvider";
-import { FaPencilAlt, FaTrashAlt } from "react-icons/fa";
+import HeaderHome from "../../components/headerhome";
+// import HeaderHome from "@/components/headerhome";
+import UpdatedProvider from "../../components/UpdatedProvider";
+// import UpdatedProvider from "@/components/UpdatedProvider";
+import { FaPencilAlt, FaTrashAlt  } from "react-icons/fa";
+import NewProvider from "../NewProvider";
 
 export default function ContentProvider() {
+const [isPopupOpen, setIsPopupOpen] = useState(false);
+const togglePopup = () => {
+    setIsPopupOpen(!isPopupOpen);
+};
+
   const [provider, setProvider] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -80,6 +89,16 @@ export default function ContentProvider() {
   return (
     <>
       <HeaderHome />
+      <div>
+        <button className="text-white bg-blue-700 px-8 py-2 rounded-md mx-5 mt-8" onClick={togglePopup}>Add Provider</button>
+        {isPopupOpen && (
+            <div className="popup-container">
+              <div className="popup-content">
+                  <NewProvider onClose={togglePopup}/>
+              </div>
+            </div>
+        )}
+      </div>
       <div className="flex justify-center mt-10">
         {isLoading ? (
           <p>Loading...</p>

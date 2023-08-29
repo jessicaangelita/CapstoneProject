@@ -1,5 +1,6 @@
 import React, { useState,useEffect } from 'react';
-import axios from '@/pages/api/axios';
+import axios from '../pages/api/axios';
+// import axios from '@/pages/api/axios';
 
 export default function UpdatedProject({ data, onUpdate, onCancel,setData }) {
   const [id, setId] = useState(data.project_id);

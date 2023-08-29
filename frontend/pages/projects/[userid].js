@@ -1,11 +1,22 @@
 import React, { useEffect, useState } from "react";
 import axios from "../api/axios";
 import { useRouter } from "next/router";
-import HeaderHome from "@/components/headerhome";
-import { FaPencilAlt, FaTrashAlt } from "react-icons/fa";
-import UpdatedProject from "@/components/UpdatedProject";
+import HeaderHome from "../../components/headerhome";
+// import HeaderHome from "@/components/headerhome";
+import { FaPencilAlt, FaTrashAlt  } from "react-icons/fa";
+import UpdatedProject from "../../components/UpdatedProject";
+// import UpdatedProject from "@/components/UpdatedProject";
+import NewProject from "../NewProject";
 
 export default function ContentProject() {
+
+  //update pb
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const togglePopup = () => {
+      setIsPopupOpen(!isPopupOpen);
+  };
+
+
     const [project, setProject] = useState([]); 
     const [isLoading, setIsLoading] = useState(true);
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -75,6 +86,17 @@ export default function ContentProject() {
     return (
         <>
             <HeaderHome/>
+            {/* update pb */}
+            <div>
+              <button className="text-white bg-blue-700 px-8 py-2 rounded-md mx-5 mt-8" onClick={togglePopup}>Add Project</button>
+                {isPopupOpen && (
+                    <div className="popup-container">
+                        <div className="popup-content">
+                            <NewProject onClose={togglePopup}/>
+                        </div>
+                    </div>
+                )}
+            </div>
             <div className="flex justify-center mt-10">
                 {isLoading ? (
                     <p>Loading...</p>
