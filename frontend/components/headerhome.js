@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { MdClose } from 'react-icons/md';
+import Link from 'next/link';
 
 const HeaderHome = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -40,19 +41,21 @@ const HeaderHome = () => {
               </div>
               <ul className="space-y-2">
               <li>
-                  <a href="/homePage" className="text-white hover:underline">Home</a>
+                  <Link href="/homePage" className='text-white hover:underline'>Home</Link>
                 </li>
                 <li>
-                  <a href="/projects" className="text-white hover:underline">Projects</a>
+                {/* <Link href={`/projects/${userid}`}>Projects </Link> */}
+                <Link href='/projects' className='text-white hover:underline'>Projects</Link>
                 </li>
                 <li>
-                  <a href="/providers" className="text-white hover:underline">Providers</a>
+                  {/* Link href={`projects/${userid}`}>Providers </Link> */}
+                  <Link href='/providers' className='text-white hover:underline'>Providers</Link>
                 </li>
                 <li>
-                  <a href="#" className="text-white hover:underline">Settings</a>
+                  <Link href="#" className='text-white hover:underline'>Settings</Link>
                 </li>
                 <li>
-                  <a href='/' className='text-white hover:underline'>Logout</a>
+                  <Link href="/" className='text-white hover:underline'>Logout</Link>
                 </li>
               </ul>
             </nav>
