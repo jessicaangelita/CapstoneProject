@@ -8,6 +8,8 @@ const HeaderHome = () => {
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
+
+  
   };
 
   return (
@@ -48,7 +50,7 @@ const HeaderHome = () => {
                 <Link href='/projects' className='text-white hover:underline'>Projects</Link>
                 </li>
                 <li>
-                  {/* Link href={`projects/${userid}`}>Providers </Link> */}
+                  {/* <Link href={`projects/${userid}`}>Providers </Link> */}
                   <Link href='/providers' className='text-white hover:underline'>Providers</Link>
                 </li>
                 <li>
