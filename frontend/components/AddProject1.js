@@ -7,7 +7,7 @@ export const AddProject1 = ({ name, setname }) => {
     <div className="m-9">
       <div className="flex items-center justify-center space-x-8">
       <div className="flex flex-col items-center">
-        <div className="rounded-full w-14 h-14 bg-gray-300 shadow-xl flex items-center justify-center">
+        <div className="rounded-full w-14 h-14 bg-sky-300 shadow-xl flex items-center justify-center">
           1
         </div>
         <p className="mt-2">Name The Project</p>

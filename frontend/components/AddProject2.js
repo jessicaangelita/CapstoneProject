@@ -6,7 +6,7 @@ export const AddProject2 = () => {
     <div className="m-9">
       <div className="flex items-center justify-center space-x-8">
       <div className="flex flex-col items-center">
-        <div className="rounded-full w-14 h-14 bg-gray-700 text-white shadow-xl flex items-center justify-center">
+        <div className="rounded-full w-14 h-14  bg-sky-300 text-white shadow-xl flex items-center justify-center">
           1
         </div>
         <p className="mt-2">Name The Project</p>

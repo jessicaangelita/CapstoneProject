@@ -10,6 +10,7 @@ import UpdatedProvider from "../../components/UpdatedProvider";
 import { FaPencilAlt, FaTrashAlt  } from "react-icons/fa";
 import NewProvider from "../NewProvider";
 
+
 export default function ContentProvider() {
 const [isPopupOpen, setIsPopupOpen] = useState(false);
 const togglePopup = () => {

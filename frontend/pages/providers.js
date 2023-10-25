@@ -1,11 +1,11 @@
-import ContentProvider from "@/components/contentprovider";
+import ContentProvider from "./providers/[messageprovider_id]";
 import React from "react";
-import HeaderHome from "@/components/headerhome";
+import HeaderHome from "../components/headerhome";
 
 export default function Providers() {
     return (
         <div>
-            <HeaderHome/>
+            {/* <HeaderHome/> */}
             <ContentProvider/>
         </div>
     )
