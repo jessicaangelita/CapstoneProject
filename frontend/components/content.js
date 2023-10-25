@@ -11,7 +11,9 @@ export default function Content() {
             <span className="flex-grow text-black border-b-2 border-black py-2 text-lg px-1">Description</span>
           </div>
           <p className="leading-relaxed mb-4">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            JICO is an abbreviation of Jira Connector which is a platform where you can connect the projects tou are working on via Jira with certain applications such as Discord.
+            JICO makes communication easier in working on a project.
+            Apart from making communication easier and smoother, it is also very easy to use so you can use it comfortably.
           </p>
           <div className="flex">
             <a className="flex item-center text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-700 rounded" href="/signUpPage" role="button">Get Started</a>
