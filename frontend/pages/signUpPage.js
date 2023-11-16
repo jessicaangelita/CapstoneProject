@@ -364,11 +364,10 @@ const SignUpPage = () => {
               {/* Sign in */}
               <div className="flex flex-col items-center mt-3 leading-snug">
                 <p>
-                  Already a member?
+                  Already a member? 
                   <a
                     href="/signInPage"
-                    className="text-blue-700 font-bold text-base leading-snug hover:underline "
-                  >
+                    className="text-blue-700 font-bold text-base leading-snug hover:underline ">
                     Sign In
                   </a>
                 </p>
