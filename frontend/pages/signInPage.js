@@ -214,7 +214,7 @@ export const signInPage = () => {
                 <div className='flex flex-col items-center justify-center text-right text-slate-700 p-4 w-full md:w-2/5'>
                   <div>
                     <h2 className='text-2xl font-bold mb-4 mt-6 mx-5'>Welcome to JICO</h2>
-                    <p className='text-base font-normal mb-12 mx-5'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam nec ultricies nisi. Suspendisse pulvinar viverra nibh vel ultricies. Mauris tincidunt mollis diam, at mollis enim aliquet eget. Fusce eros neque, pharetra eget tincidunt in, tincidunt nec tellus. </p>
+                    <p className='text-base font-normal mb-12 mx-5'>Your Gateway to Seamless Collaboration! 🚀 Elevate your team's efficiency by bridging the gap between JIRA and Discord with our innovative integration platform. Say goodbye to siloed communication and project management, and hello to a unified workspace where your teams can effortlessly synchronize updates, track progress, and stay in the loop. JICO brings harmony to your workflow, making collaboration a breeze. Join the future of project management and communication with JICO – Where JIRA Meets Discord! </p>
 
                     <div className='h-8 flex object-right-bottom'>
                       <img className='' src='https://upload.wikimedia.org/wikipedia/id/thumb/c/c4/Telkom_Indonesia_2013.svg/1200px-Telkom_Indonesia_2013.svg.png'/>
