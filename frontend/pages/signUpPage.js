@@ -121,10 +121,11 @@ const SignUpPage = () => {
             <div className="flex flex-col justify-center items-start text-left text-slate-700 w-full p-10">
               <h2 className="text-3xl font-bold mb-4 ">Welcome To Jico</h2>
               <p className="text-base font-normal mb-48">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam nec
-                ultricies nisi. Suspendisse pulvinar viverra nibh vel ultricies.
-                Mauris tincidunt mollis diam, at mollis enim aliquet eget. Fusce
-                eros neque, pharetra eget tincidunt in, tincidunt nec tellus.
+              Welcome to JICO - Embark on a journey of limitless connections by joining our community! Sign up now to unlock the full potential of our connector application. 
+              As a member, you'll gain access to a dynamic network that fosters collaboration, innovation, and meaningful relationships. 
+              Creating your account is quick and easy – just provide some basic information, and you'll be on your way to a world of opportunities. 
+              Join us in building bridges between people, ideas, and possibilities. 
+              Don't miss out – sign up today and let the connections begin!
               </p>
 
               <div className="h-8 w-16 flex object-right-bottom">
