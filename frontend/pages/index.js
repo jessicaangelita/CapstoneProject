@@ -2,7 +2,7 @@ import Link from "next/link";
 import Header from "../components/Header";
 import {FaDiscord} from 'react-icons/fa'
 import { useRouter } from "next/router";
-import Content from "../components/Content";
+import Content from '../components/Content';
 import Features from "../components/Features";
 import Footer from "../components/Footer";
 import Head from 'next/head';

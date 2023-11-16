@@ -1,5 +1,5 @@
 import ContentProject from "./projects/[userid]";
-import HeaderHome from "../components/headerhome";
+import HeaderHome from "../components/HeaderHome";
 // import ContentProject from "@/components/contentproject";
 // import HeaderHome from "@/components/headerhome";
 import React from "react";

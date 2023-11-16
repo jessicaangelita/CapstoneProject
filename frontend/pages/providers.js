@@ -1,6 +1,6 @@
 import ContentProvider from "./providers/[messageprovider_id]";
 import React from "react";
-import HeaderHome from "../components/headerhome";
+import HeaderHome from "../components/HeaderHome";
 
 export default function Providers() {
     return (

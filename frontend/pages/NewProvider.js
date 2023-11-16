@@ -137,10 +137,10 @@ export const NewProvider = ({ onClose }) => {
               onClick={(e) => {
                 if (page === FormTitles.length - 1) {
                   alert("FORM SUBMITTED");
-                  console.log("provider type nya" + provider_type);
-                  console.log("provider label nya" + provider_label);
-                  console.log("webhook nya" + webhook);
-                  console.log("connection nya" + connection);
+                  console.log("provider type nya " + provider_type);
+                  console.log("provider label nya " + provider_label);
+                  console.log("webhook nya " + webhook);
+                  console.log("connection nya " + connection);
                   handleSubmit(e);
                 } else {
                   setPage((currPage) => currPage + 1);

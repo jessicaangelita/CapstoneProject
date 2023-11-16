@@ -3,7 +3,7 @@ import axios from "../api/axios";
 // import axios from "@/pages/api/axios";
 // import UpdatedProject from "./UpdatedProject";
 import { useRouter } from "next/router";
-import HeaderHome from "../../components/headerhome";
+import HeaderHome from "../../components/HeaderHome";
 // import HeaderHome from "@/components/headerhome";
 import UpdatedProvider from "../../components/UpdatedProvider";
 // import UpdatedProvider from "@/components/UpdatedProvider";

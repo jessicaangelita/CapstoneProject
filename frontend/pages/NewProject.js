@@ -102,7 +102,7 @@ const FormTitles = ["Name The Project", "New Project Created!"];
           onClick={(e) => {
               if (page === FormTitles.length - 1) {
                 alert("FORM SUBMITTED");
-                console.log("name nya" + name);
+                console.log("name nya " + name);
                 handleSubmit(e);
               } else {
                 setPage((currPage) => currPage + 1);

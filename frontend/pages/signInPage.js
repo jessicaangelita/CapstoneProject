@@ -88,31 +88,19 @@ export const signInPage = () => {
           console.log(error);
         });
 
-      //get token
-      const accessToken = response?.data?.accessToken;
-      localStorage.setItem('token', accessToken)
-      setToken()
-      //get roles
-      const roles = response?.data?.roles;
+      // //get token
+      // const accessToken = response?.data?.accessToken;
+      // localStorage.setItem('token', accessToken)
+      // setToken()
+      // //get roles
+      // const roles = response?.data?.roles;
 
-      setAuth({username, password, roles, accessToken});
+      setAuth({username, password});
       setUsername('');
       setPassword('');
     } catch (error) {
       console.log('Sign In Failed',error)
       errorRef.current.focus();
-      // if (!error?.response) {
-      //   // no response but there's error
-      //   setErrorMsg('No Server Response');
-      // } else if (error.response?.status === 400) {
-      //   // something missing
-      //   setErrorMsg('Missing Username or Password');
-      // } else if (error.response?.status === 401) {
-      //   // the roles / token unvalid
-      //   setErrorMsg('Unauthorized');
-      // } else {
-      //   setErrorMsg('Login Failed');
-      // }
       errorRef.current.focus();
     }
 
@@ -125,13 +113,6 @@ export const signInPage = () => {
       localStorage.removeItem("rememberedPassword");
     }
   };
-
-  // useEffect(() => {
-  //   if (success) {
-  //     console.log("hrusny redirect yak")
-  //     window.location.href = "/homePage";
-  //   }
-  // }, [success]);
   
     return (
     <div>
@@ -231,15 +212,15 @@ export const signInPage = () => {
 
                 {/* welcome card */}
                 <div className='flex flex-col items-center justify-center text-right text-slate-700 p-4 w-full md:w-2/5'>
-                    <div>
-                        <h2 className='text-2xl font-bold mb-4 mt-6 mx-5'>Welcome to JICO</h2>
-                        <p className='text-base font-normal mb-12 mx-5'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam nec ultricies nisi. Suspendisse pulvinar viverra nibh vel ultricies. Mauris tincidunt mollis diam, at mollis enim aliquet eget. Fusce eros neque, pharetra eget tincidunt in, tincidunt nec tellus. </p>
+                  <div>
+                    <h2 className='text-2xl font-bold mb-4 mt-6 mx-5'>Welcome to JICO</h2>
+                    <p className='text-base font-normal mb-12 mx-5'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam nec ultricies nisi. Suspendisse pulvinar viverra nibh vel ultricies. Mauris tincidunt mollis diam, at mollis enim aliquet eget. Fusce eros neque, pharetra eget tincidunt in, tincidunt nec tellus. </p>
 
-                        <div className='h-8 flex object-right-bottom'>
-                        <img className='' src='https://upload.wikimedia.org/wikipedia/id/thumb/c/c4/Telkom_Indonesia_2013.svg/1200px-Telkom_Indonesia_2013.svg.png'/>
-                        <img className='' src='https://cdn.icon-icons.com/icons2/2699/PNG/512/atlassian_jira_logo_icon_170512.png'/>
-                        </div>
+                    <div className='h-8 flex object-right-bottom'>
+                      <img className='' src='https://upload.wikimedia.org/wikipedia/id/thumb/c/c4/Telkom_Indonesia_2013.svg/1200px-Telkom_Indonesia_2013.svg.png'/>
+                      <img className='' src='https://cdn.icon-icons.com/icons2/2699/PNG/512/atlassian_jira_logo_icon_170512.png'/>
                     </div>
+                  </div>
                 </div>
             </div>        
         </div>
