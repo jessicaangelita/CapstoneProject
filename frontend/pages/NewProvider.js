@@ -13,6 +13,7 @@ export const NewProvider = ({ onClose }) => {
 
   const [errMsg, setErrMsg] = useState("");
   const [success, setSuccess] = useState(false);
+  const [shouldClosePopup, setShouldClosePopup] = useState(false);
 
   const [provider_type, setprovider_type] = useState("");
   const [provider_label, setprovider_label] = useState("");
@@ -20,9 +21,11 @@ export const NewProvider = ({ onClose }) => {
   const [connection, setconnection] = useState([]);
 
   const [page, setPage] = useState(0);
+  const [isLastPage, setIsLastPage] = useState(false);
 
   useEffect(() => {
     setErrMsg("");
+    setIsLastPage(page === FormTitles.length - 1);
   }, [provider_type, provider_label, webhook, connection]);
 
   const handleSubmit = (e) => {
@@ -53,6 +56,13 @@ export const NewProvider = ({ onClose }) => {
       errReference.current.focus();
     }
   };
+
+  useEffect(() => {
+    if (shouldClosePopup) {
+      onClose(); // Memanggil fungsi onClose untuk menutup pop-up
+      window.location.reload();
+    }
+  }, [shouldClosePopup, onClose]);
 
   const PageDisplay = () => {
     if (page === 0) {
@@ -126,6 +136,7 @@ export const NewProvider = ({ onClose }) => {
               disabled={page == 0}
               onClick={() => {
                 setPage((currPage) => currPage - 1);
+                setIsLastPage(false);
               }}
               className="w-full text-white bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-md my-6"
             >
@@ -136,19 +147,26 @@ export const NewProvider = ({ onClose }) => {
               type="submit"
               onClick={(e) => {
                 if (page === FormTitles.length - 1) {
-                  alert("FORM SUBMITTED");
+                  // alert("FORM SUBMITTED");
                   console.log("provider type nya " + provider_type);
                   console.log("provider label nya " + provider_label);
                   console.log("webhook nya " + webhook);
                   console.log("connection nya " + connection);
                   handleSubmit(e);
+                  setShouldClosePopup(true);
                 } else {
                   setPage((currPage) => currPage + 1);
+                  setIsLastPage(page + 1 === FormTitles.length - 1);
                 }
+                setIsLastPage(page + 1 === FormTitles.length - 1);
               }}
-              className="w-full text-white bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-md my-6"
+              // className="w-full text-white bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-md my-6"
+              className={`w-full text-white bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-md my-6 
+              ${
+                isLastPage ? "bg-green-500 hover:bg-green-600" : ""
+              }`}
             >
-              Next
+              {isLastPage ? "OK" : "Next"}
             </button>
           </div>
         </div>
