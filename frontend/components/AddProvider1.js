@@ -26,9 +26,9 @@ export const AddProvider1 = ({provider_type, setprovider_type, provider_label, s
     </div>
     
       <div className="space-y-4">
-        <p className="justify-center w-full text-center text-slate-700 text-lg font-bold  mx-1 my-8">What is your designated Message Provider?</p>
+        {/* <p className="justify-center w-full text-center text-slate-700 text-lg font-bold  mx-1 my-8">What is your designated Message Provider?</p> */}
 
-        <select 
+        {/* <select 
           className="block w-full border-gray-300 border rounded-lg px-3 py-2 focus:outline-none focus:border-gray-500"
           value={provider_type} 
           onChange={(e) => setprovider_type(e.target.value)} >
@@ -36,7 +36,7 @@ export const AddProvider1 = ({provider_type, setprovider_type, provider_label, s
           <option value="discord">Discord</option>
           <option value="telegram">Telegram</option>
           <option value="microsoftteams">Microsoft Teams</option>
-        </select>
+        </select> */}
 
         <p className="justify-center w-full text-center text-slate-700 text-lg font-bold  mx-1 my-8">Enter your custom name for the message provider!</p>
         <input

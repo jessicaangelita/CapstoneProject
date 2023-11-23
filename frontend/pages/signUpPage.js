@@ -103,6 +103,7 @@ const SignUpPage = () => {
       errReference.current.focus();
     }
     setSuccess(true);
+    window.location.href = "/signInPage";
   };
 
   return (
@@ -376,7 +377,7 @@ const SignUpPage = () => {
           </form>
 
           {/* pop up succes */}
-          {success && (
+          {/* {success && (
             <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-70">
               <div className="bg-white p-8 rounded-lg flex flex-col text-white ">
                 <h2 className="text-xl font-semibold mb-4 text-black text-center">
@@ -392,7 +393,7 @@ const SignUpPage = () => {
                 </button>
               </div>
             </div>
-          )}
+          )} */}
         </div>
       </div>
     </div>
