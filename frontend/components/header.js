@@ -17,7 +17,7 @@ export default function Header() {
       </nav>
       <div className="space-x-4">
         <Link className="text-white hover:text-gray-300 font-semibold" href="/signUpPage">
-          Register
+          Sign Up
         </Link>
         <Link className="text-white hover:text-gray-300 font-semibold" href="/signInPage">
           Sign In

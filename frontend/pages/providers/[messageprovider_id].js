@@ -27,6 +27,60 @@ const togglePopup = () => {
 
     // const { messageprovider_id } = router.query
 
+    const Provider = [
+      {
+        key: 'ID',
+        title: 'ID',
+      },
+      {
+        key: 'provider_name',
+        title: 'PROVIDER NAME',
+      },
+      {
+        key: 'webhook_link',
+        title: 'WEBHOOK LINK',
+      },
+      {
+        key: 'integration',
+        title: 'INTEGRATION'
+      },
+      {
+        key: 'edit',
+        title: 'EDIT',
+      },
+      {
+        key: 'delete',
+        title: 'DELETE',
+      }
+    ]
+
+    const Project = [
+      {
+        key: 'ID',
+        title: 'ID',
+      },
+      {
+        key: 'project_name',
+        title: 'PROJECT NAME',
+      },
+      {
+        key: 'webhook_link',
+        title: 'WEBHOOK LINK',
+      },
+      {
+        key: 'integration',
+        title: 'INTEGRATION'
+      },
+      {
+        key: 'edit',
+        title: 'EDIT',
+      },
+      {
+        key: 'delete',
+        title: 'DELETE',
+      }
+    ]
+
 
     const openDeleteModal = (message_provider_id) => {
         setSelectedProviderId(message_provider_id);
@@ -100,52 +154,52 @@ const togglePopup = () => {
             </div>
         )}
       </div>
-      <div className="flex justify-center mt-10">
+      <div className="mx-auto max-w-2xl">
         {isLoading ? (
           <p>Loading...</p>
         ) : (
-          <table className="border-collapse border w-full border-gray-800">
-            <thead>
-              <tr className="bg-gray-200">
-                <th className="px-6 py-3 text-left">ID</th>
-                <th className="px-6 py-3 text-left">Provider Name</th>
-                <th className="px-6 py-3 text-left">Webhook Link</th>
-                <th className="px-6 py-3 text-left">Integration</th>
-                <th className="px-6 py-3 text-center">Edit</th>
-                <th className="px-6 py-3 text-center">Delete</th>
-              </tr>
+          <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" className="px-6 py-3 text-left">ID</th>
+                    <th scope="col" className="px-6 py-3 text-left">Provider Name</th>
+                    <th scope="col" className="px-6 py-3 text-left">Webhook Link</th>
+                    <th scope="col" className="px-6 py-3 text-left">Integration</th>
+                    <th scope="col" className="px-6 py-3 text-center">Edit</th>
+                    <th scope="col" className="px-6 py-3 text-center">Delete</th>
+                </tr>
             </thead>
             <tbody>
-              {Array.isArray(provider) && provider.length > 0 ? (
-                provider.map((item) => (
-                  <tr key={item.id} className="border-t">
-                    <td className="px-6 py-4">{item.id}</td>
-                    <td className="px-6 py-4">{item.provider_label}</td>
-                    <td className="px-6 py-4">{item.webhook}</td>
-                    <td className="px-6 py-4">{item.provider_type}</td>
-                    <td className="px-6 py-4 text-center">
-                      <div>
-                        <button onClick={() => handleEdit(item)}>
-                          <FaPencilAlt className="text-blue-500" />
-                        </button>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 text-center">
-                      <button onClick={() => openDeleteModal(item.id)}>
-                            <FaTrashAlt className="text-red-500"/>
-                        </button>
-                    </td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan="6" className="text-center py-4">
-                    No data available.
-                  </td>
-                </tr>
-              )}
+                {Array.isArray(provider) && provider.length > 0 ? (
+                    provider.map((item) => (
+                        <tr key={item.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                            <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"> {item.id}</th>
+                            <td className="px-6 py-4">{item.provider_label}</td>
+                            <td className="px-6 py-4">{item.webhook}</td>
+                            <td className="px-6 py-4">{item.provider_type}</td>
+                            <td className="px-6 py-4 text-center">
+                              <div>
+                                <button onClick={() => handleEdit(item)}>
+                                  <FaPencilAlt className="text-blue-500" />
+                                </button>
+                              </div>
+                            </td>
+                            <td className="px-6 py-4 text-center">
+                              <button onClick={() => openDeleteModal(item.id)}>
+                                <FaTrashAlt className="text-red-500"/>
+                              </button>
+                            </td>
+                        </tr>
+                    ))
+                ) : (
+                    <tr>
+                        <td colSpan="6" className="text-center py-4">
+                            No data available.
+                        </td>
+                    </tr>
+                )}
             </tbody>
-          </table>
+        </table>
         )}
         <div>
           {showUpdate && data && (
