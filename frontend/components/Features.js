@@ -3,8 +3,7 @@ import React from "react";
 export default function Features() {
     return (
       <div className="container px-5 py-24 mx-auto">
-      <h1 className="sm:text-3xl text-2xl font-medium title-font text-center text-gray-900 mb-20">Our Features
-            </h1>
+      <h1 className="sm:text-3xl text-2xl font-medium title-font text-center text-gray-900 mb-20">Our Features</h1>
         <div className="flex flex-wrap -m-4">
           <div className="p-4 lg:w-1/3">
             <div className="h-[90%] bg-blue-100 bg-opacity-75 px-8 pt-16 pb-24 rounded-lg overflow-hidden text-center relative transition-transform transform hover:scale-110 hover:bg-blue-200">
