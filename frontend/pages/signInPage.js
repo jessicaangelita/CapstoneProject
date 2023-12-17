@@ -88,13 +88,6 @@ export const signInPage = () => {
           console.log(error);
         });
 
-      // //get token
-      // const accessToken = response?.data?.accessToken;
-      // localStorage.setItem('token', accessToken)
-      // setToken()
-      // //get roles
-      // const roles = response?.data?.roles;
-
       setAuth({username, password});
       setUsername('');
       setPassword('');
