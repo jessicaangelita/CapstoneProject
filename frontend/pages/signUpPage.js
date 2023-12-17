@@ -127,6 +127,8 @@ const SignUpPage = () => {
               Creating your account is quick and easy – just provide some basic information, and you'll be on your way to a world of opportunities. 
               Join us in building bridges between people, ideas, and possibilities. 
               Don't miss out – sign up today and let the connections begin!
+              <br/>
+              JICO – Where JIRA Meets Discord!
               </p>
 
               <div className="h-8 w-16 flex object-right-bottom">

@@ -8,6 +8,7 @@ import UpdatedProject from "../../components/UpdatedProject";
 // import UpdatedProject from "@/components/UpdatedProject";
 import NewProject from "../NewProject";
 
+
 export default function ContentProject() {
 
   //update pb
@@ -24,6 +25,7 @@ export default function ContentProject() {
     const [showUpdate, setShowUpdate] = useState(false);
     const [data, setData] = useState(undefined);
 
+
     const openDeleteModal = (project_id) => {
         setSelectedProjectId(project_id);
         setDeleteModalOpen(true);
@@ -34,8 +36,8 @@ export default function ContentProject() {
         setDeleteModalOpen(false);
     };
 
-    const router = useRouter();
-    const { userid } = router.query;
+    // const router = useRouter();
+    // const { userid } = router.query;
 
     const handleEdit = (item) => {
         setData(item);
@@ -58,7 +60,7 @@ export default function ContentProject() {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get(`http://localhost:8050/project/user/connected/${userid}`);
+            const response = await axios.get('http://localhost:8050/project/all');
             const responseData = response.data.data;
             setProject(responseData); 
             setIsLoading(false);
@@ -76,9 +78,9 @@ export default function ContentProject() {
     
       useEffect(() => {
         void fetchData();
-      }, [userid]);
+      }, []);
     
-      const onProviderUpdate = () => {
+      const onProjectUpdate = () => {
         void fetchData();
         handleCancel();
       };
@@ -86,9 +88,8 @@ export default function ContentProject() {
     return (
         <>
             <HeaderHome/>
-            {/* update pb */}
-            <div>
-              <button className="text-white bg-blue-700 px-8 py-2 rounded-md mx-5 mt-8" onClick={togglePopup}>Add Project</button>
+            <div className="flex justify-end">
+              <button className="text-white bg-primary-lightblue hover:bg-primary-mediumblue px-8 py-2 rounded-md mx-5 mt-5 mb-8 text-end" onClick={togglePopup}>Add Project</button>
                 {isPopupOpen && (
                     <div className="popup-container">
                         <div className="popup-content">
@@ -97,37 +98,38 @@ export default function ContentProject() {
                     </div>
                 )}
             </div>
-            <div className="flex justify-center mt-10">
+            <div className="mx-auto max-w-3xl mr-[250px]">
                 {isLoading ? (
                     <p>Loading...</p>
                 ) : (
-                    <table className="border-collapse border w-full border-gray-800">
-                        <thead>
-                            <tr className="bg-gray-200">
-                                <th className="px-6 py-3 text-left">ID</th>
-                                <th className="px-6 py-3 text-left">Project Name</th>
-                                <th className="px-6 py-3 text-left">Link Webhook</th>
-                                <th className="px-6 py-3 text-left">Integration</th>
-                                <th className="px-6 py-3 text-center">Edit</th>
-                                <th className="px-6 py-3 text-center">Delete</th>
+                    <table className="w-full text-sm  text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                <th scope="col" className="px-6 py-3 text-left">ID</th>
+                                <th scope="col" className="px-6 py-3 text-left">Project Name</th>
+                                <th scope="col" className="px-6 py-3 text-left">Webhook Link</th>
+                                <th scope="col" className="px-6 py-3 text-left">Integration</th>
+                                <th scope="col" className="px-6 py-3 text-center">Edit</th>
+                                <th scope="col" className="px-6 py-3 text-center">Delete</th>
                             </tr>
                         </thead>
                         <tbody>
                             {Array.isArray(project) && project.length > 0 ? (
                                 project.map((item) => (
-                                    <tr key={item.project_id}>
+                                    <tr key={item.project_id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"> {item.id} </th>
                                         <td className="px-6 py-4">{item.project_id}</td>
                                         <td className="px-6 py-4">{item.name}</td>
                                         <td className="px-6 py-4">{item.webhook}</td>
                                         <td className="px-6 py-4">{item.provider_type}</td>
-                                        <td className="px-6 py-4">
+                                        <td className="px-6 py-4 text-center">
                                             <div>
                                         <button onClick={() => handleEdit(item)}>
                                                 <FaPencilAlt className="text-blue-500" />
                                             </button>      
                                         </div>                   
-                                    </td>
-                                        <td className="px-6 py-4">
+                                        </td>
+                                        <td className="px-6 py-4 text-center">
                                             <button onClick={() => openDeleteModal(item.project_id)}>
                                                 <FaTrashAlt className="text-red-500" />
                                             </button>
@@ -136,21 +138,25 @@ export default function ContentProject() {
                                 ))
                             ) : (
                                 <tr>
-                                    <td colSpan="6" className="text-center">No data available.</td>
+                                    <td colSpan="6" className="text-center py-4">
+                                        No data available.
+                                    </td>
                                 </tr>
                             )}
 
                         </tbody>
                     </table>
                 )}
+                <div>
                 {showUpdate && (
-            <UpdatedProject
-            data={data}
-            onUpdate={onProviderUpdate}
-            setData={setData}
-            onCancel={handleCancel}
-            />
-        )}
+                    <UpdatedProject
+                        data={data}
+                        onUpdate={onProjectUpdate}
+                        setData={setData}
+                        onCancel={handleCancel}
+                    />
+                )}
+            </div>
         </div>
 
             {deleteModalOpen && (
@@ -166,4 +172,4 @@ export default function ContentProject() {
             )}
         </>
     );
-            }
+}

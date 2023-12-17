@@ -4,8 +4,7 @@ import HeaderHome from "../components/HeaderHome";
 
 export default function Providers() {
     return (
-        <div>
-            {/* <HeaderHome/> */}
+        <div className="min-h-screen bg-primary-darkgrey">
             <ContentProvider/>
         </div>
     )

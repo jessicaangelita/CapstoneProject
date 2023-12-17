@@ -23,77 +23,17 @@ const togglePopup = () => {
   const [selectedProviderId, setSelectedProviderId] = useState(null);
   const [showUpdate, setShowUpdate] = useState(false);
   const [data, setData] = useState(undefined);
-    // const router = useRouter();
-
-    // const { messageprovider_id } = router.query
-
-    const Provider = [
-      {
-        key: 'ID',
-        title: 'ID',
-      },
-      {
-        key: 'provider_name',
-        title: 'PROVIDER NAME',
-      },
-      {
-        key: 'webhook_link',
-        title: 'WEBHOOK LINK',
-      },
-      {
-        key: 'integration',
-        title: 'INTEGRATION'
-      },
-      {
-        key: 'edit',
-        title: 'EDIT',
-      },
-      {
-        key: 'delete',
-        title: 'DELETE',
-      }
-    ]
-
-    const Project = [
-      {
-        key: 'ID',
-        title: 'ID',
-      },
-      {
-        key: 'project_name',
-        title: 'PROJECT NAME',
-      },
-      {
-        key: 'webhook_link',
-        title: 'WEBHOOK LINK',
-      },
-      {
-        key: 'integration',
-        title: 'INTEGRATION'
-      },
-      {
-        key: 'edit',
-        title: 'EDIT',
-      },
-      {
-        key: 'delete',
-        title: 'DELETE',
-      }
-    ]
-
-
+ 
     const openDeleteModal = (message_provider_id) => {
         setSelectedProviderId(message_provider_id);
         setDeleteModalOpen(true);
     }
-  
 
   const closeDeleteModal = () => {
         setSelectedProviderId(null);
         setDeleteModalOpen(false);
     }
 
-  //Updated
   const handleEdit = (item) => {
     setData(item);
   };
@@ -144,8 +84,8 @@ const togglePopup = () => {
   return (
     <>
       <HeaderHome />
-      <div>
-        <button className="text-white bg-blue-700 px-8 py-2 rounded-md mx-5 mt-8" onClick={togglePopup}>Add Provider</button>
+      <div className="flex justify-end">
+        <button className="text-white bg-primary-lightblue hover:bg-primary-mediumblue px-8 py-2 rounded-md mx-5 mt-5 mb-8 text-end" onClick={togglePopup}>Add Provider</button>
         {isPopupOpen && (
             <div className="popup-container">
               <div className="popup-content">
@@ -154,11 +94,11 @@ const togglePopup = () => {
             </div>
         )}
       </div>
-      <div className="mx-auto max-w-2xl">
+      <div className="mx-auto max-w-3xl mr-[250px]">
         {isLoading ? (
           <p>Loading...</p>
         ) : (
-          <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+          <table className="w-full text-sm  text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                     <th scope="col" className="px-6 py-3 text-left">ID</th>
@@ -173,7 +113,7 @@ const togglePopup = () => {
                 {Array.isArray(provider) && provider.length > 0 ? (
                     provider.map((item) => (
                         <tr key={item.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                            <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"> {item.id}</th>
+                            <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"> {item.id} </th>
                             <td className="px-6 py-4">{item.provider_label}</td>
                             <td className="px-6 py-4">{item.webhook}</td>
                             <td className="px-6 py-4">{item.provider_type}</td>

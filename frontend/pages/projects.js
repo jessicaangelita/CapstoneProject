@@ -7,8 +7,7 @@ import React from "react";
 
 export default function Projects() {
     return (
-        <div>
-            {/* <ContentProject/> */}
+        <div className="min-h-screen bg-primary-darkgrey">
             <ContentProject/>
         </div>
     )
