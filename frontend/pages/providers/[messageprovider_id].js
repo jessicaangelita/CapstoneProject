@@ -94,7 +94,7 @@ const togglePopup = () => {
             </div>
         )}
       </div>
-      <div className="mx-auto max-w-3xl mr-[250px]">
+      <div className="mx-auto max-w-3xl mr-[300px]">
         {isLoading ? (
           <p>Loading...</p>
         ) : (
