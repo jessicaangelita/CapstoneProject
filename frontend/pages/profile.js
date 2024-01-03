@@ -1,7 +1,7 @@
 // pages/profile.js
 
 import React, { useState, useEffect, useRouter } from "react";
-import HeaderHome from "../components/HeaderHome";
+import HeaderHome from "../components/headerhome"
 import FormProfileEdit from "../components/EditProfile";
 import axios from "../pages/api/axios";
 // import user from "../public/assets/user.png"
@@ -51,14 +51,14 @@ const Profile = () => {
         </div>
       <HeaderHome />
       
-      <div className="container mx-auto mt-8 p-4">
-        <h1 className="text-2xl font-bold mb-4 mr-8">Profile</h1>
+      <div className="container mx-auto mt-24 ml-36 p-4">
+        {/* <h1 className="text-2xl font-bold mb-4 mr-28">Profile</h1> */}
         <div className="flex justify-center items-center">
 
         {/* Information */}
-        <div className="bg-white flex flex-col items-center max-w-screen-lg border-8 border-gradient-to-l overflow-hidden rounded-lg shadow-[0_3px_10px_rgb(0,0,0,1)] w-3/5 md:flex-row text-black">
+        <div className="bg-white flex flex-col items-center max-w-screen-lg border-8 border-gradient-to-l overflow-hidden rounded-lg shadow-[0_3px_10px_rgb(0,0,0,1)] w-2/3 md:flex-row text-black">
           {/* Profile display */}
-          <div className= "p-6 rounded-2xl m-1 flex flex-col shadow-md justify-start items-center w-96 from-primary-mediumblue via-white to-primary-mediumblue bg-gradient-to-tr h-96">
+          <div className= "p-6 rounded-2xl m-1 flex flex-col shadow-md justify-start items-center w-1/3 from-primary-mediumblue via-white to-primary-mediumblue bg-gradient-to-tr h-96">
             <img className="inline-block h-24 w-24 rounded-full ring-2 ring-white"
                   src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                   alt=""
@@ -120,9 +120,9 @@ const Profile = () => {
               <div className="mt-6 flex items-center justify-end">
                 <button
                   onClick={() => setIsEditing(true)}
-                  className="bg-blue-500 text-white py-1 px-7 rounded mt-9"
+                  className="bg-blue-500 text-white text-lg py-3 px-7 rounded mt-9"
                 >
-                  Edit Profile
+                  Edit
                 </button>
               </div>
             </div>
