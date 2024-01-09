@@ -29,6 +29,13 @@ module.exports = {
         'inter': ['Inter', 'sans-serif'],
         'josefin': ['Josefin Sans', 'sans-serif'],
         'noto': ['Noto Sans', 'sans-serif']
+      },
+      dropShadow: {
+        'white-3xl': '0 100px 100px rgba(255, 255, 255, 1)',
+        '4xl': [
+            '0 35px 35px rgba(255, 255, 255, 0.25)',
+            '0 45px 65px rgba(0, 0, 0, 0.15)'
+        ]
       }
     },
   },
