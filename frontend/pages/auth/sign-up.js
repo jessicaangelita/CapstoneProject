@@ -44,6 +44,7 @@ const SignUpPage = () => {
   // Error Message
   const [errMsg, setErrMsg] = useState("");
   const [success, setSuccess] = useState(false);
+  const [registrationWarning, setRegistrationWarning] = useState(false);
 
   useEffect(() => {
     userReference.current.focus(); //setting focusnya ketika komponen load
@@ -92,21 +93,27 @@ const SignUpPage = () => {
         password: pass,
       };
 
-      axios
-        .post(signup_url, data)
-        .then((res) => {
-          console.log("success");
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    } catch (err) {
-      console.log("Registrastion Failed", err);
-      errReference.current.focus();
-    }
-    setSuccess(true);
-    window.location.href = "/auth/sign-in";
-  };
+      const response = await axios.post(signup_url, data)
+      .then((res) => {
+        console.log("Registration Success");
+      })
+      .catch((err) => {
+        if (err instanceof Error && err.response) {
+          if (err.response.status === 400) {
+            console.log("Registration failed. Account already registered.");
+            setRegistrationWarning(true);
+          }
+        }
+      });
+
+      } catch (err) {
+        console.log('Registrastion Failed',err)
+        // setErrMsg("Registration failed. Please try again.");
+        errReference.current.focus();
+      }
+      setSuccess(true);
+      // window.location.href = "/signInPage";
+    };
 
   return (
     <>
@@ -135,6 +142,13 @@ const SignUpPage = () => {
                 <p className="font-light text-sm mb-5 text-primary-lightblue">
                   Fill the credential required for registration
                 </p>
+
+                {/* Warning for already registered data */}
+                {registrationWarning && (
+                  <p className="text-red-600 text-sm ">
+                    Account already registered. Please sign in or use a different email/username.
+                  </p>
+                )}
               </div>
 
               <div className="p-3 pt-0">
