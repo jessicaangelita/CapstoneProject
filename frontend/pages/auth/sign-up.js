@@ -87,7 +87,7 @@ const SignUpPage = () => {
 
     try {
       const data = {
-        fullname,
+        name: fullname,
         username: uname,
         email,
         password: pass,
@@ -112,7 +112,7 @@ const SignUpPage = () => {
         errReference.current.focus();
       }
       setSuccess(true);
-      // window.location.href = "/signInPage";
+      window.location.href = "/auth/sign-in";
     };
 
   return (
