@@ -44,6 +44,7 @@ export default function ContentProject() {
 
   const deleteProject = async () => {
     try {
+      console.log(selectedProjectId)
       await axios.delete(
         `http://localhost:8050/project/id/${selectedProjectId}`
       );
@@ -126,8 +127,9 @@ export default function ContentProject() {
                     <button onClick={() => handleEdit(item)}>
                       <FaPencilAlt className="text-blue-500" />
                     </button>
-                    <a href="projects/detailproject">Details</a>
-                    <button onClick={() => openDeleteModal(item.project_id)}>
+                    {/* <a href={`/projectDetails/${item.id}`}>Details</a> */}
+                    <a href="/projectDetails">Details</a>
+                    <button onClick={() => openDeleteModal(item.id)}>
                       <FaTrashAlt className="text-red-500" />
                     </button>
                   </div>

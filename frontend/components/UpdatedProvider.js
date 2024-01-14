@@ -3,6 +3,7 @@ import axios from "../pages/api/axios";
 // import axios from "@/pages/api/axios";
 
 export default function UpdatedProvider({ data, onUpdate, onCancel, setData }) {
+  console.log(data)
   const [id,setID] = useState(data.id)
   const [providername, setProvidertName] = useState(data.provider_label);
   const [webhook, setWebhook] = useState(data.webhook);

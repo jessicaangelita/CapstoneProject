@@ -123,7 +123,7 @@ export default function ContentProvider() {
                     <button onClick={() => handleEdit(item)}>
                       <FaPencilAlt className="text-blue-500" />
                     </button>
-                    <button onClick={() => openDeleteModal(item.provider_id)}>
+                    <button onClick={() => openDeleteModal(item.id)}>
                       <FaTrashAlt className="text-red-500" />
                     </button>
                   </div>
