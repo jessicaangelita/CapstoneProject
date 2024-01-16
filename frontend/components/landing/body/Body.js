@@ -36,10 +36,10 @@ export const Body = () => {
             {/* Get Started Button */}
             <div className="w-full flex pb-14 lg:pb-24 md:pb-24 justify-center space-x-3 md:space-x-7 lg:space-x-10 font-semibold">
               <button className="w-1/2 lg:w-1/3 text-white bg-primary-lightblue border-0 py-3 focus:outline-none rounded-md hover:bg-primary-mediumblue tracking-wider">
-                <a href="/signUpPage">Get Started</a>
+                <a href="/auth/sign-up">Get Started</a>
               </button>
               <button className="w-1/2 lg:w-1/3 text-white bg-primary-grey border-0 py-3 focus:outline-none rounded-md hover:bg-primary-darkgrey tracking-wider">
-                <a href="/signInPage">Sign In</a>
+                <a href="/auth/sign-in">Sign In</a>
               </button>
             </div>
           </div>

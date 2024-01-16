@@ -7,6 +7,8 @@ import axios, { setToken } from "../api/axios";
 import AuthContext from "../context/AuthProvider";
 import Image from "next/image";
 import { IMAGE } from "../../public/config/index";
+import Link from "next/link";
+import bcrypt from 'bcryptjs';
 
 const SignIn_URL = "http://localhost:8050/user/SignIn";
 
@@ -65,27 +67,55 @@ export const signInPage = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // RAWPassword
+  // const hashPassword = async (password) => {
+  //   const saltRounds = 10;
+  //   const hashedPassword = await bcrypt.hash(password, saltRounds);
+  //   return hashedPassword;
+  // };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     // buat response success
     // test only // console.log(username, password);
 
     try {
+      // const hashedPassword = await hashPassword(password);
+
       const data = {
         username,
         password,
       };
-      axios
-        .post(SignIn_URL, data)
-        .then((res) => {
-          console.log("success");
-          //IF LOGIN SUCCESS <bakal direplace atau dipindahin gtw>
-          setSuccess(true);
-          window.location.href = "/homePage";
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+
+      // HASH PASSWORD
+      // const hashedPassword = bcrypt.hashSync(password, 10);
+      // data.password = hashedPassword;
+
+     const res = await axios.post(SignIn_URL, data)
+     
+     const { accessToken } = res.data.data;
+
+     localStorage.setItem("accessToken", accessToken);
+    //  localStorage.setItem("hashedPassword", hashedPassword);
+     console.log("success");
+     setSuccess(true);
+     window.location.href = "/homePage";
+
+        // .then((res) => {
+        //   const { accessToken } = response.data.data;
+
+        //   localStorage.setItem("accessToken", accessToken);
+        //   console.log("success");
+        //   // const { accessToken } = res.data.data;
+
+        //   // localStorage.setItem("accessToken", accessToken);
+        //   //IF LOGIN SUCCESS <bakal direplace atau dipindahin gtw>
+        //   setSuccess(true);
+        //   window.location.href = "/homePage";
+        // })
+        // .catch((error) => {
+        //   console.log(error);
+        // });
 
       // //get token
       // const accessToken = response?.data?.accessToken;
@@ -100,8 +130,8 @@ export const signInPage = () => {
     } catch (error) {
       console.log("Sign In Failed", error);
       errorRef.current.focus();
-      errorRef.current.focus();
     }
+
 
     // buat remember me
     if (rememberMe) {
@@ -169,16 +199,24 @@ export const signInPage = () => {
                 </a>
                 . Privacy - Terms.
               </span>
-              <Image
-                alt="TELKOM Logo"
-                src={IMAGE.TELKOM_LOGO_WHITE}
-                className="h-10 w-auto mb-2"
-              />
-              <Image
-                alt="JIRA Logo"
-                src={IMAGE.JIRA_LOGO_WHITE}
-                className="h-5 w-auto mb-2"
-              />
+              <div>
+              <a href="https://www.telkom.co.id/sites" target="_blank" rel="noopener noreferrer">
+                <Image
+                  alt="TELKOM Logo"
+                  src={IMAGE.TELKOM_LOGO_WHITE}
+                  className="h-10 w-auto mb-2"
+                />
+                </a>
+              </div>
+              <div>
+              <a href="https://www.atlassian.com/software/jira" target="_blank" rel="noopener noreferrer">
+                <Image
+                  alt="JIRA Logo"
+                  src={IMAGE.JIRA_LOGO_WHITE}
+                  className="h-5 w-auto mb-2"
+                />
+                </a>
+              </div>
             </div>
           </div>
         </div>
@@ -188,11 +226,13 @@ export const signInPage = () => {
 
           {/* JICO Logo */}
           <div className="flex flex-col items-end py-0 pr-16">
-            <Image
-              alt="JICO Logo"
-              src={IMAGE.LOGO_DARK_BLUE}
-              className="h-10 w-auto"
-            />
+          <Link href="/">
+              <Image
+                alt="JICO Logo"
+                src={IMAGE.LOGO_DARK_BLUE}
+                className="h-10 w-auto cursor-pointer"
+              />
+            </Link>
           </div>
           <div className="pt-1 pb-8 px-4 w-full">
             <div className="rounded-md border border-primary-lightblue text-primary-darkgrey shadow-sm flex min-h-full flex-1 flex-col justify-center bg-transparent border-none">

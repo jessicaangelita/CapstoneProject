@@ -8,6 +8,7 @@ import { FcCheckmark } from "react-icons/fc";
 import axios from "../api/axios";
 import { IMAGE } from "../../public/config/index";
 import Image from "next/image";
+import Link from "next/link";
 
 // export default function SignUpPage() {
 
@@ -44,6 +45,7 @@ const SignUpPage = () => {
   // Error Message
   const [errMsg, setErrMsg] = useState("");
   const [success, setSuccess] = useState(false);
+  const [registrationWarning, setRegistrationWarning] = useState(false);
 
   useEffect(() => {
     userReference.current.focus(); //setting focusnya ketika komponen load
@@ -86,27 +88,35 @@ const SignUpPage = () => {
 
     try {
       const data = {
-        fullname,
+        name: fullname,
         username: uname,
         email,
         password: pass,
       };
 
-      axios
-        .post(signup_url, data)
-        .then((res) => {
-          console.log("success");
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    } catch (err) {
-      console.log("Registrastion Failed", err);
-      errReference.current.focus();
-    }
-    setSuccess(true);
-    window.location.href = "/auth/sign-in";
-  };
+      const response = await axios.post(signup_url, data)
+      .then((res) => {
+        console.log("Registration Success");
+        setSuccess(true);
+        window.location.href = "/auth/sign-in";
+      })
+      .catch((err) => {
+        if (err instanceof Error && err.response) {
+          if (err.response.status === 400) {
+            console.log("Registration failed. Account already registered.");
+            setRegistrationWarning(true);
+          }
+        }
+      });
+
+      } catch (err) {
+        console.log('Registrastion Failed',err)
+        // setErrMsg("Registration failed. Please try again.");
+        errReference.current.focus();
+      }
+      // setSuccess(true);
+      // window.location.href = "/auth/sign-in";
+    };
 
   return (
     <>
@@ -118,11 +128,13 @@ const SignUpPage = () => {
         <div className="md:w-2/5 flex flex-col justify-center">
           {/* LOGO */}
           <div className="flex flex-col items-start py-4 pl-6 ">
-            <Image
-              alt="JICO Logo"
-              src={IMAGE.LOGO_DARK_BLUE}
-              className="h-10 w-auto"
-            />
+            <Link href="/">
+              <Image
+                alt="JICO Logo"
+                src={IMAGE.LOGO_DARK_BLUE}
+                className="h-10 w-auto cursor-pointer"
+              />
+            </Link>
           </div>
 
           <div className="pt-1 pb-8 px-4 w-full">
@@ -133,8 +145,15 @@ const SignUpPage = () => {
                   Sign Up
                 </h5>
                 <p className="font-light text-sm mb-5 text-primary-lightblue">
-                  Fill the credential required for registration
+                  Please provide the required information for the registration process.
                 </p>
+
+                {/* Warning for already registered data */}
+                {registrationWarning && (
+                  <p className="text-red-600 text-sm ">
+                    Account already registered. Please sign in or use a different email/username.
+                  </p>
+                )}
               </div>
 
               <div className="p-3 pt-0">
@@ -148,7 +167,7 @@ const SignUpPage = () => {
                   </p>
 
                   {/* FORM */}
-                  <form onSubmit={handleSubmit} className="space-y-6">
+                  <form onSubmit={handleSubmit} className="space-y-5">
                     {/* FullName */}
                     <div className="space-y-2">
                       <p
@@ -414,9 +433,9 @@ const SignUpPage = () => {
           </div>
 
           {/* IMG Footer */}
-          <div className="absolute bottom-0 text-white mx-3 invisible md:visible lg:visible">
+          <div className="absolute bottom-0 right-0 text-white mx-3 invisible md:visible lg:visible">
             <div className="flex gap-2 mb-3 items-end flex-row ">
-              <span className="block text-sm text-white sm:text-center">
+              <span className="block text-sm text-white sm:text-center mb-2">
                 © 2023
                 <a
                   href="https://www.telkom.co.id/sites"
@@ -426,16 +445,24 @@ const SignUpPage = () => {
                 </a>
                 . Privacy - Terms.
               </span>
-              <Image
-                alt="TELKOM Logo"
-                src={IMAGE.TELKOM_LOGO_WHITE}
-                className="h-10 w-auto mb-2"
-              />
-              <Image
-                alt="JIRA Logo"
-                src={IMAGE.JIRA_LOGO_WHITE}
-                className="h-5 w-auto mb-2"
-              />
+              <div>
+              <a href="https://www.telkom.co.id/sites" target="_blank" rel="noopener noreferrer">
+                <Image
+                  alt="TELKOM Logo"
+                  src={IMAGE.TELKOM_LOGO_WHITE}
+                  className="h-10 w-auto mb-2"
+                />
+              </a>
+              </div>
+              <div>
+                <a href="https://www.atlassian.com/software/jira" target="_blank" rel="noopener noreferrer">
+                <Image
+                    alt="JIRA Logo"
+                    src={IMAGE.JIRA_LOGO_WHITE}
+                    className="h-5 w-auto mb-3"
+                  />
+                </a>
+              </div>
             </div>
           </div>
         </div>

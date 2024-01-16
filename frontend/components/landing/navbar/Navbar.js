@@ -19,11 +19,11 @@ export const Navbar = () => {
 
       {/* Right Side */}
       <div className="flex space-x-10 justify-center">
-        <Link className="font-extrabold text-primary-lightblue hover:underline py-2" href="/auth/sign-in">
+        <Link className="font-extrabold text-primary-lightblue hover:underline" href="/auth/sign-in">
           Sign In
         </Link>
         <Link
-          className="text-white font-semibold bg-primary-lightblue px-5 py-2 lg:px-10 hover:underline rounded-md"
+          className="text-white font-semibold bg-primary-lightblue px-5 lg:px-10 hover:underline"
           href="/auth/sign-up"
         >
           Sign Up
