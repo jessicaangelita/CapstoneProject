@@ -8,6 +8,7 @@ import AuthContext from "../context/AuthProvider";
 import Image from "next/image";
 import { IMAGE } from "../../public/config/index";
 import Link from "next/link";
+import bcrypt from 'bcryptjs';
 
 const SignIn_URL = "http://localhost:8050/user/SignIn";
 
@@ -66,30 +67,55 @@ export const signInPage = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // RAWPassword
+  // const hashPassword = async (password) => {
+  //   const saltRounds = 10;
+  //   const hashedPassword = await bcrypt.hash(password, saltRounds);
+  //   return hashedPassword;
+  // };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     // buat response success
     // test only // console.log(username, password);
 
     try {
+      // const hashedPassword = await hashPassword(password);
+
       const data = {
         username,
         password,
       };
-      axios
-        .post(SignIn_URL, data)
-        .then((res) => {
-          console.log("success");
-          // const { accessToken } = res.data.data;
 
-          // localStorage.setItem("accessToken", accessToken);
-          //IF LOGIN SUCCESS <bakal direplace atau dipindahin gtw>
-          setSuccess(true);
-          window.location.href = "/homePage";
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      // HASH PASSWORD
+      // const hashedPassword = bcrypt.hashSync(password, 10);
+      // data.password = hashedPassword;
+
+     const res = await axios.post(SignIn_URL, data)
+     
+     const { accessToken } = res.data.data;
+
+     localStorage.setItem("accessToken", accessToken);
+    //  localStorage.setItem("hashedPassword", hashedPassword);
+     console.log("success");
+     setSuccess(true);
+     window.location.href = "/homePage";
+
+        // .then((res) => {
+        //   const { accessToken } = response.data.data;
+
+        //   localStorage.setItem("accessToken", accessToken);
+        //   console.log("success");
+        //   // const { accessToken } = res.data.data;
+
+        //   // localStorage.setItem("accessToken", accessToken);
+        //   //IF LOGIN SUCCESS <bakal direplace atau dipindahin gtw>
+        //   setSuccess(true);
+        //   window.location.href = "/homePage";
+        // })
+        // .catch((error) => {
+        //   console.log(error);
+        // });
 
       // //get token
       // const accessToken = response?.data?.accessToken;
@@ -103,7 +129,6 @@ export const signInPage = () => {
       setPassword("");
     } catch (error) {
       console.log("Sign In Failed", error);
-      errorRef.current.focus();
       errorRef.current.focus();
     }
 

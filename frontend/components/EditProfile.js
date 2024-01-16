@@ -279,7 +279,7 @@ const FormProfileEdit = ({ onSave }) => {
             type={showPassword ? "text" : "password"}
             name="password"
             onChange={(e) => setPassword(e.target.value)}
-            required
+            // required
             aria-invalid={validPass ? "false" : "true"}
             aria-describedby="pass-note"
             onFocus={() => setPassFocus(true)}
