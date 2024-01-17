@@ -24,42 +24,42 @@ export default function ContentProfile () {
   const router = useRouter();
 
   const handleEditButtonClick = () => {
-    router.push("/edit"); // Sesuaikan dengan path yang sesuai untuk halaman edit profil Anda
+    router.push("/editUser"); // Sesuaikan dengan path yang sesuai untuk halaman edit profil Anda
   };
   
 //   const handleEdit = (item) => {
 //     setData(item);
 // };
 
-  // const handleSaveProfile = async (editedData) => {
-  //  try {
-  //     const response = await axios.put(
-  //       "http://localhost:8050/user/profile",
-  //       editedData,
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-  //         },
-  //       }
-  //     );
+  const handleSaveProfile = async (editedData) => {
+   try {
+      const response = await axios.put(
+        "http://localhost:8050/user/profile",
+        editedData,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
+      );
   
-  //     // Pastikan permintaan berhasil
-  //     if (response.status === 200) {
-  //       console.log("Profile updated successfully!");
-  //       setIsEditing(false); 
-  //       fetchProfileData(); 
+      // Pastikan permintaan berhasil
+      if (response.status === 200) {
+        console.log("Profile updated successfully!");
+        setIsEditing(false); 
+        fetchProfileData(); 
 
-  //       router.push("/profile");
-  //       console.log(router);
-  //     } else {
-  //       console.error("Failed to update profile:", response.data);
+        router.push("/profile");
+        console.log(router);
+      } else {
+        console.error("Failed to update profile:", response.data);
         
-  //     }
-  //   } catch (error) {
-  //     console.error("Error updating profile:", error);
+      }
+    } catch (error) {
+      console.error("Error updating profile:", error);
       
-  //   }
-  // };
+    }
+  };
     
     // Fetch profile data from the API
     const fetchProfileData = async () => {
@@ -89,7 +89,7 @@ export default function ContentProfile () {
 
     useEffect(() => {
         fetchProfileData();
-      }, []);
+      }, [router.query]);
 
 //   return (
 //     <div className="min-h-screen bg-primary-darkgrey flex flex-col w-full">
@@ -200,9 +200,9 @@ export default function ContentProfile () {
             </div>
 
 
-          {/* {isEditing ? (
+          {isEditing ? (
             <FormProfileEdit onSave={handleSaveProfile} />
-          ) : ( */}
+          ) : (
             <div className="mt-6 pl-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
             <div className="sm:col-span-3">
               <label htmlFor="first-name" className="block text-2xl font-medium leading-6 text-gray-900">
@@ -241,7 +241,7 @@ export default function ContentProfile () {
                 </button>
               </div>
             </div>
-          {/* )} */}
+           )}
           </div>
           </div>
           </div>
