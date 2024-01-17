@@ -3,23 +3,10 @@ import React , { useEffect, useState }from "react";
 import Link from "next/link";
 
 export default function Profile() {
-    const [id, setId] = useState("");
 
-    useEffect(() => {
-      // Ambil ID dari localStorage atau tempat penyimpanan lainnya
-      const storedId = localStorage.getItem("accessToken"); // Sesuaikan dengan tempat Anda menyimpan ID
-      setId(storedId);
-    }, []);
-    
     return (
         <div className="min-h-screen bg-primary-darkgrey">
             <ContentProfile/>
-            {/* <Link href="profile/" as={`user/profile`}>
-                Your Profile
-            </Link> */}
-            <Link href={`/profile/${id}`} as={`user/profile/${id}`}>
-                Your Profile
-            </Link>
         </div>
     )
 }
