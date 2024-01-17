@@ -8,7 +8,6 @@ import AuthContext from "../context/AuthProvider";
 import Image from "next/image";
 import { IMAGE } from "../../public/config/index";
 import Link from "next/link";
-import bcrypt from 'bcryptjs';
 
 const SignIn_URL = "http://localhost:8050/user/SignIn";
 
@@ -67,36 +66,21 @@ export const signInPage = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // RAWPassword
-  // const hashPassword = async (password) => {
-  //   const saltRounds = 10;
-  //   const hashedPassword = await bcrypt.hash(password, saltRounds);
-  //   return hashedPassword;
-  // };
-
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    // buat response success
-    // test only // console.log(username, password);
+    e.preventDefault()
 
     try {
-      // const hashedPassword = await hashPassword(password);
 
       const data = {
         username,
         password,
       };
 
-      // HASH PASSWORD
-      // const hashedPassword = bcrypt.hashSync(password, 10);
-      // data.password = hashedPassword;
-
      const res = await axios.post(SignIn_URL, data)
      
      const { accessToken } = res.data.data;
 
      localStorage.setItem("accessToken", accessToken);
-    //  localStorage.setItem("hashedPassword", hashedPassword);
      console.log("success");
      setSuccess(true);
      window.location.href = "/homePage";
