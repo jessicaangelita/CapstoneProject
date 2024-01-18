@@ -18,7 +18,7 @@ export default function ContentProject() {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [selectedProjectId, setSelectedProjectId] = useState(null);
   const [showUpdate, setShowUpdate] = useState(false);
-  const [data, setData] = useState(undefined);
+  const [data, setData] = useState({});
 
   const openDeleteModal = (project_id) => {
     setSelectedProjectId(project_id);
@@ -31,11 +31,21 @@ export default function ContentProject() {
   };
 
   // const router = useRouter();
-  // const { userid } = router.query;
+  // const { user_id } = router.query;
+  // console.log(user_id, "userid")
 
   const handleEdit = (item) => {
     setData(item);
+    if (!data) return;
+
+    setShowUpdate(true);
   };
+
+//   useEffect(() => {
+//   if (!data) return;
+
+//   setShowUpdate(true);
+// }, [data]);
 
   const handleCancel = () => {
     setData(undefined);
@@ -46,39 +56,76 @@ export default function ContentProject() {
     try {
       console.log(selectedProjectId)
       await axios.delete(
-        `http://localhost:8050/project/id/${selectedProjectId}`
+        `http://localhost:8050/project/id/${selectedProjectId}`,
+        {
+          headers: {
+              Authorization : `Bearer ${localStorage.getItem("accessToken")}`    
+          }
+        }
       );
-      fetchData();
+      console.log('asd')
+      fetchProjectData();
       closeDeleteModal();
     } catch (error) {
       console.error("Error deleting project: ", error);
     }
   };
 
-  const fetchData = async () => {
+  
+
+//   const fetchData = async () => {
+//     try {
+//       const response = await axios.get("http://localhost:8050/project/all");
+//       const responseData = response.data.data;
+//       setProject(responseData);
+//       setIsLoading(false);
+//     } catch (error) {
+//       console.error("Error fetching data: ", error);
+//       setIsLoading(false);
+//     }
+//   };
+
+const fetchProjectData = async () => {
     try {
-      const response = await axios.get("http://localhost:8050/project/all");
-      const responseData = response.data.data;
-      setProject(responseData);
-      setIsLoading(false);
+        const response = await axios.get(
+            `http://localhost:8050/project/user/owned`,
+            {
+                headers: {
+                    Authorization : `Bearer ${localStorage.getItem("accessToken")}`    
+                }
+            }
+        );
+
+        const fetchData = await response.data;
+
+        console.log('Data from API', fetchData);
+        console.log(fetchData.data);
+        if(fetchData) {
+          console.log(project, "abc")
+            setProject(fetchData.data);
+            console.log(project, "asd")
+            setIsLoading(false);
+        }
     } catch (error) {
-      console.error("Error fetching data: ", error);
-      setIsLoading(false);
+        console.error("Error fetching data:", error);
+        setIsLoading(false);
     }
-  };
+};
 
-  useEffect(() => {
-    if (!data) return;
 
-    setShowUpdate(true);
-  }, [data]);
 
-  useEffect(() => {
-    void fetchData();
-  }, []);
+useEffect(() => {
+    fetchProjectData();
+}, []);
+
+
+
+//   useEffect(() => {
+//     void fetchData();
+//   }, []);
 
   const onProjectUpdate = () => {
-    void fetchData();
+    void fetchProjectData();
     handleCancel();
   };
 
@@ -103,14 +150,18 @@ export default function ContentProject() {
         )}
       </div>
       <div className="mx-auto max-w-3xl mr-[300px]">
+        {console.log(Array.isArray(project), "array")}
         {isLoading ? (
           <p>Loading...</p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+
             {Array.isArray(project) && project.length > 0 ? (
-              project.map((item) => (
-                <div
-                  key={item.project_id}
+              project.map((item) => {
+                console.log(item, "item");
+                return(
+                  <div
+                  key={item.user_id}
                   className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg"
                 >
                   <div className="p-6">
@@ -134,7 +185,9 @@ export default function ContentProject() {
                     </button>
                   </div>
                 </div>
-              ))
+                )
+                
+                })
             ) : (
               <div className="text-center py-4">No data available.</div>
             )}

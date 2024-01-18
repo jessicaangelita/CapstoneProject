@@ -7,7 +7,7 @@ import { AddProvider4 } from "../components/AddProvider4";
 import axios from "./api/axios";
 
 export const NewProvider = ({ onClose }) => {
-  const NewProviderURL = "http://localhost:8050/message-provider/new";
+  // const NewProviderURL = "http://localhost:8050/message-provider/new";
   const ConnectionURL = "http://localhost:8050/connection/new";
   const errReference = useRef();
 
@@ -42,7 +42,11 @@ export const NewProvider = ({ onClose }) => {
       //   connection
       // }
       axios
-        .post(NewProviderURL, data)
+        .post(`http://localhost:8050/message-provider/new`, data, {
+          headers: {
+            Authorization : `Bearer ${localStorage.getItem("accessToken")}`    
+          }
+        })
         // .post(ConnectionURL, dataConnection)
         .then((res) => {
           console.log("success");

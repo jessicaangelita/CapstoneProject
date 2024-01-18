@@ -36,7 +36,12 @@ export default function UpdatedProject({ data, onUpdate, onCancel,setData }) {
         };
 
         await axios.put(`http://localhost:8050/project/edit/${data.id}`,
-         updatedData);
+         updatedData,
+         {
+          headers: {
+              Authorization : `Bearer ${localStorage.getItem("accessToken")}`    
+          }
+        });
 
         setData(updatedData);
         setProjectName(updatedData);

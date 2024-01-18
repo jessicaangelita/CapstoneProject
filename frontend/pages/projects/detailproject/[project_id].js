@@ -6,69 +6,42 @@ import Link from 'next/link';
 import  NewConnectProject from '../../NewConnectProject';
 
 
-const ProjectDetailPage = ({project_id}) => {
-  console.log(project_id)
+const ProjectDetailPage = ({}) => {
   const router = useRouter();
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  // const [list, setList] = useState([]);
-  // const [connection_project_id, setconnection_project_id] = useState("");
-  // const [connectiion_message_provider_id, setconnectiion_message_provider_id] = useState("");
-  // const [project_id, setproject_id] = useState([project_id, setproject_id]);
-  // const [message]
-
-
-  // useEffect(() => {
-  //   setErrMsg("");
-  // }, [connection_project_id, connectiion_message_provider_id])
-
-  // const fetchConnectionProject = async () => {
-  //   try {
-  //     const response = await axios.get(
-  //       `http://localhost:8050/project/id/connected/{${project_id}}`
-  //     );
-  //     const responseData = response.data.data;
-  //   } catch (error) {
-  //     console.error("error fetching data:", error);
-  //   };
-  // };
-
-  // useEffect(() => {
-  //   fetchConnectionProject();
-  // })
+  const [ project_id, setProject_id] = useState(null);
   
+  // const {project_id} = router.query
+  // console.log(project_id)
 
-  // const fetchConnectionProject = async () => {
-  //   try {
-  //     const response = await axios.get(
-  //       `http://localhost:8050/project/id/{${project_id}}`
-  //     );
-  //     const responseData = response.data.data;
+  const fetchConnectData = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8050/connection/id/${project_id}`,
+        {
+          headers: {
+              Authorization : `Bearer ${localStorage.getItem("accessToken")}`    
+          }
+      }
+      );
 
-  //     setList(responseData);
-  //     console.log(response);
-  //   } catch (error) {
-  //     console.error("error fetching data: ", error);
-  //   };
-  // };
+      const fetchData = await response.data;
 
-  // const fetchConnectionProvider = async () => {
-  //   try {
-  //     const response = await axios.get(
-  //       `http://localhost:8050/connection/message-provider/{${messageprovider_id}}`
-  //     );
-  //     const responseData = response.data.data;
+      console.log('Data from API', fetchData);
+      console.log(fetchData.data);
+      if(fetchData) {
+        console.log(project_id), "project id";
+        setProject_id(fetchData.data);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
-  //     setList(responseData);
-  //     console.log(response);
-  //   } catch (error) {
-  //     console.error("error fetching data: ", error);
-  //   };
-  // };
+  useEffect(() => {
+    fetchConnectData();
+  }, []);
 
-  // useEffect(() => {
-  //   fetchConnectionProject(),
-  //   fetchConnectionProvider()
-  // },);
 
   const togglePopup = () => {
     setIsPopupOpen(!isPopupOpen);

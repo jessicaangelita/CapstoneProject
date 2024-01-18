@@ -8,16 +8,30 @@ import axios from './api/axios';
 
 export const NewProject = ({onClose}) => {
 
-const NewProjectURL = "http://localhost:8050/project/new";
+// const NewProjectURL = "http://localhost:8050/project/new";
 const errReference = useRef();
 const [errMsg, setErrMsg] = useState("");
 const [success, setSuccess] = useState(false);
 const [page, setPage] = useState(0);
 const [name, setname] = useState("");
+const [shouldClosePopup, setShouldClosePopup] = useState(false);
+const [isLastPage, setIsLastPage] = useState(false);
+
+useEffect(() => {
+  setErrMsg("");
+  setIsLastPage(page === FormTitles.length - 1);
+}, [name]);
 
 useEffect(() => {
     setErrMsg("");
 }, [name]);
+
+useEffect(() => {
+  if (shouldClosePopup) {
+    onClose(); // Memanggil fungsi onClose untuk menutup pop-up
+    window.location.reload();
+  }
+}, [shouldClosePopup, onClose]);
 
 
 const handleSubmit = (e) => {
@@ -29,7 +43,11 @@ const handleSubmit = (e) => {
       };
 
       axios
-        .post(NewProjectURL, data)
+        .post(`http://localhost:8050/project/new`, data, {
+          headers: {
+            Authorization : `Bearer ${localStorage.getItem("accessToken")}`    
+          }
+        })
         .then((res) => {
           console.log("success");
         })
@@ -97,7 +115,30 @@ const FormTitles = ["Name The Project", "New Project Created!"];
         <div className='mt-2 flex gap-2'>
           {/* nanti apus */}
 
+
           <button
+              type="submit"
+              onClick={(e) => {
+                if (page === FormTitles.length - 1) {
+                  // alert("FORM SUBMITTED");
+                  console.log("name nya " + name);
+                  handleSubmit(e);
+                  setShouldClosePopup(true);
+                } else {
+                  setPage((currPage) => currPage + 1);
+                  setIsLastPage(page + 1 === FormTitles.length - 1);
+                }
+                setIsLastPage(page + 1 === FormTitles.length - 1);
+              }}
+              // className="w-full text-white bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-md my-6"
+              className={`w-full text-white bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-md my-6 
+              ${
+                isLastPage ? "bg-green-500 hover:bg-green-600" : ""
+              }`}
+            >
+              {isLastPage ? "OK" : "Next"}
+            </button>
+          {/* <button
           type="submit"
           onClick={(e) => {
               if (page === FormTitles.length - 1) {
@@ -109,7 +150,7 @@ const FormTitles = ["Name The Project", "New Project Created!"];
               }
             }} className='w-full text-white bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-md my-6'>
               Next
-          </button>
+          </button> */}
         </div>
       </div>
     </div>

@@ -6,7 +6,7 @@ import { data } from 'autoprefixer';
 
 export const NewConnectProject = ({onClose}) => {
 
-const NewConnectProjectURL = "http://localhost:8050/connection/new";
+// const NewConnectProjectURL = "http://localhost:8050/connection/new";
 const errReference = useRef();
 const [errMsg, setErrMsg] = useState("");
 const [success, setSuccess] = useState(false);
@@ -15,8 +15,10 @@ const [project_id, setproject_id] = useState("");
 const [message_provider_id, setmessage_provider_id] = useState("");
 const [isLastPage, setIsLastPage] = useState(false);
 const [shouldClosePopup, setShouldClosePopup] = useState(false);
+const [name, setname] = useState("");
 
 const [id, setId] = useState([project_id, setproject_id]);
+console.log(id, "asd")
   const [listProvider, setListProvider] = useState([]);
   const [selectedprovider, setSelectedProvider] = useState('');
 
@@ -25,6 +27,10 @@ const [id, setId] = useState([project_id, setproject_id]);
 useEffect(() => {
     setErrMsg("");
     setIsLastPage(page === FormTitles.length - 1);
+}, [project_id, ,message_provider_id]);
+
+useEffect(() => {
+  setErrMsg("");
 }, [project_id, ,message_provider_id]);
 
 const fetchProvider = async () => {
@@ -55,7 +61,12 @@ const handleSubmit = (e) => {
       };
 
       axios
-        .post(NewConnectProjectURL, data)
+        .post(`http://localhost:8050/connection/new`, data, {
+          headers: {
+            Authorization : `Bearer ${localStorage.getItem("accessToken")}`    
+          }
+        }
+        )
         .then((res) => {
           console.log("success");
           setSuccess(true);
