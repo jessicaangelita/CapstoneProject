@@ -1,9 +1,9 @@
 import React, { useState,useEffect } from 'react';
 import axios from '../pages/api/axios';
-// import axios from '@/pages/api/axios';
 
 export default function UpdatedProject({ data, onUpdate, onCancel,setData }) {
-  const [id, setId] = useState(data.project_id);
+  console.log(data)
+  const [id, setId] = useState(data.id);
   const [projectname, setProjectName] = useState(data.name ?? undefined) ;
   const [webhook, setWebhook] = useState(data.webhook ?? undefined);
   const [selectedprovider, setSelectedProvider] = useState('');
@@ -35,8 +35,13 @@ export default function UpdatedProject({ data, onUpdate, onCancel,setData }) {
             provider: selectedprovider,
         };
 
-        await axios.put(`http://localhost:8050/project/edit/${data.project_id}`,
-         updatedData);
+        await axios.put(`http://localhost:8050/project/edit/${data.id}`,
+         updatedData,
+         {
+          headers: {
+              Authorization : `Bearer ${localStorage.getItem("accessToken")}`    
+          }
+        });
 
         setData(updatedData);
         setProjectName(updatedData);
@@ -69,7 +74,7 @@ export default function UpdatedProject({ data, onUpdate, onCancel,setData }) {
             <td className='pl-3'>
               <input
                 type="text"
-                value={data.project_id}
+                value={data.id}
                 disabled
                 className="w-full border p-2 rounded outline-none"
               />
@@ -121,9 +126,9 @@ export default function UpdatedProject({ data, onUpdate, onCancel,setData }) {
                     );
                   })}
 
-                <option value="Number 1">{data.provider}</option>
+                {/* <option value="Number 1">{data.provider}</option>
                 <option value="Number 2">{data.provider}</option>
-                <option value="Number 3">{data.provider}</option>
+                <option value="Number 3">{data.provider}</option> */}
 
               </select>
             </td>
