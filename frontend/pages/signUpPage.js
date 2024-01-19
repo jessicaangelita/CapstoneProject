@@ -5,7 +5,7 @@ import { MdPermIdentity, MdLockOutline } from "react-icons/md";
 import {BiSolidInfoCircle, BiHide, BiShow } from "react-icons/bi";
 import {ImCheckmark} from "react-icons/im";
 import { FcCheckmark } from "react-icons/fc";
-import axios from "./api/axios";
+import axios, {AxiosError} from "./api/axios";
 
 // export default function SignUpPage() {
 
@@ -41,6 +41,8 @@ const SignUpPage = () => {
   // Error Message
   const [errMsg, setErrMsg] = useState("");
   const [success, setSuccess] = useState(false);
+  const [registrationWarning, setRegistrationWarning] = useState(false);
+
 
   useEffect(() => {
     userReference.current.focus(); //setting focusnya ketika komponen load
@@ -83,27 +85,32 @@ const SignUpPage = () => {
 
     try {
       const data = {
-        fullname,
+        name: fullname,
         username: uname,
         email,
         password: pass,
       };
 
-      axios
-        .post(signup_url, data)
+      const response = await axios.post(signup_url, data)
         .then((res) => {
-          console.log("success");
+          console.log("Registration Success");
         })
         .catch((err) => {
-          console.log(err);
+          if (err instanceof Error && err.response) {
+            if (err.response.status === 400) {
+              console.log("Registration failed. Account already registered.");
+              setRegistrationWarning(true);
+            }
+          }
         });
 
     } catch (err) {
       console.log('Registrastion Failed',err)
+      // setErrMsg("Registration failed. Please try again.");
       errReference.current.focus();
     }
     setSuccess(true);
-    window.location.href = "/signInPage";
+    // window.location.href = "/signInPage";
   };
 
   return (
@@ -165,6 +172,14 @@ const SignUpPage = () => {
                 Sign Up
               </h1>
             </div>
+
+              {/* Warning for already registered data */}
+              {registrationWarning && (
+                <p className="text-red-600 text-sm mb-4">
+                  Account already registered. Please sign in or use a different email/username.
+                </p>
+              )}
+
             <div className="relative py-2">
 
               {/* Fullname */}

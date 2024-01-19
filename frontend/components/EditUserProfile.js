@@ -1,7 +1,7 @@
 import React, { useState,useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
-import { FaRegEnvelope, FaTimes } from "react-icons/fa";
+import { FaRegEnvelope, FaTimes, FaArrowLeft } from "react-icons/fa";
 import { MdPermIdentity, MdLockOutline } from "react-icons/md";
 import { BiSolidInfoCircle, BiHide, BiShow } from "react-icons/bi";
 import { FcCheckmark } from "react-icons/fc";
@@ -11,7 +11,7 @@ const fullname_valid = /^[A-Z][a-zA-Z\s]*$/;
 const username_valid = /^[a-zA-Z][a-zA-Z0-9_]{4,14}$/; //bebas min 5-15 huruf bole spasi
 const email_valid = /^[a-zA-Z0-9_.]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/; //dapat menggunakan angka, huruf, _ dan . sebelum @
 
-export default function EditProfile (){
+export default function EditProfile ({onCancel}){
   const userReference = useRef();
   const errReference = useRef();
 
@@ -101,6 +101,10 @@ export default function EditProfile (){
     window.location.href = "/profile";
   }
 
+  const handleBack = () => {
+    router.push('/profile');
+  };
+
     return(
     <div className="min-h-screen bg-primary-darkgrey flex flex-col w-full">
        <div>
@@ -113,59 +117,69 @@ export default function EditProfile (){
           {/* Judul */}
           <div className="mb-3">
             <h1 className="text-xl text-black font-bold mb-2 text-center justify-center">Edit Profile</h1>
+
+            <button
+            className=" hover:text-red-600 mb-2 text-black py-1 px-4 text-lg"
+            type="button"
+            onClick={handleBack}
+            >
+              <FaArrowLeft/>
+            </button>         
           </div>
 
           {/* Form */}
           <form onSubmit={handleSubmit} method="post" className="max-w-md mx-auto mt-5 flex flex-col items-center w-full ">
-          <div className="space-y-2 mb-2">
-        <p
-          id="note"
-          className={`${
-          fullnameFocus && name && !validFullname
-          ? "instructions"
-          : "sr-only"
-        } flex items-center text-red-600 mb-1 text-xs`}
-        >
-        <BiSolidInfoCircle className="mr-2" />
-         Must start with a capital letter
-        </p>
-        <label className="text-base font-semibold leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-gray-dark-300">
-         Fullname
-        {/* <span className="text-red-600 ml-1">*</span> */}
-        </label>
-        <div className="w-full bg-white flex items-center mb-[5px] border-gray-300 border rounded-lg px-3 py-1 focus:outline-none shadow shadow-black">
-        <MdPermIdentity className="m-[1%] text-slate-700" />
-        <input
-         type="text"
-         name="name"
-         placeholder="Enter your Full Name"
-        ref={userReference}
-        autoComplete="off"
-        onChange={(e) => setName(e.target.value)}
-        required
-        aria-invalid={validFullname ? "false" : "true"}
-        aria-describedby="note"
-        onFocus={() => setFullnameFocus(true)}
-        onBlur={() => setFullnameFocus(false)}
-        className="ml-[2%] w-64 focus:outline-none h-8 border-slate-200 bg-white px-3 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium transition duration-300 ease-in-out  disabled:cursor-not-allowed disabled:opacity-50 block rounded-md border-0 py-1.5 text-primary-darkblue shadow-sm  placeholder:text-primary-grey sm:text-sm sm:leading-6"
-        />
-      {/* checkmark */}   
-        <span className={validFullname ? "valid" : "hidden"}>
-        <FcCheckmark />
-        </span>
-        <span
-         className={`${
-         validFullname || !name ? "hidden" : ""
-         } text-red-600`}
-        >
-                          <FaTimes />
-                        </span>
-                      </div>
-                    </div>
 
-                    
-      {/* Username */}
-      <div className="space-y-2 mb-2">
+            {/* Fullnamr */}
+          <div className="space-y-2 mb-2">
+            <p
+              id="note"
+              className={`${
+              fullnameFocus && name && !validFullname
+              ? "instructions"
+              : "sr-only"
+            } flex items-center text-red-600 mb-1 text-xs`}
+            >
+            <BiSolidInfoCircle className="mr-2" />
+            Must start with a capital letter
+            </p>
+            <label className="text-base font-semibold leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-gray-dark-300">
+            Fullname
+            {/* <span className="text-red-600 ml-1">*</span> */}
+            </label>
+            <div className="w-full bg-white flex items-center mb-[5px] border-gray-300 border rounded-lg px-3 py-1 focus:outline-none shadow shadow-black">
+            <MdPermIdentity className="m-[1%] text-slate-700" />
+            <input
+            type="text"
+            name="name"
+            placeholder="Enter your Full Name"
+            ref={userReference}
+            autoComplete="off"
+            onChange={(e) => setName(e.target.value)}
+            required
+            aria-invalid={validFullname ? "false" : "true"}
+            aria-describedby="note"
+            onFocus={() => setFullnameFocus(true)}
+            onBlur={() => setFullnameFocus(false)}
+            className="ml-[2%] w-64 focus:outline-none h-8 border-slate-200 bg-white px-3 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium transition duration-300 ease-in-out  disabled:cursor-not-allowed disabled:opacity-50 block rounded-md border-0 py-1.5 text-primary-darkblue shadow-sm  placeholder:text-primary-grey sm:text-sm sm:leading-6"
+            />
+          {/* checkmark */}   
+            <span className={validFullname ? "valid" : "hidden"}>
+            <FcCheckmark />
+            </span>
+            <span
+            className={`${
+            validFullname || !name ? "hidden" : ""
+            } text-red-600`}
+            >
+                              <FaTimes />
+                            </span>
+                          </div>
+                        </div>
+
+                        
+          {/* Username */}
+          <div className="space-y-2 mb-2">
                       <p
                         id="uname-note"
                         className={`${
