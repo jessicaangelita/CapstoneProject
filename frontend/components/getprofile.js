@@ -6,6 +6,7 @@ import Head from "next/head";
 import HeaderHome from "./headerhome"
 import { FaPencilAlt} from "react-icons/fa";
 import { RiLockPasswordFill } from 'react-icons/ri';
+import ChangePassword from "./ChangePassword";
 
 export default function ContentProfile () {
 
@@ -21,15 +22,18 @@ export default function ContentProfile () {
     email: '',
   });
 
+  const [showChangePassword, setShowChangePassword] = useState(false);
+
   const router = useRouter();
 
   const handleEditButtonClick = () => {
     router.push("/editProfile"); // Sesuaikan dengan path yang sesuai untuk halaman edit profil Anda
   };
-  
-//   const handleEdit = (item) => {
-//     setData(item);
-// };
+
+  const handleChangePasswordButtonClick = () => {
+    setShowChangePassword(true);
+    setIsEditing(false); // Close the edit mode when opening the Change Password pop-up
+  };
 
   const handleSaveProfile = async (editedData) => {
    try {
@@ -77,11 +81,9 @@ export default function ContentProfile () {
         // console.log('Profile Data:', profileData);
         console.log('Data from API:', dataFetch);
         console.log(data.data?.id);
-        // console.log(data.code);
         if(dataFetch){
           setData(dataFetch);
         }
-        // setData(dataFetch);
       } catch (error) {
         console.error("Error fetching profile data:", error);
       }
@@ -124,8 +126,13 @@ export default function ContentProfile () {
           <div className="flex justify-center items-center space-y-4 flex-col">
             <div className="flex flex-col items-center mt-2 mb-4 mr-10">
               <h1 className="text-slate-700 text-3xl font-semibold">Profile</h1>
+              <button
+                  onClick={handleChangePasswordButtonClick}
+                  // className="bg-red-500 text-white text-lg py-3 px-7 rounded mt-9 mb-5 ml-4 flex items-center"
+                >
+                  <RiLockPasswordFill className="mr-2 text-red-600" />
+                </button>
             </div>
-
 
           {isEditing ? (
             <FormProfileEdit onSave={handleSaveProfile} />
@@ -166,6 +173,19 @@ export default function ContentProfile () {
                 >
                   Edit
                 </button>
+                {/* Button Change Pass
+                <button
+                  onClick={handleChangePasswordButtonClick}
+                  className="bg-red-500 text-white text-lg py-3 px-7 rounded mt-9 mb-5 ml-4 flex items-center"
+                >
+                  <RiLockPasswordFill className="mr-2" />
+                  Change Password
+                </button> */}
+
+                {showChangePassword && (
+                  <ChangePassword onCancel={() => setShowChangePassword(false)} />
+                )}
+
               </div>
             </div>
            )}
