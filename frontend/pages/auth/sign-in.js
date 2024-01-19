@@ -41,26 +41,26 @@ export const signInPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const rememberedUsername = localStorage.getItem("rememberedUsername");
-      const rememberedPassword = localStorage.getItem("rememberedPassword");
+  // useEffect(() => {
+  //   if (typeof window !== "undefined") {
+  //     const rememberedUsername = localStorage.getItem("rememberedUsername");
+  //     const rememberedPassword = localStorage.getItem("rememberedPassword");
 
-      if (rememberedUsername) {
-        setFormData((prevData) => ({
-          ...prevData,
-          username: rememberedUsername,
-        }));
-      }
+  //     if (rememberedUsername) {
+  //       setFormData((prevData) => ({
+  //         ...prevData,
+  //         username: rememberedUsername,
+  //       }));
+  //     }
 
-      if (rememberedPassword) {
-        setFormData((prevData) => ({
-          ...prevData,
-          password: rememberedPassword,
-        }));
-      }
-    }
-  }, []);
+  //     if (rememberedPassword) {
+  //       setFormData((prevData) => ({
+  //         ...prevData,
+  //         password: rememberedPassword,
+  //       }));
+  //     }
+  //   }
+  // }, []);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -118,13 +118,13 @@ export const signInPage = () => {
 
 
     // buat remember me
-    if (rememberMe) {
-      localStorage.setItem("rememberedUsername", formDatusername);
-      localStorage.setItem("rememberedPassword", formDatpassword);
-    } else {
-      localStorage.removeItem("rememberedUsername");
-      localStorage.removeItem("rememberedPassword");
-    }
+    // if (rememberMe) {
+    //   localStorage.setItem("rememberedUsername", formDatusername);
+    //   localStorage.setItem("rememberedPassword", formDatpassword);
+    // } else {
+    //   localStorage.removeItem("rememberedUsername");
+    //   localStorage.removeItem("rememberedPassword");
+    // }
   };
 
   return (
