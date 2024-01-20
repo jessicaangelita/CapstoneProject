@@ -8,7 +8,14 @@ const images = {
     AUTH_PAGE2 : require('../assets/background/blueWallpaper2.jpg'),
     LOGO_LIGHT_BLUE: require('../assets/logo/logo-light-blue.png'),
     JIRA_LOGO_WHITE: require('../assets/logo/jira-logo-white.png'),
-    TELKOM_LOGO_WHITE: require('../assets/logo/telkom-logo-white.png')
+    TELKOM_LOGO_WHITE: require('../assets/logo/telkom-logo-white.png'),
+    WEBHOOK_STEP1: require('../assets/video/WebhookStep1.gif'),
+    WEBHOOK_STEP2: require('../assets/video/WebhookStep2.gif'),
+    WEBHOOK_STEP3: require('../assets/video/WebhookStep3.gif'),
+    WEBHOOK_STEP4: require('../assets/video/WebhookStep4.gif'),
+    WEBHOOK_STEP5: require('../assets/video/WebhookStep5.gif'),
+    WEBHOOK_STEP6: require('../assets/video/WebhookStep6.gif'),
+    AVATAR_1: require('../assets/avatar/1.jpg')
 }
 
 export default images;

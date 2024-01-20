@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "../api/axios";
 import { useRouter } from "next/router";
-import HeaderHome from "../../components/HeaderHome";
+import HeaderHome from "../../components/headerhome";
 import UpdatedProvider from "../../components/UpdatedProvider";
 import { FaPencilAlt, FaTrashAlt } from "react-icons/fa";
-import NewProvider from "../NewProvider";
+import {AddProvider} from "../../components/provider/create/AddProvider"
 
 export default function ContentProvider() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -93,7 +93,7 @@ export default function ContentProvider() {
         {isPopupOpen && (
           <div className="popup-container">
             <div className="popup-content">
-              <NewProvider onClose={togglePopup} />
+              <AddProvider onClose={togglePopup} />
             </div>
           </div>
         )}
