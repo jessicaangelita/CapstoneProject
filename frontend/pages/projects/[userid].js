@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "../api/axios";
 // import { useRouter } from "next/router";
-import HeaderHome from "../../components/headerhome";
+import HeaderHome from "../../components/HeaderHome";
 import { FaPencilAlt, FaTrashAlt } from "react-icons/fa";
 import UpdatedProject from "../../components/UpdatedProject";
 import {AddProject} from "../../components/project/create/AddProject"

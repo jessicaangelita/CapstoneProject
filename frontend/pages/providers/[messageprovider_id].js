@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "../api/axios";
 import { useRouter } from "next/router";
-import HeaderHome from "../../components/headerhome";
+import HeaderHome from "../../components/HeaderHome";
 import UpdatedProvider from "../../components/UpdatedProvider";
 import { FaPencilAlt, FaTrashAlt } from "react-icons/fa";
 import {AddProvider} from "../../components/provider/create/AddProvider"
@@ -41,7 +41,12 @@ export default function ContentProvider() {
   const deleteProvider = async () => {
     try {
       await axios.delete(
-        `http://localhost:8050/message-provider/id/${selectedProviderId}`
+        `http://localhost:8050/message-provider/id/${selectedProviderId}`,
+        {
+          headers: {
+              Authorization : `Bearer ${localStorage.getItem("accessToken")}`    
+          }
+        }
       );
       fetchData();
       closeDeleteModal();

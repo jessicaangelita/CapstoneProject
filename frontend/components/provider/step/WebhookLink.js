@@ -1,5 +1,4 @@
 import React from 'react'
-import ReactPlayer from 'react-player';
 import WebhookStep1 from "../../../public/assets/video/WebhookStep1.gif"
 import Image from 'next/image';
 import {IMAGE} from "../../../public/config/index"

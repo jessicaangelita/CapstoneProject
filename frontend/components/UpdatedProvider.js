@@ -39,7 +39,12 @@ export default function UpdatedProvider({ data, onUpdate, onCancel, setData }) {
 
       await axios.put(
         `http://localhost:8050/message-provider/edit/${data.id}`,
-        updatedData
+        updatedData,
+        {
+          headers: {
+              Authorization : `Bearer ${localStorage.getItem("accessToken")}`    
+          }
+        }
       );
 
       setData(updatedData);
