@@ -56,7 +56,8 @@ const handleSubmit = (e) => {
 
     try {
       const data = {
-        project_id,
+        id ,
+        project_id ,
         message_provider_id
       };
 
@@ -69,7 +70,6 @@ const handleSubmit = (e) => {
         )
         .then((res) => {
           console.log("success");
-          setSuccess(true);
         })
         .catch((err) => {
           console.log(err);
@@ -79,6 +79,7 @@ const handleSubmit = (e) => {
       console.log('Add New Connection Failed',err)
       errReference.current.focus();
     }
+    setSuccess(true);
   };
 
   useEffect(() => {
@@ -87,6 +88,7 @@ const handleSubmit = (e) => {
       window.location.reload();
     }
   }, [shouldClosePopup, onClose]);
+
 
   
 

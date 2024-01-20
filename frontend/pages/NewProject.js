@@ -138,19 +138,6 @@ const FormTitles = ["Name The Project", "New Project Created!"];
             >
               {isLastPage ? "OK" : "Next"}
             </button>
-          {/* <button
-          type="submit"
-          onClick={(e) => {
-              if (page === FormTitles.length - 1) {
-                alert("FORM SUBMITTED");
-                console.log("name nya " + name);
-                handleSubmit(e);
-              } else {
-                setPage((currPage) => currPage + 1);
-              }
-            }} className='w-full text-white bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-md my-6'>
-              Next
-          </button> */}
         </div>
       </div>
     </div>
