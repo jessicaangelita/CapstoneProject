@@ -23,7 +23,6 @@ console.log(id, "asd")
   const [selectedprovider, setSelectedProvider] = useState('');
 
 
-
 useEffect(() => {
     setErrMsg("");
     setIsLastPage(page === FormTitles.length - 1);
@@ -36,7 +35,12 @@ useEffect(() => {
 const fetchProvider = async () => {
   try {
     const response = await axios.get(
-      `http://localhost:8050/message-provider/all`
+      `http://localhost:8050/message-provider/owned`, 
+      {
+        headers: {
+          Authorization : `Bearer ${localStorage.getItem("accessToken")}`    
+        }
+      }
     );
     const responseData = response.data.data;
 
@@ -56,13 +60,15 @@ const handleSubmit = (e) => {
 
     try {
       const data = {
-        id ,
         project_id ,
         message_provider_id
       };
-
+      console.log(project_id, "projectid");
+      console.log(message_provider_id, "msgprovid")
+      console.log(data, "data")
       axios
-        .post(`http://localhost:8050/connection/new`, data, {
+        .post(`http://localhost:8050/connection/new`, data, 
+        {
           headers: {
             Authorization : `Bearer ${localStorage.getItem("accessToken")}`    
           }
@@ -84,21 +90,14 @@ const handleSubmit = (e) => {
 
   useEffect(() => {
     if (shouldClosePopup) {
-      onClose(); // Memanggil fungsi onClose untuk menutup pop-up
+      onClose(); 
       window.location.reload();
     }
   }, [shouldClosePopup, onClose]);
 
-
-  
-
 const PageDisplay = () => {
   if (page === 0) {
     return <ConnectProject 
-              project_id={project_id} 
-              setproject_id={setproject_id}
-              message_provider_id={message_provider_id}
-              setmessage_provider_id={setmessage_provider_id}
               listProvider={listProvider}
               setListProvider={setListProvider}
               selectedprovider={selectedprovider}
@@ -156,7 +155,6 @@ const FormTitles = ["Connect Project"];
           type="submit"
           onClick={(e) => {
               if (page === FormTitles.length - 1) {
-                // alert("FORM SUBMITTED");
                 console.log("name nya " + name);
                 handleSubmit(e);
                 setShouldClosePopup(true);
@@ -164,7 +162,7 @@ const FormTitles = ["Connect Project"];
                 setPage((currPage) => currPage + 1);
                 setIsLastPage(page + 1 === FormTitles.length - 1);
               }
-              setIsLastPage(page + 1 === FormTitles.length - 1);
+              // setIsLastPage(page + 1 === FormTitles.length - 1);
             }} 
             className={`w-full text-white bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-md my-6 
               ${

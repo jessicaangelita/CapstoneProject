@@ -9,18 +9,25 @@ import  NewConnectProject from '../../NewConnectProject';
 const ProjectDetailPage = ({}) => {
   const router = useRouter();
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [ project_id, setProject_id] = useState(null);
+  const [projectData, setProjectData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [connection_id, setConnection_id] = useState(null);
-
+  const [connectionData, setConnectionData] = useState(null);
+  const [projectId, setProjectId] = useState(null);
   
-  // const {project_id} = router.query
-  // console.log(project_id)
+  useEffect(() => {
+    const projectIdFromQuery = router.query.project_id;
+    setProjectId(projectIdFromQuery);
 
-  const fetchConnectData = async () => {
+    if (projectId) {
+      fetchConnectData(projectIdFromQuery);
+      fetchListenerURL(projectIdFromQuery);
+    }
+  }, [router.query.project_id]);
+  
+  const fetchConnectData = async (projectId) => {
     try {
       const response = await axios.get(
-        `http://localhost:8050/message-provider/user/connected/owned`,
+        `http://localhost:8050/project/id/connected/${projectId}`,
         {
           headers: {
               Authorization : `Bearer ${localStorage.getItem("accessToken")}`    
@@ -30,12 +37,10 @@ const ProjectDetailPage = ({}) => {
 
       const fetchData = await response.data;
 
-      console.log('Data from API', fetchData);
-      console.log(fetchData.data);
       if(fetchData) {
-        console.log(project_id), "project id";
-        setProject_id(fetchData.data);
+        setProjectData(fetchData.data);
         setIsLoading(false);
+        console.log(fetchData, "setelah api project connected");
       }
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -43,10 +48,10 @@ const ProjectDetailPage = ({}) => {
     }
   };
 
-  const fetchListenerURL = async () => {
+  const fetchListenerURL = async (projectId) => {
     try {
       const response = await axios.get(
-        `http://localhost:8050/webhook/${connection_id}`,
+        `http://localhost:8050/webhook/${projectId}`,
         {
           headers: {
               Authorization : `Bearer ${localStorage.getItem("accessToken")}`    
@@ -56,24 +61,16 @@ const ProjectDetailPage = ({}) => {
 
       const fetchData = await response.data;
 
-      console.log('Data from API', fetchData);
-      console.log(fetchData.data);
       if(fetchData) {
-        console.log(connection_id, "connection id");
-        setConnection_id(fetchData.data);
+        setConnectionData(fetchData.data);
         setIsLoading(false);
+        console.log(fetchData, "setelah api listener")
       }
     } catch (error) {
       console.error("Error fetching data listener url:", error);
       setIsLoading(false);
     }
   };
-
-  useEffect(() => {
-    fetchConnectData();
-    fetchListenerURL();
-  }, []);
-
 
   const togglePopup = () => {
     setIsPopupOpen(!isPopupOpen);
@@ -100,15 +97,13 @@ const ProjectDetailPage = ({}) => {
         )}
       </div>
       <div className="mx-auto max-w-3xl mr-[300px]">
-        {console.log(Array.isArray(project_id, connection_id), "array")}
-
         {isLoading ? (
           <p>Loading...</p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             <div>
-              {Array.isArray(connection_id) && connection_id.length > 0 ? (
-                connection_id.map((item) => {
+              {Array.isArray(connectionData) && connectionData.length > 0 ? (
+                connectionData.map((item) => {
                   console.log(item, 'item');
                   return (
                     <div
@@ -127,28 +122,28 @@ const ProjectDetailPage = ({}) => {
                 <div className="text-center py-4">No data available.</div>
               )}
             </div>
-            {Array.isArray(project_id) && project_id.length > 0 ? (
-              project_id.map((item) => {
-                console.log(item, "item");
-                return (
+            {Array.isArray(projectData) && projectData.length > 0 && projectData[0] ? (
+              // projectData.map((item) => {
+                // console.log(item, "item");
+                // return (
                   <div
-                    key={item.message_provider_user_id}
+                    key={projectData[0].message_provider_user_id}
                     className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg"
                   >
                     <div className="p-6">
                       <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-2">
-                        {item.provider_label}
+                        {projectData[0].provider_label}
                       </h2>
                       <p className="text-gray-500 dark:text-gray-400">
-                        Connection ID: {item.connection_id}
+                        Connection ID: {projectData[0].connection_id}
                       </p>
                       <p className="text-gray-500 dark:text-gray-400">
-                        webhook : {item.webhook}
+                        webhook : {projectData[0].webhook}
                       </p>
                     </div>
                   </div>
-                );
-              })
+                // );
+              // })
             ) : (
               <div className="text-center py-4">No data available.</div>
             )}

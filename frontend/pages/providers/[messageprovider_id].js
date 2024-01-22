@@ -58,7 +58,12 @@ export default function ContentProvider() {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:8050/message-provider/all"
+        `http://localhost:8050/message-provider/owned`,
+        {
+          headers: {
+              Authorization : `Bearer ${localStorage.getItem("accessToken")}`    
+          }
+        } 
       );
       const responseData = response.data.data;
       setProvider(responseData);

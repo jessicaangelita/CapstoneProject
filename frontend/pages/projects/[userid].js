@@ -178,8 +178,8 @@ useEffect(() => {
                     <button onClick={() => handleEdit(item)}>
                       <FaPencilAlt className="text-blue-500" />
                     </button>
-                    {/* <a href={`/projectDetails/${item.id}`}>Details</a> */}
-                    <a href="/projectDetails">Details</a>
+                    <a href={`projects//detailproject/${item.id}`}>Details</a>
+                    {/* <a href="/projectDetails">Details</a> */}
                     <button onClick={() => openDeleteModal(item.id)}>
                       <FaTrashAlt className="text-red-500" />
                     </button>
