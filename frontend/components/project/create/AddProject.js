@@ -71,15 +71,15 @@ export const AddProject = ({ onClose }) => {
   return (
     <>
       <div className="items-center justify-center flex md:flex fixed inset-0 z-50 ">
-        <div className="fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] border p-6 shadow-lg duration-200 sm:rounded-lg bg-primary-black">
+        <div className="fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] border p-6 shadow-lg duration-200 sm:rounded-lg bg-primary-white text-primary-black">
           {/* Close button */}
           <IoCloseCircle
-            className="absolute cursor-pointer right-4 top-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2  focus:ring-offset-2 disabled:pointer-events-none h-auto text-white font-extrabold w-[7%]"
+            className="absolute cursor-pointer right-4 top-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2  focus:ring-offset-2 disabled:pointer-events-none h-auto text-primary-mediumblue hover:text-primary-darkblue font-extrabold w-[7%]"
             onClick={onClose}
           />
 
           {/* Title */}
-          <p className="flex justify-center text-primary-white text-3xl font-bold">
+          <p className="flex justify-center text-primary-darkblue text-3xl font-bold">
             New Project
           </p>
 
@@ -107,7 +107,7 @@ export const AddProject = ({ onClose }) => {
                 setPage((currPage) => currPage - 1);
                 setIsLastPage(false);
               }}
-              className="w-full text-primary-darkblue bg-primary-white hover:bg-primary-lightgrey px-4 py-2 rounded-md mb-6 text-base font-semibold"
+              className="w-full text-primary-darkblue bg-primary-white hover:bg-primary-lightgrey px-4 py-2 rounded-md mb-6 text-base font-semibold shadow-primary-darkblue shadow-sm"
             >
               Prev
             </button>
@@ -125,7 +125,7 @@ export const AddProject = ({ onClose }) => {
                 }
                 setIsLastPage(page + 1 === FormTitles.length - 1);
               }}
-              className={`w-full text-white bg-primary-lightblue hover:bg-primary-mediumblue px-4 py-2 rounded-md mb-6 text-base font-semibold
+              className={`w-full text-white bg-primary-lightblue hover:bg-primary-mediumblue px-4 py-2 rounded-md mb-6 text-base font-semibold shadow-sm shadow-primary-darkblue
               ${isLastPage ? "bg-green-500 hover:bg-green-600" : ""}`}
             >
               {isLastPage ? "OK" : "Next"}

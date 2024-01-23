@@ -5,6 +5,7 @@ import HeaderHome from "../../components/HeaderHome";
 import { FaPencilAlt, FaTrashAlt } from "react-icons/fa";
 import UpdatedProject from "../../components/UpdatedProject";
 import {AddProject} from "../../components/project/create/AddProject"
+import SideBar from "../../components/sidebar/SideBar";
 
 export default function ContentProject() {
   //update pb
@@ -131,7 +132,7 @@ useEffect(() => {
 
   return (
     <>
-      <HeaderHome />
+      <SideBar/>
       <title>Projects</title>
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold text-white ml-80">List Project</h1>

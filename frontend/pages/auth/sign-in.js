@@ -132,7 +132,7 @@ export const signInPage = () => {
       <Head>
         <title>Sign In - Welcome to JICO</title>
       </Head>
-      <div className="md:flex font-inter">
+      <div className="md:flex font-inter min-h-screen">
         {/* IMG SECTION */}
         <div className="md:w-3/5 h-32 md:h-screen lg:h-screen items-center relative">
           {/* Background */}
@@ -184,21 +184,29 @@ export const signInPage = () => {
                 . Privacy - Terms.
               </span>
               <div>
-              <a href="https://www.telkom.co.id/sites" target="_blank" rel="noopener noreferrer">
-                <Image
-                  alt="TELKOM Logo"
-                  src={IMAGE.TELKOM_LOGO_WHITE}
-                  className="h-10 w-auto mb-2"
-                />
+                <a
+                  href="https://www.telkom.co.id/sites"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Image
+                    alt="TELKOM Logo"
+                    src={IMAGE.TELKOM_LOGO_WHITE}
+                    className="h-10 w-auto mb-2"
+                  />
                 </a>
               </div>
               <div>
-              <a href="https://www.atlassian.com/software/jira" target="_blank" rel="noopener noreferrer">
-                <Image
-                  alt="JIRA Logo"
-                  src={IMAGE.JIRA_LOGO_WHITE}
-                  className="h-5 w-auto mb-2"
-                />
+                <a
+                  href="https://www.atlassian.com/software/jira"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Image
+                    alt="JIRA Logo"
+                    src={IMAGE.JIRA_LOGO_WHITE}
+                    className="h-5 w-auto mb-2"
+                  />
                 </a>
               </div>
             </div>
@@ -207,10 +215,9 @@ export const signInPage = () => {
 
         {/* FORM SECTION */}
         <div className="md:w-2/5 flex flex-col justify-center">
-
           {/* JICO Logo */}
           <div className="flex flex-col items-end py-0 pr-16">
-          <Link href="/">
+            <Link href="/">
               <Image
                 alt="JICO Logo"
                 src={IMAGE.LOGO_DARK_BLUE}
@@ -220,7 +227,6 @@ export const signInPage = () => {
           </div>
           <div className="pt-1 pb-8 px-4 w-full">
             <div className="rounded-md border border-primary-lightblue text-primary-darkgrey shadow-sm flex min-h-full flex-1 flex-col justify-center bg-transparent border-none">
-
               {/* FORM Title */}
               <div className="flex flex-col space-y-1.5 p-3 mx-auto w-full max-w-lg">
                 <h5 className="mt-5 font-bold leading-9 tracking-tight text-primary-darkgrey text-4xl ">
@@ -233,10 +239,8 @@ export const signInPage = () => {
 
               <div className="p-3 pt-0">
                 <div className="mt-10 mx-auto w-full max-w-lg">
-
                   {/* FORM */}
                   <form onSubmit={handleSubmit} className="space-y-6">
-
                     {/* Username */}
                     <div className="space-y-2">
                       <label className="text-base font-semibold leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-gray-dark-300">
@@ -292,7 +296,7 @@ export const signInPage = () => {
                         )}
                       </div>
                     </div>
-                    
+
                     {/* Error Message */}
                     <div>
                       <p
@@ -317,7 +321,12 @@ export const signInPage = () => {
                           />
                           Remember me
                         </label>
-                        <a href="/forgotpass" className=" text-primary-lightblue font-semibold hover:underline text-md">Forgot Password</a>
+                        <a
+                          href="/forgotpass"
+                          className=" text-primary-lightblue font-semibold hover:underline text-md"
+                        >
+                          Forgot Password
+                        </a>
                       </div>
                     </div>
 
@@ -334,8 +343,15 @@ export const signInPage = () => {
 
                     {/* Redirect Sign Up */}
                     <div className="flex items-center justify-center my-5">
-                      <span className=" text-primary-grey text-md">Not a member yet?</span>
-                      <a href="/auth/sign-up" className="ml-2 text-primary-lightblue text-md font-semibold">Sign Up</a>
+                      <span className=" text-primary-grey text-md">
+                        Not a member yet?
+                      </span>
+                      <a
+                        href="/auth/sign-up"
+                        className="ml-2 text-primary-lightblue text-md font-semibold"
+                      >
+                        Sign Up
+                      </a>
                     </div>
                   </form>
                 </div>

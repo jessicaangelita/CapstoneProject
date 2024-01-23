@@ -5,6 +5,7 @@ import HeaderHome from "../../components/HeaderHome";
 import UpdatedProvider from "../../components/UpdatedProvider";
 import { FaPencilAlt, FaTrashAlt } from "react-icons/fa";
 import {AddProvider} from "../../components/provider/create/AddProvider"
+import {SideBar} from "../../components/sidebar/SideBar"
 
 export default function ContentProvider() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -91,7 +92,9 @@ export default function ContentProvider() {
 
   return (
     <>
-      <HeaderHome />
+      <div className="bg-primary-darkgrey">
+        <SideBar />
+      </div>
       <title>Providers</title>
       <div className="flex justify-end">
         <button

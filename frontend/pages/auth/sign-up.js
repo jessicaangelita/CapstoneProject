@@ -123,7 +123,7 @@ const SignUpPage = () => {
       <Head>
         <title>Sign Up - Welcome to JICO</title>
       </Head>
-      <div className="md:flex font-inter">
+      <div className="md:flex font-inter min-h-screen">
         {/* FORM SECTION */}
         <div className="md:w-2/5 flex flex-col justify-center">
           {/* LOGO */}
@@ -226,7 +226,7 @@ const SignUpPage = () => {
                         } flex items-center text-red-600 mt-2`}
                       >
                         <BiSolidInfoCircle className="mr-2" />
-                        Must be 5 to 15 characters, letters, numbers are allowed
+                        Must be 5 to 15 characters
                       </p>
                       <label className="text-base font-semibold leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-gray-dark-300">
                         Username
@@ -272,7 +272,7 @@ const SignUpPage = () => {
                         } flex items-center text-red-600 mt-2`}
                       >
                         <BiSolidInfoCircle className="mr-2" />
-                        Letters, numbers, underscore and dot are allowed
+                        Must be in email format
                       </p>
                       <label className="text-base font-semibold leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-gray-dark-300">
                         Email

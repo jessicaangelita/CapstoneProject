@@ -4,6 +4,7 @@ import HeaderHome from "../../../components/HeaderHome";
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import  NewConnectProject from '../../NewConnectProject';
+import SideBar from '../../../components/sidebar/SideBar';
 
 
 const ProjectDetailPage = ({}) => {
@@ -78,7 +79,7 @@ const ProjectDetailPage = ({}) => {
 
   return (
     <div>
-      <HeaderHome />
+      <SideBar/>
       <title>Project Details</title>
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold text-white ml-80">Detail Project</h1>
