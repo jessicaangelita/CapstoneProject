@@ -14,21 +14,12 @@ const ProjectDetailPage = ({}) => {
   const [isLoading, setIsLoading] = useState(true);
   const [connectionData, setConnectionData] = useState(null);
   const [projectId, setProjectId] = useState(null);
-  
-  useEffect(() => {
-    const projectIdFromQuery = router.query.project_id;
-    setProjectId(projectIdFromQuery);
 
-    if (projectId) {
-      fetchConnectData(projectIdFromQuery);
-      fetchListenerURL(projectIdFromQuery);
-    }
-  }, [router.query.project_id]);
-  
   const fetchConnectData = async (projectId) => {
     try {
       const response = await axios.get(
         `http://localhost:8050/project/id/connected/${projectId}`,
+        // berarti projectId nya diganti ke connection_id kah?
         {
           headers: {
               Authorization : `Bearer ${localStorage.getItem("accessToken")}`    
@@ -40,38 +31,55 @@ const ProjectDetailPage = ({}) => {
 
       if(fetchData) {
         setProjectData(fetchData.data);
-        setIsLoading(false);
-        console.log(fetchData, "setelah api project connected");
+        console.log(fetchData, "setelah api project connected ");
       }
+      // INI CONNECTION IDNYA
+      //
+      fetchListenerURL(fetchData.data[0].connection_id)
+      console.log(fetchData.data[0].connection_id)
+      // connection id dapat dari ProjectData.
+      // ada atau tidak ada data loadingnya di false kan
+      setIsLoading(false);
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error fetching data: ", error);
       setIsLoading(false);
     }
   };
 
-  const fetchListenerURL = async (projectId) => {
+  useEffect(() => {
+    const projectIdFromQuery = router.query.project_id;
+    setProjectId(projectIdFromQuery);
+
+    if (projectId) {
+      fetchConnectData(projectIdFromQuery);
+    }
+  }, [router.query.project_id]);
+
+  const fetchListenerURL = async (connectionId) => {
     try {
       const response = await axios.get(
-        `http://localhost:8050/webhook/${projectId}`,
+        `http://localhost:8050/webhook/${connectionId}`,
         {
           headers: {
               Authorization : `Bearer ${localStorage.getItem("accessToken")}`    
           }
         } 
       );
-
       const fetchData = await response.data;
 
       if(fetchData) {
         setConnectionData(fetchData.data);
-        setIsLoading(false);
-        console.log(fetchData, "setelah api listener")
+        console.log(fetchData, "setelah api listener connect")
       }
     } catch (error) {
       console.error("Error fetching data listener url:", error);
-      setIsLoading(false);
     }
+    return;   
   };
+  
+  // ini dari awal bisa langsung dapat webhooknya atau harus pilih connection dulu ?
+  // fetchListenerURL(projectIdFromQuery);
+  
 
   const togglePopup = () => {
     setIsPopupOpen(!isPopupOpen);
@@ -103,17 +111,30 @@ const ProjectDetailPage = ({}) => {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             <div>
-              {Array.isArray(connectionData) && connectionData.length > 0 ? (
+              {connectionData ? (
+                <div className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg">
+                <div className="p-6">
+                  <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-2">
+                    {connectionData.listener_url}
+                  </h2>
+                </div>
+              </div>
+              ) : (
+                <div className="text-center py-4">No data available.</div>
+              )}
+
+              {/* {connectionData ? (
+              console.log(connectionData.listener_url, "data connection")
                 connectionData.map((item) => {
                   console.log(item, 'item');
                   return (
                     <div
-                      key={item.user_id}
+                      key={connectionData.listener_url}
                       className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg"
                     >
                       <div className="p-6">
                         <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-2">
-                          {item.listener_url}
+                          {connectionData.listener_url}
                         </h2>
                       </div>
                     </div>
@@ -121,7 +142,7 @@ const ProjectDetailPage = ({}) => {
                 })
               ) : (
                 <div className="text-center py-4">No data available.</div>
-              )}
+              )} */}
             </div>
             {Array.isArray(projectData) && projectData.length > 0 && projectData[0] ? (
               // projectData.map((item) => {

@@ -23,7 +23,7 @@ export const ConnectProject = ({  listProvider, setListProvider, selectedprovide
                     const { provider_label, id: providerId } = provider;
 
                     return (
-                      <option key={providerId} value={provider_label}>
+                      <option key={provider.id} value={provider.id}>
                         {provider_label}
                       </option>
                     );
