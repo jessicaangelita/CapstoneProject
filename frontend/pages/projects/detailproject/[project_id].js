@@ -88,6 +88,7 @@ const ProjectDetailPage = ({}) => {
   return (
     <div>
       <SideBar/>
+      <div className='min-h-screen bg-primary-darkgrey'>
       <title>Project Details</title>
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold text-white ml-80">Detail Project</h1>
@@ -172,6 +173,7 @@ const ProjectDetailPage = ({}) => {
           </div>
         )}
       </div>
+    </div>
     </div>
   );
 };
