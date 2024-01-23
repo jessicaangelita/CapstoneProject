@@ -9,6 +9,7 @@ import Head from "next/head";
 import ProfileFooter from "../../components/footer/ProfileFooter";
 import HeaderHome from "../../components/HeaderHome";
 import SideBar from "../../components/sidebar/SideBar";
+import axios from "../api/axios";
 
 export const profile = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -79,7 +80,7 @@ export const profile = () => {
 
       // console.log('Profile Data:', profileData);
       console.log("Data from API:", dataFetch);
-      console.log(data.data?.id);
+      console.log(data.data?.name);
       if (dataFetch) {
         setData(dataFetch);
       }
@@ -132,7 +133,7 @@ export const profile = () => {
                   <input
                     type="text"
                     name="name"
-                    placeholder={data.data?.name}
+                    value={data.data?.name }
                     readOnly
                     className="ml-[2%] w-full focus:outline-none h-10 border-slate-200 bg-white px-3 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium transition duration-300 ease-in-out  disabled:cursor-not-allowed disabled:opacity-50 block rounded-md border-0 py-1.5 text-primary-darkblue shadow-sm  placeholder:text-primary-grey sm:text-sm sm:leading-6"
                   />
@@ -149,7 +150,7 @@ export const profile = () => {
                   <input
                     type="text"
                     name="username"
-                    placeholder={data.data?.username}
+                    value={data.data?.username}
                     readOnly
                     className="ml-[2%] w-full focus:outline-none h-10 border-slate-200 bg-white px-3 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium transition duration-300 ease-in-out  disabled:cursor-not-allowed disabled:opacity-50 block rounded-md border-0 py-1.5 text-primary-darkblue shadow-sm  placeholder:text-primary-grey sm:text-sm sm:leading-6"
                   />
@@ -166,7 +167,7 @@ export const profile = () => {
                   <input
                     type="email"
                     name="email"
-                    placeholder={data.data?.email}
+                    value={data.data?.email}
                     readOnly
                     className="ml-[2%] w-full focus:outline-none h-10 border-slate-200 bg-white px-3 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium transition duration-300 ease-in-out  disabled:cursor-not-allowed disabled:opacity-50 block rounded-md border-0 py-1.5 text-primary-darkblue shadow-sm  placeholder:text-primary-grey sm:text-sm sm:leading-6"
                   />
@@ -174,7 +175,7 @@ export const profile = () => {
               </div>
 
               {/* Password */}
-              <div className="space-y-2">
+              {/* <div className="space-y-2">
                 <label className="text-base font-semibold leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-gray-dark-300">
                   Password
                 </label>
@@ -199,7 +200,7 @@ export const profile = () => {
                     />
                   )}
                 </div>
-              </div>
+              </div> */}
             </div>
           )}
           <ProfileFooter />

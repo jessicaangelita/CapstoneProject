@@ -41,27 +41,6 @@ export const signInPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
 
-  // useEffect(() => {
-  //   if (typeof window !== "undefined") {
-  //     const rememberedUsername = localStorage.getItem("rememberedUsername");
-  //     const rememberedPassword = localStorage.getItem("rememberedPassword");
-
-  //     if (rememberedUsername) {
-  //       setFormData((prevData) => ({
-  //         ...prevData,
-  //         username: rememberedUsername,
-  //       }));
-  //     }
-
-  //     if (rememberedPassword) {
-  //       setFormData((prevData) => ({
-  //         ...prevData,
-  //         password: rememberedPassword,
-  //       }));
-  //     }
-  //   }
-  // }, []);
-
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -85,29 +64,6 @@ export const signInPage = () => {
      setSuccess(true);
      window.location.href = "/homePage";
 
-        // .then((res) => {
-        //   const { accessToken } = response.data.data;
-
-        //   localStorage.setItem("accessToken", accessToken);
-        //   console.log("success");
-        //   // const { accessToken } = res.data.data;
-
-        //   // localStorage.setItem("accessToken", accessToken);
-        //   //IF LOGIN SUCCESS <bakal direplace atau dipindahin gtw>
-        //   setSuccess(true);
-        //   window.location.href = "/homePage";
-        // })
-        // .catch((error) => {
-        //   console.log(error);
-        // });
-
-      // //get token
-      // const accessToken = response?.data?.accessToken;
-      // localStorage.setItem('token', accessToken)
-      // setToken()
-      // //get roles
-      // const roles = response?.data?.roles;
-
       setAuth({ username, password });
       setUsername("");
       setPassword("");
@@ -115,16 +71,6 @@ export const signInPage = () => {
       console.log("Sign In Failed", error);
       errorRef.current.focus();
     }
-
-
-    // buat remember me
-    // if (rememberMe) {
-    //   localStorage.setItem("rememberedUsername", formDatusername);
-    //   localStorage.setItem("rememberedPassword", formDatpassword);
-    // } else {
-    //   localStorage.removeItem("rememberedUsername");
-    //   localStorage.removeItem("rememberedPassword");
-    // }
   };
 
   return (

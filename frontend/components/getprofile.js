@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 // import FormProfileEdit from "../components/EditProfile";
 import axios from "../pages/api/axios";
 import Head from "next/head";
-import HeaderHome from "./headerhome"
+import HeaderHome from "./HeaderHome";
 import { FaPencilAlt} from "react-icons/fa";
 import { RiLockPasswordFill } from 'react-icons/ri';
 import ChangePassword from "./ChangePassword";
@@ -27,12 +27,12 @@ export default function ContentProfile () {
   const router = useRouter();
 
   const handleEditButtonClick = () => {
-    router.push("/editProfile"); // Sesuaikan dengan path yang sesuai untuk halaman edit profil Anda
+    router.push("/editProfile");
   };
 
   const handleChangePasswordButtonClick = () => {
     setShowChangePassword(true);
-    setIsEditing(false); // Close the edit mode when opening the Change Password pop-up
+    setIsEditing(false); 
   };
 
   const handleSaveProfile = async (editedData) => {
