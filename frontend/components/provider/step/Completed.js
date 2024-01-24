@@ -43,7 +43,7 @@ export const Completed = () => {
             Congratulations!
           </div>
           <div className="text-base font-semibold text-primary-grey">
-            Your Project has been created.
+            Your Provider has been created.
             <br />
             Just click OK to finalize it
           </div>

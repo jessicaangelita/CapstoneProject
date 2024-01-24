@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import ContentHome from "../components/contenthome";
 import SideBar from "../components/sidebar/SideBar";
 import axios from "../pages/api/axios";
+import { CiFaceSmile } from "react-icons/ci";
 
 export default function Home() {
     const [username, setUsername] = useState("");
@@ -51,15 +52,17 @@ export default function Home() {
         }, []);
 
     return (
-        <>
-            <div className="min-h-screen bg-primary-darkgrey flex flex-col w-full">
-                <SideBar />
-                <title>Home</title>
-                <div className="flex-grow flex items-center justify-center">
-                    <h1 className="text-4xl text-white font-bold">Welcome, {data.data?.username}</h1>
-                </div>
-                {/* <ContentHome/> */}
-            </div>
-        </>
+      <>
+        <div className="min-h-screen bg-primary-darkgrey flex flex-col w-full">
+          <SideBar />
+          <title>Home</title>
+          <div className="flex-grow flex items-center justify-center">
+            <h1 className="text-4xl text-white font-bold">
+              Welcome, {data.data?.username} <CiFaceSmile className="inline"/>
+            </h1>
+          </div>
+          {/* <ContentHome/> */}
+        </div>
+      </>
     );
 }
