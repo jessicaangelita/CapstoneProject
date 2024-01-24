@@ -207,21 +207,21 @@ useEffect(() => {
       </div>
 
       {deleteModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-75">
-          <div className="bg-white p-6 rounded-lg">
-            <p className="text-xl mb-4">
+        <div className="items-center justify-center flex md:flex fixed inset-0 z-50 bg-black bg-opacity-70">
+          <div className="fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] border p-8 shadow-lg duration-200 sm:rounded-lg bg-primary-white text-primary-black">
+            <p className="text-xl mb-7">
               Are you sure you want to delete this project?
             </p>
-            <div className="flex justify-end">
+            <div className="flex justify-end gap-x-3">
               <button
                 onClick={closeDeleteModal}
-                className="mr-2 px-4 py-2 bg-gray-300 rounded"
+                className="w-32 text-primary-darkblue bg-primary-white hover:bg-primary-lightgrey px-4 py-2 rounded-md text-base font-semibold shadow-primary-darkblue shadow-sm"
               >
                 Cancel
               </button>
               <button
                 onClick={deleteProject}
-                className="px-4 py-2 bg-red-500 text-white rounded"
+                className="w-32 text-primary-darkblue bg-red-500 hover:bg-red-600 px-4 py-2 rounded-md text-base font-semibold shadow-primary-darkblue shadow-sm"
               >
                 Delete
               </button>
