@@ -54,6 +54,7 @@ export const SideBar = () => {
               open && "rotate-[360deg]"
             }`}
             onClick={() => setOpen(!open)}
+            alt="Logo"
           />
         </div>
         <div className="space-y-8">
