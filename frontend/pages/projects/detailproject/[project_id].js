@@ -31,7 +31,7 @@ const ProjectDetailPage = ({}) => {
 
       if(fetchData) {
         setProjectData(fetchData.data);
-        console.log(fetchData, "setelah api project connected ");
+        console.log(fetchData, "setelah api project connected");
       }
       // INI CONNECTION IDNYA
       //
@@ -91,7 +91,7 @@ const ProjectDetailPage = ({}) => {
       <div className='min-h-screen bg-primary-darkgrey'>
       <title>Project Details</title>
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold text-white ml-80">Detail Project</h1>
+        <h1 className="text-2xl font-bold text-white ml-80">Detail Project </h1>
         <button
           className="text-white bg-primary-lightblue hover:bg-primary-mediumblue px-8 py-2 rounded-md mx-5 mt-5 mb-8 text-end"
           onClick={togglePopup}

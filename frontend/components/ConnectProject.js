@@ -13,8 +13,8 @@ export const ConnectProject = ({  listProvider, setListProvider, selectedprovide
     
     {/* Input for the Form */}
       <div className="space-y-4">        
-          <p className="justify-center w-full text-center text-slate-700 text-lg font-bold  mx-1 my-8">Select Provider Name</p>
-          <select className="w-full border p-2 rounded outline-none" 
+          <p className="justify-center w-full text-center text-slate-700 text-lg font-bold mx-1 my-2 mt-[-3%]">Select Provider Name</p>
+          <select className="w-full border p-2 rounded outline-none " 
               value={selectedprovider}
               onChange={(e) => setSelectedProvider(e.target.value)}
               >

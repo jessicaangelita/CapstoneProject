@@ -155,7 +155,7 @@ useEffect(() => {
         {isLoading ? (
           <p>Loading...</p>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full h-full">
 
             {Array.isArray(project) && project.length > 0 ? (
               project.map((item) => {
@@ -170,9 +170,9 @@ useEffect(() => {
                       {item.name}
                     </h2>
                     {/* <p className="text-gray-500 dark:text-gray-400">{item.webhook}</p> */}
-                    <p className="text-gray-500 dark:text-gray-400">
+                    {/* <p className="text-gray-500 dark:text-gray-400">
                       ID: {item.id}
-                    </p>
+                    </p> */}
                     {/* <p className="text-gray-500 dark:text-gray-400">Integration: {item.provider_type}</p> */}
                   </div>
                   <div className="flex justify-between p-4">

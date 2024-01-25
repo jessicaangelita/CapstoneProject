@@ -8,6 +8,7 @@ import AuthContext from "../context/AuthProvider";
 import Image from "next/image";
 import { IMAGE } from "../../public/config/index";
 import Link from "next/link";
+import NoAccount from "../../components/warning/LoginFailed";
 
 const SignIn_URL = "http://localhost:8050/user/SignIn";
 
@@ -15,6 +16,10 @@ export const signInPage = () => {
   const usernameRef = useRef();
   const errorRef = useRef();
   const { setAuth } = useContext(AuthContext);
+
+  // Sign in Warning
+  const [signinWarning, setSignInWarning] = useState(false);
+  const [showNoAccountAlert, setShowNoAccountAlert] = useState(false);
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -68,6 +73,13 @@ export const signInPage = () => {
       setUsername("");
       setPassword("");
     } catch (error) {
+      if (error instanceof Error && error.response) {
+        if (error.response.status === 401) {
+          console.log("Sign in Failed, There's somethings wrong with your username or password.");
+          setSignInWarning(true);
+          // setShowNoAccountAlert(true); 
+        }
+      }
       console.log("Sign In Failed", error);
       errorRef.current.focus();
     }
@@ -181,6 +193,17 @@ export const signInPage = () => {
                 <p className="font-light text-sm mb-5 text-primary-lightblue">
                   Enter your Username and Password to sign in
                 </p>
+
+                {signinWarning && (
+                  <p className="text-red-600 text-sm ">
+                    Sign In Failed. We Can't find your data!!
+                  </p>
+                )}
+
+                {/* No Account Alert */}
+                  {/* {showNoAccountAlert && (
+                    <NoAccount setShowAlert={setShowNoAccountAlert} />
+                  )} */}
               </div>
 
               <div className="p-3 pt-0">

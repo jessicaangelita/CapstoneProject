@@ -4,6 +4,7 @@ import { ConnectProject } from '../components/ConnectProject';
 import axios from './api/axios';
 import { useRouter } from 'next/router';
 import { data } from 'autoprefixer';
+import { IoCloseCircle } from "react-icons/io5";
 
 export const NewConnectProject = ({onClose}) => {
   const router = useRouter();
@@ -105,20 +106,24 @@ const FormTitles = ["Connect Project"];
     <div className='items-center justify-center flex md:flex fixed inset-0 z-50'>
       <div className='bg-gray-100  w-fit shadow-2xl rounded-lg border-solid border-black p-4 mx-4 my-8 min-w-[300px] max-w-md md:w-[50%]'>
         {/* Close button */}
-          <button
+          {/* <button
             className="flex top-0 right-0 m-2 text-white bg-blue-700 px-5 mx-2 my-4 hover:text-gray-700 rounded-md p-2"
             onClick={onClose}
           >
             Close
-          </button>
+          </button> */}
+          <IoCloseCircle
+            className="absolute cursor-pointer rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:pointer-events-none h-auto text-primary-mediumblue hover:text-primary-darkblue font-extrabold w-[3%]"
+            onClick={onClose}
+        />
         
         {/* Title */}
         <p className="flex justify-center text-slate-700 text-2xl font-extrabold mb-6">Connect Project</p>
 
         {/* Progress Title */}
-        <div className='flex justify-center'>
+        {/* <div className='flex justify-center'>
           <h1 className='flex justify-center'>{FormTitles[page]}</h1>
-        </div>
+        </div> */}
         
 
         {/* Form Body */}
@@ -141,7 +146,7 @@ const FormTitles = ["Connect Project"];
         {/* Button */}
 
 
-        <div className='mt-2 flex gap-2'>
+        <div className='flex gap-2 justify-center'>
           {/* nanti apus */}
 
           <button
@@ -157,9 +162,9 @@ const FormTitles = ["Connect Project"];
               }
               // setIsLastPage(page + 1 === FormTitles.length - 1);
             }} 
-            className={`w-full text-white bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-md my-6 
+            className={`w-72 flex justify-center text-white bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-md my-3 mt-[-4%]
               ${
-                isLastPage ? "bg-green-500 hover:bg-green-600" : ""
+                isLastPage ? "bg-blue-500 hover:bg-blue-600" : ""
               }`}
             >
                 {isLastPage ? "OK" : "Next"}

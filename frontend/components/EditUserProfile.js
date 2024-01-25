@@ -21,9 +21,13 @@ const pass_valid = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9]).{6,10}$
 export default function EditProfile ({ onCancel }) {
   const userReference = useRef();
   const errReference = useRef();
+  const [data, setData] = useState({});
 
   // Toggle Password
   const [showPassword, setShowPassword] = useState(false);
+
+  // Original Data
+  const [originalData, setOriginalData] = useState({});
 
   const [name, setName] = useState("");
   const [validFullname, setValidFullname] = useState(false);
@@ -51,10 +55,6 @@ export default function EditProfile ({ onCancel }) {
   const [registrationWarning, setRegistrationWarning] = useState(false);
 
   const router = useRouter();
-
-  // useEffect(() => {
-  //   userReference.current.focus(); //setting focusnya ketika komponen load
-  // }, []);
 
   useEffect(() => {
     const result = fullname_valid.test(name);
@@ -131,8 +131,6 @@ export default function EditProfile ({ onCancel }) {
   };
 
 
-  const [data, setData] = useState({});
-  // Fetch profile data from the API
   const fetchProfileData = async () => {
     try {
       const response = await axios.get(`http://localhost:8050/user/profile`, {
@@ -157,6 +155,22 @@ export default function EditProfile ({ onCancel }) {
   useEffect(() => {
     fetchProfileData();
   }, [router.query]);
+
+  useEffect(() => {
+    // Set the original data when the fetched data changes
+    setOriginalData(data.data || {});
+  }, [data]);
+
+  const isDataChanged = () => {
+    // Compare the new data with the original data
+    return (
+      name !== originalData.name ||
+      username !== originalData.username ||
+      email !== originalData.email 
+      // password !== originalData.password ||
+      // matchPassword !== originalData.password
+    );
+  };
 
   return (
     <>
@@ -419,8 +433,11 @@ export default function EditProfile ({ onCancel }) {
             </div>
 
             <button
-              className="bg-primary-mediumblue text-white text-center hover:bg-primary-darkblue duration-200 px-3 inline-flex items-center justify-center whitespace-nowrap rounded-md font-semibold ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 py-2 text-base w-full"
+              className="`${
+                isDataChanged() ? 'bg-primary-mediumblue hover:bg-primary-darkblue' : 'bg-gray-300 cursor-not-allowed'
+              } bg-primary-mediumblue text-white text-center hover:bg-primary-darkblue duration-200 px-3 inline-flex items-center justify-center whitespace-nowrap rounded-md font-semibold ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 py-2 text-base w-full"
               type="submit"
+              disabled={!isDataChanged()}
             >
               Save Changes
             </button>
