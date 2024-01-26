@@ -15,7 +15,8 @@ const images = {
     WEBHOOK_STEP4: require('../assets/video/WebhookStep4.gif'),
     WEBHOOK_STEP5: require('../assets/video/WebhookStep5.gif'),
     WEBHOOK_STEP6: require('../assets/video/WebhookStep6.gif'),
-    AVATAR_1: require('../assets/avatar/1.jpg')
+    AVATAR_1: require('../assets/avatar/1.jpg'),
+    INFINITY: require('../assets/video/Infinity.gif')
 }
 
 export default images;

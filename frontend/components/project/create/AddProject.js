@@ -70,7 +70,7 @@ export const AddProject = ({ onClose }) => {
 
   return (
     <>
-      <div className="items-center justify-center flex md:flex fixed inset-0 z-50 ">
+      <div className="items-center justify-center flex md:flex fixed inset-0 z-50 bg-black bg-opacity-70">
         <div className="fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] border p-6 shadow-lg duration-200 sm:rounded-lg bg-primary-white text-primary-black">
           {/* Close button */}
           <IoCloseCircle

@@ -9,8 +9,8 @@ import { MdWorkOutline } from "react-icons/md";
 import { RiLogoutCircleLine } from "react-icons/ri";
 import { TbMenu2 } from "react-icons/tb";
 
-export const SideBar = () => {
-  const [open, setOpen] = useState(false);
+export const SideBarHome = () => {
+  const [open, setOpen] = useState(true);
 
   return (
     <div className="fixed top-0 left-0 font-inter">
@@ -109,4 +109,4 @@ export const SideBar = () => {
     </div>
   );
 };
-export default SideBar;
+export default SideBarHome;

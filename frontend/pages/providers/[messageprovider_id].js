@@ -96,54 +96,60 @@ export default function ContentProvider() {
         <SideBar />
       </div>
       <title>Providers</title>
-      <div className="flex justify-end">
-        <button
-          className="text-white bg-primary-lightblue hover:bg-primary-mediumblue px-8 py-2 rounded-md mx-5 mt-5 mb-8 text-end"
-          onClick={togglePopup}
-        >
-          Add Provider
-        </button>
-        {isPopupOpen && (
-          <div className="popup-container">
-            <div className="popup-content">
-              <AddProvider onClose={togglePopup} />
+
+      <div className="flex justify-between items-center pt-12 mb-6 border-b-2 border-primary-white ml-14 md:ml-40 md:mr-24">
+        <h1 className="lg:text-2xl font-bold text-white items-start ml-12 text-xl">
+          List Provider
+        </h1>
+        <div className="flex items-center justify-end w-[30%] md:w[20%] lg:w-[18%] xl:w-[16%] 2xl:w-[14%] mr-4 md:mr-8 xl:mr-14">
+          <button
+            className="text-white bg-primary-lightblue hover:bg-primary-mediumblue py-2 rounded-md mt-5 mb-8 text-center  shadow-sm shadow-primary-grey w-full"
+            onClick={togglePopup}
+          >
+            Add Provider
+          </button>
+          {isPopupOpen && (
+            <div className="popup-container">
+              <div className="popup-content">
+                <AddProvider onClose={togglePopup} />
+              </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
-      <div className="mx-auto max-w-3xl mr-[300px]">
+
+      <div className="md:ml-28 ml-[87px] mr-2 mt-10">
         {isLoading ? (
-          <p>Loading...</p>
+          <p className=" text-primary-lightgrey">Loading...</p>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 md:ml-12 md:mr-24 overflow-auto">
             {Array.isArray(provider) && provider.length > 0 ? (
               provider.map((item) => (
                 <div
                   key={item.provider_id}
-                  className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg"
+                  className="bg-primary-black rounded-lg overflow-hidden shadow-md shadow-primary-darkblue"
                 >
                   <div className="p-6">
-                    <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-2">
+                    <h2 className="text-xl font-bold text-primary-white mb-2">
                       {item.provider_label}
                     </h2>
-                    {/* <p className="text-gray-500 dark:text-gray-400">{item.webhook}</p> */}
-                    <p className="text-gray-500 dark:text-gray-400">
-                      ID: {item.id}
-                    </p>
-                    {/* <p className="text-gray-500 dark:text-gray-400">Integration: {item.provider_type}</p> */}
+                    <p className="text-primary-lightgrey">ID: {item.id}</p>
                   </div>
-                  <div className="flex justify-between p-4">
+
+                  <div className="flex justify-end space-x-4 p-4 mx-3 mb-3">
                     <button onClick={() => handleEdit(item)}>
-                      <FaPencilAlt className="text-blue-500" />
+                      <FaPencilAlt className="text-primary-lightgrey h-6 w-auto" />
                     </button>
                     <button onClick={() => openDeleteModal(item.id)}>
-                      <FaTrashAlt className="text-red-500" />
+                      <FaTrashAlt className="text-red-400 h-6 w-auto" />
                     </button>
                   </div>
                 </div>
               ))
             ) : (
-              <div className="text-center py-4">No data available.</div>
+              <div className="text-center py-4  text-primary-lightgrey">
+                No data available.
+              </div>
             )}
           </div>
         )}

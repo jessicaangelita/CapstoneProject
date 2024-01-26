@@ -68,6 +68,7 @@ export const signInPage = () => {
      console.log("success");
      setSuccess(true);
      window.location.href = "/homePage";
+     
 
       setAuth({ username, password });
       setUsername("");
@@ -290,12 +291,12 @@ export const signInPage = () => {
                           />
                           Remember me
                         </label>
-                        <a
+                        {/* <a
                           href="/forgotpass"
                           className=" text-primary-lightblue font-semibold hover:underline text-md"
                         >
                           Forgot Password
-                        </a>
+                        </a> */}
                       </div>
                     </div>
 

@@ -101,7 +101,7 @@ export const profile = () => {
         <div className="bg-primary-grey"><SideBar/></div>
           
 
-        <div className=" bg-primary-white w-2/5 mt-10 rounded-lg h-[90vh] overflow-auto mb-10">
+        <div className=" bg-primary-white w-2/5  mt-10 rounded-lg h-[90vh] overflow-auto mb-10">
           <div className="flex items-center justify-center pt-10 flex-col">
             <Image
               src={IMAGE.AVATAR_1}
