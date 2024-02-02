@@ -111,7 +111,7 @@ export default function EditProfile ({ onCancel }) {
 
       // setProfileData(updatedData);
       console.log("saved", updatedData);
-      // router.push("/user/profile");
+      router.push("/user/profile");
       // onUpdate();
     } catch (err) {
       // console.log("Update error", err);
@@ -123,6 +123,7 @@ export default function EditProfile ({ onCancel }) {
         console.error("Update error:", err.message);
       }
     }
+    router.push("/user/profile");
     window.location.href = "/user/profile";
   };
 
