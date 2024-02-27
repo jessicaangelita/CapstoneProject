@@ -91,6 +91,7 @@ export default function EditProfile ({ onCancel }) {
   }, [name, username, email, password, matchPassword]);
 
   const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
       const updatedData = {
         name,
@@ -182,7 +183,7 @@ export default function EditProfile ({ onCancel }) {
         <SideBar />
       </div>
       <div className="flex items-center justify-center bg-[url('../public/assets/background/SnowyMountainFooter.jpg')] min-h-screen">
-        <div className=" bg-primary-white lg:w-2/5 w-auto mt-10 rounded-lg h-[90vh] overflow-auto mb-10">
+        <div className=" bg-primary-white lg:w-2/5 w-auto mt-10 rounded-lg max-h-[90vh] overflow-auto mb-10">
           <div className="flex items-center justify-center pt-10 flex-col">
             <Image
               src={IMAGE.AVATAR_1}
@@ -203,7 +204,6 @@ export default function EditProfile ({ onCancel }) {
             method="post"
             className="space-y-6 mx-10"
           >
-            {/* FullName */}
             <div className="space-y-2">
               <p
                 id="note"
@@ -236,7 +236,6 @@ export default function EditProfile ({ onCancel }) {
                   onBlur={() => setFullnameFocus(false)}
                   className="ml-[2%] w-full focus:outline-none h-10 border-slate-200 bg-white px-3 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium transition duration-300 ease-in-out  disabled:cursor-not-allowed disabled:opacity-50 block rounded-md border-0 py-1.5 text-primary-darkblue shadow-sm  placeholder:text-primary-grey sm:text-sm sm:leading-6"
                 />
-                {/* checkmark */}
                 <span className={validFullname ? "valid" : "hidden"}>
                   <FcCheckmark />
                 </span>
@@ -250,7 +249,6 @@ export default function EditProfile ({ onCancel }) {
               </div>
             </div>
 
-            {/* Username */}
             <div className="space-y-2">
               <p
                 id="uname-note"
@@ -282,7 +280,6 @@ export default function EditProfile ({ onCancel }) {
                   onBlur={() => setUnameFocus(false)}
                   className="ml-[2%] w-full focus:outline-none h-10 border-slate-200 bg-white px-3 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium transition duration-300 ease-in-out  disabled:cursor-not-allowed disabled:opacity-50 block rounded-md border-0 py-1.5 text-primary-darkblue shadow-sm  placeholder:text-primary-grey sm:text-sm sm:leading-6"
                 />
-                {/* checkmark */}
                 <span className={validUname ? "valid" : "hidden"}>
                   <FcCheckmark />
                 </span>
@@ -296,7 +293,6 @@ export default function EditProfile ({ onCancel }) {
               </div>
             </div>
 
-            {/* Email */}
             <div className="space-y-2">
               <p
                 id="email-note"
@@ -327,7 +323,6 @@ export default function EditProfile ({ onCancel }) {
                   onBlur={() => setEmailFocus(false)}
                   className="ml-[2%] w-full focus:outline-none h-10 border-slate-200 bg-white px-3 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium transition duration-300 ease-in-out  disabled:cursor-not-allowed disabled:opacity-50 block rounded-md border-0 py-1.5 text-primary-darkblue shadow-sm  placeholder:text-primary-grey sm:text-sm sm:leading-6"
                 />
-                {/* checkmark */}
                 <span className={validEmail ? "valid" : "hidden"}>
                   <FcCheckmark />
                 </span>
@@ -341,7 +336,6 @@ export default function EditProfile ({ onCancel }) {
               </div>
             </div>
 
-            {/* //Password */}
             <div className="space-y-2">
             <p
                 id="pass-note"
@@ -387,7 +381,6 @@ export default function EditProfile ({ onCancel }) {
               </div>
             </div>
 
-            {/* Confirm Password */}
             <div className="space-y-2">
             <p
               id="confirm-note"
