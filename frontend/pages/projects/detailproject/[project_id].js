@@ -50,7 +50,12 @@ const ProjectDetailPage = ({}) => {
     const projectIdFromQuery = router.query.project_id;
     setProjectId(projectIdFromQuery);
 
-    if (projectId) {
+    // if (projectId) {
+    //   fetchConnectData(projectIdFromQuery);
+    // }
+
+    if (projectIdFromQuery) {
+      setProjectId(projectIdFromQuery);
       fetchConnectData(projectIdFromQuery);
     }
   }, [router.query.project_id]);
